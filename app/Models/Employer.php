@@ -15,5 +15,5 @@ class Employer extends Model
                            'Hinh_anh', 'Tai_khoan',
                            'Mat_khau'];
     protected $primaryKey = 'Ma_nha_tuyen_dung';
-    protected $table = 'Nha_tuyen_dung';
+    protected $table = 'nha_tuyen_dung';
 }

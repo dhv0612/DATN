@@ -359,3 +359,12 @@ jQuery(function($){
  
 });
 
+
+// document.getElementById("skip-value-lower").addEventListener("change", salaryfrom);
+
+// function salaryfrom() {
+// var x = document.getElementById("skip-value-lower").innerHTML;
+// document.getElementById('salary_from').value = x;
+
+
+

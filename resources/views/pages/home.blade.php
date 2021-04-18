@@ -39,7 +39,7 @@
                             <li><a href="blog-single.html">BLOG DETAILS</a></li>                                            
                           </ul>
                         </li> -->
-                        <li><a href="contact.html">NHÀ TUYỂN DỤNG</a></li>
+                        <li><a href="{{URL::TO('/employer')}}">NHÀ TUYỂN DỤNG</a></li>
 
                     </ul>
                 </div>

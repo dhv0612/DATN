@@ -71,7 +71,7 @@
                         <!-- start properties content head -->
                         <div class="aa-properties-content-head">
                             <div class="aa-properties-content-head-left">
-                                <form action="" class="aa-sort-form">
+                                <form action="" class="aa-sort-form" >
                                     <label for="">Sắp xếp</label>
                                     <select name="">
                                         <option value="1" selected="Default">Mặc định</option>
@@ -97,18 +97,21 @@
                         <!-- Start properties content body -->
                         <div class="aa-properties-content-body">
                             <ul class="aa-properties-nav aa-list-view">
+                                <?php     date_default_timezone_set('Asia/Ho_Chi_Minh');
+                                $today = date('Y-m-d');
+                                ?>
                                 @foreach ($jobs_list as $key => $jl)
                                     @foreach ($employer as $key => $emp)
-                                        @if ($emp->Ma_nha_tuyen_dung == $jl->Ma_nha_tuyen_dung)
+                                        @if ($emp->Ma_nha_tuyen_dung == $jl->Ma_nha_tuyen_dung && $jl->Han_ung_tuyen >= $today)
 
                                             <li>
-                                                <article class="aa-properties-item">
-                                                    <a class="aa-properties-item-img" href="{{ URL::to('jobs-details/' . $jl->Ma_bai_dang) }}">
+                                                <article class="aa-properties-item" style="border:1px solid #ddd">
+                                                    <a class="aa-properties-item-img" style="width: 30%; " href="{{ URL::to('jobs-details/' . $jl->Ma_bai_dang) }}">
                                                         <img alt="img"
-                                                            src="{{ 'public/frontend/HomeProperty/img/item/6.jpg' }}">
+                                                            src="{{asset('public/upload/nhatuyendung/'.$emp->Hinh_anh) }}">
                                                     </a>
 
-                                                    <div class="aa-properties-item-content">
+                                                    <div class="aa-properties-item-content" style="width: 70%; border: none; border-left: 1px solid #ddd;">
                                                         {{-- <div class="aa-properties-info">
                                                             <span>{{$emp->Ten_cong_ty}}</span>
                                                             @foreach ($place as $key => $pla)
@@ -162,7 +165,6 @@
                                                             </span>
                                               
                                                             <a class="aa-secondary-btn" style="border: 1px solid;"  href="{{URL::to('jobs-details/'.$jl->Ma_bai_dang)}}">Xem </a>
-                                                            <a class="aa-secondary-btn" style="border: 1px solid;" href="{{URL::to('save-job')}}">Lưu</a>
                                                         </div>
                                                     </div>
                                                 </article>
@@ -233,50 +235,47 @@
                         <!-- Start Single properties sidebar -->
                         <div class="aa-properties-single-sidebar">
                             <h3>Thông tin tìm kiếm</h3>
-                            <form action="">
+                            <form method="POST" action="{{URL::to('/jobs-list')}}">
+                                {{ csrf_field() }}
                                 <div class="aa-single-advance-search">
-                                    <input type="text" placeholder="Nhập vào công việc bạn muốn tìm">
+                                    <input type="text" name="title" placeholder="Nhập vào công việc bạn muốn tìm">
                                 </div>
                                 <div class="aa-single-advance-search">
-                                    <select id="" name="place">
+                                    <select id="" name="branch">                      
                                         @foreach ($branch as $key => $bra)
                                             <option
                                                 value="<?php echo $bra->Ma_nganh_nghe; ?>">
                                                 <?php echo $bra->Ten_nganh_nghe; ?>
                                             </option>
                                         @endforeach
+
                                     </select>
                                 </div>
 
                                 <div class="aa-single-advance-search">
-                                    <select id="" name="">
+                                    <select id="" name="place">
                                         @foreach ($place as $key => $pla)
-                                            <option value="<?php echo $pla->Ma_dia_diem; ?>">
+                                            <option
+                                                value="<?php echo $pla->Ma_dia_diem; ?>">
                                                 <?php echo $pla->Ten_dia_diem; ?>
                                             </option>
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="aa-single-filter-search">
-                                    <span>Mức lương từ</span>
+                                <div class="aa-single-filter-search" id="salary">
+                                    <span>MỨC LƯƠNG TỪ</span>
                                     <span id="skip-value-lower" class="example-val"></span>
-                                    <span>Triệu đến</span>
+                                    <span>TRIỆU VNĐ </span><span>ĐẾN</span>
                                     <span id="skip-value-upper" class="example-val"></span>
-                                    <span>Triệu</span>
-                                    <div id="aa-sqrfeet-range" class="noUi-target noUi-ltr noUi-horizontal noUi-background">
+                                    <span>TRIỆU VNĐ</span>
+                                    <div id="aa-sqrfeet-range"
+                                        class="noUi-target noUi-ltr noUi-horizontal noUi-background">
                                     </div>
+                                    <input type="hidden" id="salary_from" name="salary_from">
+                                    <input type="hidden" id="salary_to" name="salary_to">
                                 </div>
-                                <!-- <div class="aa-single-filter-search">
-                              <span>PRICE ($)</span>
-                              <span>FROM</span>
-                              <span id="skip-value-lower2" class="example-val">30.00</span>
-                              <span>TO</span>
-                              <span id="skip-value-upper2" class="example-val">100.00</span>
-                              <div id="aa-price-range" class="noUi-target noUi-ltr noUi-horizontal noUi-background">
-                              </div>      
-                            </div> -->
                                 <div class="aa-single-advance-search">
-                                    <input type="submit" value="Tìm kiếm" class="aa-search-btn">
+                                    <input id="submit-job" type="submit" value="Tìm kiếm" class="aa-search-btn">
                                 </div>
                             </form>
                         </div>
@@ -329,6 +328,21 @@
         </div>
     </section>
     <!-- / Properties  -->
+    <script>
+        // document.getElementById("skip-value-lower").addEventListener("change", salaryfrom);
 
+        // function salaryfrom() {
+        // var x = document.getElementById("skip-value-lower").innerHTML;
+        // document.getElementById('salary_from').value = x;
+        document.getElementById("submit-job").addEventListener("click", salary);
+
+        function salary() {
+            var from = document.getElementById("skip-value-lower").outerText;
+            var to = document.getElementById("skip-value-upper").outerText;
+            document.getElementById("salary_from").value = from;
+            document.getElementById("salary_to").value = to;
+        }
+
+    </script>
 
 @endsection

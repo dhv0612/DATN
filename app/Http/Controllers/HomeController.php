@@ -1,8 +1,10 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Models\Branch;
 use App\Models\Employer;
 use App\Models\Jobs;
+use App\Models\Place;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -77,8 +79,19 @@ class HomeController extends Controller
     }
     
     public function job_detail($jobid){
-
-        return view ('pages.job.job_detail');
+        $userid = Session::get('userid');
+        $job_detail = Jobs::where('Ma_bai_dang', $jobid)->first();
+        $employer = Employer::where('Ma_nha_tuyen_dung', $job_detail->Ma_nha_tuyen_dung)->first();
+        $place = Place::where('Ma_dia_diem', $job_detail->Ma_dia_diem)->first();
+        $branch = Branch::where('Ma_nganh_nghe',$job_detail->Ma_nganh_nghe)->first();    
+        $detail = DB::table('chi_tiet_ung_cu')->where('Ma_bai_dang', $jobid)->where('Ma_ung_vien', $userid)->first();    
+        // return response()->json($job_des);
+        return view ('pages.job.job_detail')
+                    ->with('place', $place)
+                    ->with('branch', $branch)
+                    ->with('employer', $employer)
+                    ->with('job_detail',$job_detail)
+                    ->with('detail', $detail);
 
     } 
     

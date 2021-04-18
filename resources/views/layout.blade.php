@@ -8,8 +8,8 @@
     <title>UTC2 Tìm kiếm việc làm</title>
 
     <!-- Favicon -->
-    <link rel="shortcut icon" href="{{asset( 'public/frontend/HomeProperty/img/favicon.ico') }}" type="image/x-icon">
-
+    <link rel="shortcut icon" href="{{asset( 'public/upload/logo.png') }}" type="image/x-icon">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <!-- Font awesome -->
     <link href="{{ asset('public/frontend/HomeProperty/css/font-awesome.css') }}" rel="stylesheet">
     <!-- Bootstrap -->
@@ -72,10 +72,20 @@
                             </div>
                             <div class="col-md-6 col-sm-6 col-xs-6">
                                 <div class="aa-header-right">
-                                    <a href="{{URL::to('/signup-user')}}" class="aa-register">Đăng ký</a>                                        
-                                    <a href="{{URL::to('/login-user')}}" class="aa-login">Đăng nhập</a>
-                                    {{-- <a href="register.html" class="aa-register">DHV</a>                                        
-                                    <a href="signin.html" class="aa-login">Đăng xuất</a> --}}
+                                    <?php
+                                        $userid = Session::get('userid');
+                                        $name = Session::get('name');                                          
+                                        if ($userid){
+                                    ?>
+                                    <a href="{{URL::to('/profile-user')}}" class="aa-register"><?php echo $name;?></a>                                        
+                                    <a href="{{URL::to('/logout-user')}}" class="aa-login">Đăng xuất</a>
+                                    <?php
+                                        }else{?>
+                                     <a href="{{URL::to('/signup-user')}}" class="aa-register">Đăng ký</a>                                        
+                                     <a href="{{URL::to('/login-user')}}" class="aa-login">Đăng nhập</a>                                   
+                                    <?php
+                                        }
+                                    ?>
                                 </div>
                             </div>
                         </div>
@@ -86,9 +96,11 @@
     </header>
     <!-- End header section -->
 
-    @yield('content')
+        @yield('content')
 
-    <!-- Footer -->
+    
+    
+      <!-- Footer -->
     <footer id="aa-footer">
         <div class="container">
             <div class="row">
@@ -141,7 +153,7 @@
     <script type="text/javascript" src="{{ asset('public/frontend/HomeProperty/js/jquery.fancybox.pack.js') }}"></script>
     <!-- Custom js -->
     <script src="{{ asset('public/frontend/HomeProperty/js/custom.js') }}"></script>
-
+    {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> --}}
 </body>
 
 </html>
