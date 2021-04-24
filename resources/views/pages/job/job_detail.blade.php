@@ -38,7 +38,7 @@
                         <li class="active"><a href="#">VIỆC LÀM</a></li>
                         <li><a href="gallery.html">THÔNG TIN VỀ UTC2</a></li>
 
-                        <li><a href="gallery.html">NHÀ TUYỂN DỤNG</a></li>
+                        <li><a href="{{URL::TO('/employer')}}">NHÀ TUYỂN DỤNG</a></li>
 
                 </div>
                 <!--/.nav-collapse -->

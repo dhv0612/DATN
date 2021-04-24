@@ -87,7 +87,8 @@
 
                             </div>
                             <div class="aa-contact-form">
-                                <form class="contactform" action="{{ URL::to('/save-info-user') }}" method="post" >
+                                <form class="contactform" action="{{ URL::to('/save-profile-user') }}" method="post"  enctype="multipart/form-data">
+                                    {{ csrf_field() }}
                                     <p class="comment-form-author">
                                         <label for="author">Xác nhận mật khẩu <span class="required">*</span></label>
                                         <input type="password" name="password" value="" size="30" required="required"

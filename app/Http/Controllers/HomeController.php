@@ -91,8 +91,8 @@ class HomeController extends Controller
                     ->with('branch', $branch)
                     ->with('employer', $employer)
                     ->with('job_detail',$job_detail)
-                    ->with('detail', $detail);
-
+                    ->with('detail', $detail)
+                    ->with('SEO', 1);
     } 
     
     // public function job_detail(){

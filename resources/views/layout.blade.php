@@ -8,31 +8,42 @@
     <title>UTC2 Tìm kiếm việc làm</title>
 
     <!-- Favicon -->
-    <link rel="shortcut icon" href="{{asset( 'public/upload/logo.png') }}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ asset('public/upload/logo.png') }}" type="image/x-icon">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <!-- Font awesome -->
     <link href="{{ asset('public/frontend/HomeProperty/css/font-awesome.css') }}" rel="stylesheet">
     <!-- Bootstrap -->
-    <link href="{{ asset( 'public/frontend/HomeProperty/css/bootstrap.css') }}" rel="stylesheet">
+    <link href="{{ asset('public/frontend/HomeProperty/css/bootstrap.css') }}" rel="stylesheet">
     <!-- slick slider -->
-    <link rel="stylesheet" type="text/css" href="{{ asset( 'public/frontend/HomeProperty/css/slick.css' )}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('public/frontend/HomeProperty/css/slick.css') }}">
     <!-- price picker slider -->
-    <link rel="stylesheet" type="text/css" href="{{ asset( 'public/frontend/HomeProperty/css/nouislider.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('public/frontend/HomeProperty/css/nouislider.css') }}">
     <!-- Fancybox slider -->
-    <link rel="stylesheet" href="{{ asset( 'public/frontend/HomeProperty/css/jquery.fancybox.css') }}" type="text/css"
+    <link rel="stylesheet" href="{{ asset('public/frontend/HomeProperty/css/jquery.fancybox.css') }}" type="text/css"
         media="screen" />
     <!-- Theme color -->
-    <link id="switcher" href="{{ asset( 'public/frontend/HomeProperty/css/theme-color/default-theme.css') }}"
+    <link id="switcher" href="{{ asset('public/frontend/HomeProperty/css/theme-color/default-theme.css') }}"
         rel="stylesheet">
 
     <!-- Main style sheet -->
-    <link href="{{ asset( 'public/frontend/HomeProperty/css/style.css') }}" rel="stylesheet">
-
-
+    <link href="{{ asset('public/frontend/HomeProperty/css/style.css') }}" rel="stylesheet">
     <!-- Google Font -->
     <link href='https://fonts.googleapis.com/css?family=Vollkorn' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 
+    @if (isset($SEO))
+    <?php
+    $Ma_bai_dang = $job_detail->Ma_bai_dang;
+    $Tieu_de = $job_detail->Tieu_de_SEO;
+    $Mo_ta_SEO = $job_detail->Mo_ta_SEO;
+    $Hinh_anh = $job_detail->Hinh_anh_SEO;
+    ?>
+        <meta property="og:url"                content="<?php echo URL;?>/jobs-details/<?php echo $Ma_bai_dang ?>"/>
+        <meta property="og:type"               content="article" />
+        <meta property="og:title"              content= "<?php echo $Tieu_de ?>" />
+        <meta property="og:description"        content="<?php echo $Mo_ta_SEO ?>" />
+        <meta property="og:image"              content="<?php echo URL?>/public/upload/nhatuyendung/SEO/<?php echo $Hinh_anh; ?>">
+    @endif
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -73,18 +84,16 @@
                             <div class="col-md-6 col-sm-6 col-xs-6">
                                 <div class="aa-header-right">
                                     <?php
-                                        $userid = Session::get('userid');
-                                        $name = Session::get('name');                                          
-                                        if ($userid){
-                                    ?>
-                                    <a href="{{URL::to('/profile-user')}}" class="aa-register"><?php echo $name;?></a>                                        
-                                    <a href="{{URL::to('/logout-user')}}" class="aa-login">Đăng xuất</a>
-                                    <?php
-                                        }else{?>
-                                     <a href="{{URL::to('/signup-user')}}" class="aa-register">Đăng ký</a>                                        
-                                     <a href="{{URL::to('/login-user')}}" class="aa-login">Đăng nhập</a>                                   
-                                    <?php
-                                        }
+                                    $userid = Session::get('userid');
+                                    $name = Session::get('name');
+                                    if ($userid) { ?>
+                                    <a href="{{ URL::to('/profile-user') }}" class="aa-register"><?php
+                                        echo $name; ?></a>
+                                    <a href="{{ URL::to('/logout-user') }}" class="aa-login">Đăng xuất</a>
+                                    <?php } else { ?>
+                                    <a href="{{ URL::to('/signup-user') }}" class="aa-register">Đăng ký</a>
+                                    <a href="{{ URL::to('/login-user') }}" class="aa-login">Đăng nhập</a>
+                                    <?php }
                                     ?>
                                 </div>
                             </div>
@@ -96,11 +105,11 @@
     </header>
     <!-- End header section -->
 
-        @yield('content')
+    @yield('content')
 
-    
-    
-      <!-- Footer -->
+
+
+    <!-- Footer -->
     <footer id="aa-footer">
         <div class="container">
             <div class="row">
@@ -136,24 +145,31 @@
     </footer>
     <!-- / Footer -->
 
-
-
+   
     <!-- jQuery library -->
     <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script> -->
-    <script src="{{asset( 'public/frontend/HomeProperty/js/jquery.min.js' )}}"></script>
+    <script src="{{ asset('public/frontend/HomeProperty/js/jquery.min.js') }}"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="{{asset( 'public/frontend/HomeProperty/js/bootstrap.js') }}"></script>
+    <script src="{{ asset('public/frontend/HomeProperty/js/bootstrap.js') }}"></script>
     <!-- slick slider -->
-    <script type="text/javascript" src="{{asset( 'public/frontend/HomeProperty/js/slick.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('public/frontend/HomeProperty/js/slick.js') }}"></script>
     <!-- Price picker slider -->
-    <script type="text/javascript" src="{{ asset('public/frontend/HomeProperty/js/nouislider.js' )}}"></script>
+    <script type="text/javascript" src="{{ asset('public/frontend/HomeProperty/js/nouislider.js') }}"></script>
     <!-- mixit slider -->
     <script type="text/javascript" src="{{ asset('public/frontend/HomeProperty/js/jquery.mixitup.js') }}"></script>
     <!-- Add fancyBox -->
-    <script type="text/javascript" src="{{ asset('public/frontend/HomeProperty/js/jquery.fancybox.pack.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('public/frontend/HomeProperty/js/jquery.fancybox.pack.js') }}">
+    </script>
     <!-- Custom js -->
     <script src="{{ asset('public/frontend/HomeProperty/js/custom.js') }}"></script>
     {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> --}}
+
+    <script src="{{ asset('public/frontend/Pageadmin/plugins/summernote/summernote-bs4.min.js') }}"></script>
+    <!-- CodeMirror -->
+    <script src="{{ asset('public/frontend/Pageadmin/plugins/codemirror/codemirror.js') }}"></script>
+    <script src="{{ asset('public/frontend/Pageadmin/plugins/codemirror/mode/css/css.js') }}"></script>
+    <script src="{{ asset('public/frontend/Pageadmin/plugins/codemirror/mode/xml/xml.js') }}"></script>
+    <script src="{{ asset('public/frontend/Pageadmin/plugins/codemirror/mode/htmlmixed/htmlmixed.js') }}"></script>
 </body>
 
 </html>

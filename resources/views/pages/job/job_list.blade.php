@@ -32,10 +32,9 @@
                         </li> -->
                         <li class="active"><a href="{{ URL::to('/jobs-list') }}">VIỆC LÀM</a></li>
                         <li><a href="">TTHÔNG TIN VỀ UTC2</a></li>
-                        <li class="dropdown">
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="blog-archive.html">NHÀ TUYỂN DỤNG <span
-                                    class="caret"></span></a>
-
+                        <li>
+                            <a  href="{{URL::TO('/employer')}}">NHÀ TUYỂN DỤNG </a>
+                        </li>
                 </div>
                 <!--/.nav-collapse -->
             </div>

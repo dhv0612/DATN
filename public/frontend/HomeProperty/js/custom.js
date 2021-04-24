@@ -191,7 +191,7 @@ jQuery(function($){
  
             range: {
               //  'min': Intl.NumberFormat('en-IN', { maximumSignificantDigits: 3 }).format(1000000),
-              'min': 2,
+              'min': 0,
               '10%': 5,
               '20%': 9,
               '30%': 12,
