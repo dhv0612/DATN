@@ -59,3 +59,5 @@ Route::post('/update-exam-employer/{examid}',[EmployerController::class, 'update
 Route::get('/add-exam-employer',[EmployerController::class, 'add_exam_employer']);
 Route::post('/save-exam-employer',[EmployerController::class, 'save_exam_employer']);
 Route::get('/view-question-exam/{examid}',[EmployerController::class, 'view_question_exam']);
+Route::post('/import-question',[EmployerController::class, 'import_question']);
+Route::get('/delete-question/{questionid}',[EmployerController::class, 'delete_question']);
