@@ -1,80 +1,88 @@
 @extends('layout_employer')
 @section('employer_content')
-<nav class="mt-2">
-  <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
-      data-accordion="false">
-      <li class="nav-item ">
-          <a href="{{ URL::to('/dashboard-employer') }}" class="nav-link ">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
-              <p>
-                  Trang chủ
-              </p>
-          </a>
-      </li>
-      <li class="nav-item menu-open">
-          <a href="pages/widgets.html" class="nav-link active">
-              <i class="nav-icon fas fa-th"></i>
-              <p>
-                  Bài đăng tuyển dụng
-                  <i class="fas fa-angle-left right"></i>
-              </p>
-          </a>
-          <ul class="nav nav-treeview">
-              <li class="nav-item">
-                  <a href="{{ URL::to('/list-job-employer') }}" class="nav-link active">
-                      <i class="far fa-circle nav-icon"></i>
-                      <p>Danh sách bài đăng</p>
-                  </a>
-              </li>
-              <li class="nav-item">
-                  <a href="{{ URL::to('/add-job-employer') }}" class="nav-link">
-                      <i class="far fa-circle nav-icon"></i>
-                      <p>Thêm bài đăng</p>
-                  </a>
-              </li>
+    <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+            <li class="nav-item ">
+                <a href="{{ URL::to('/dashboard-employer') }}" class="nav-link ">
+                    <i class="nav-icon fas fa-tachometer-alt"></i>
+                    <p>
+                        Trang chủ
+                    </p>
+                </a>
+            </li>
+            <li class="nav-item menu-open">
+                <a href="pages/widgets.html" class="nav-link active">
+                    <i class="nav-icon fas fa-th"></i>
+                    <p>
+                        Bài đăng tuyển dụng
+                        <i class="fas fa-angle-left right"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                        <a href="{{ URL::to('/list-job-employer') }}" class="nav-link active">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Danh sách bài đăng</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ URL::to('/add-job-employer') }}" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Thêm bài đăng</p>
+                        </a>
+                    </li>
 
-          </ul>
-      </li>
-      <li class="nav-item ">
-          <a href="#" class="nav-link ">
-              <i class="nav-icon fas fa-copy"></i>
-              <p>
-                  Bài kiểm tra
-                  <i class="fas fa-angle-left right"></i>
-              </p>
-          </a>
-          <ul class="nav nav-treeview">
-              <li class="nav-item">
-                  <a href="{{URL::to('/list-exam-employer')}}" class="nav-link">
-                      <i class="far fa-circle nav-icon"></i>
-                      <p>Danh sách bài kiểm tra</p>
-                  </a>
-              </li>
-              
-              <li class="nav-item">
-                  <a href="{{URL::to('/add-exam-employer')}}" class="nav-link ">
-                      <i class="far fa-circle nav-icon"></i>
-                      <p>Thêm bài kiểm tra</p>
-                  </a>
-              </li>
+                </ul>
+            </li>
+            <li class="nav-item ">
+                <a href="#" class="nav-link ">
+                    <i class="nav-icon fas fa-copy"></i>
+                    <p>
+                        Bài kiểm tra
+                        <i class="fas fa-angle-left right"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                        <a href="{{ URL::to('/list-exam-employer') }}" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Danh sách bài kiểm tra</p>
+                        </a>
+                    </li>
 
-          </ul>
-      </li>
-      <li class="nav-item">
-          <a href="{{URl::to('/logout-employer')}}" class="nav-link">
-              <i class="nav-icon fas fa-sign-out-alt"></i></i>
-              <p>
-                  Đăng xuất
-              </p>
-          </a>
-      </li>
+                    <li class="nav-item">
+                        <a href="{{ URL::to('/add-exam-employer') }}" class="nav-link ">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Thêm bài kiểm tra</p>
+                        </a>
+                    </li>
 
-  </ul>
-</nav>
-<!-- /.sidebar-menu -->
-</div>
-<!-- /.sidebar -->
-</aside>
+                </ul>
+            </li>
+            <li class="nav-item ">
+                <a href="{{ URL::to('/list-user-test') }}" class="nav-link">
+                    <i class="nav-icon fas fa-user-friends"></i>
+                    <p>
+                        Danh sách ứng viên
+                        {{-- <i class="fas fa-angle-left right"></i> --}}
+                    </p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ URl::to('/logout-employer') }}" class="nav-link">
+                    <i class="nav-icon fas fa-sign-out-alt"></i></i>
+                    <p>
+                        Đăng xuất
+                    </p>
+                </a>
+            </li>
+
+        </ul>
+    </nav>
+    <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+    </aside>
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
@@ -102,7 +110,8 @@
                             </div>
                             <!-- /.card-header -->
                             <!-- form start -->
-                            <form action="{{ URL::to('/update-job-employer/'.$job_detail->Ma_bai_dang) }}" method="post"  enctype="multipart/form-data">
+                            <form action="{{ URL::to('/update-job-employer/' . $job_detail->Ma_bai_dang) }}" method="post"
+                                enctype="multipart/form-data">
                                 {{ csrf_field() }}
                                 <div class="card-body">
                                     <div class="form-group">
@@ -114,67 +123,100 @@
                                     <div class="form-group">
                                         <label>Ngành nghề</label>
                                         <select name="branch" class="form-control">
-                                            @foreach ($branch as $key=>$bra )
-                                             @if ($job_detail->Ma_nganh_nghe == $bra->Ma_nganh_nghe)
-                                             <option value="{{$bra->Ma_nganh_nghe}}" selected>{{$bra->Ten_nganh_nghe}}</option>
-                                             @else
-                                             <option value="{{$bra->Ma_nganh_nghe}}" >{{$bra->Ten_nganh_nghe}}</option>
-                                             @endif
-                                            @endforeach                                         
+                                            @foreach ($branch as $key => $bra)
+                                                @if ($job_detail->Ma_nganh_nghe == $bra->Ma_nganh_nghe)
+                                                    <option value="{{ $bra->Ma_nganh_nghe }}" selected>
+                                                        {{ $bra->Ten_nganh_nghe }}</option>
+                                                @else
+                                                    <option value="{{ $bra->Ma_nganh_nghe }}">{{ $bra->Ten_nganh_nghe }}
+                                                    </option>
+                                                @endif
+                                            @endforeach
                                         </select>
                                     </div>
                                     <div class="form-group">
                                         <label>Địa điểm</label>
                                         <select name="place" class="form-control">
-                                            @foreach ($place as $key=>$pla )
-                                             @if ($job_detail->Ma_dia_diem == $pla->Ma_dia_diem)
-                                             <option value="{{$pla->Ma_dia_diem}}" selected>{{$pla->Ten_dia_diem}}</option>
-                                             @else
-                                             <option value="{{$pla->Ma_dia_diem}}" >{{$pla->Ten_dia_diem}}</option>
-                                             @endif
-                                            @endforeach                                                                         
+                                            @foreach ($place as $key => $pla)
+                                                @if ($job_detail->Ma_dia_diem == $pla->Ma_dia_diem)
+                                                    <option value="{{ $pla->Ma_dia_diem }}" selected>
+                                                        {{ $pla->Ten_dia_diem }}</option>
+                                                @else
+                                                    <option value="{{ $pla->Ma_dia_diem }}">{{ $pla->Ten_dia_diem }}
+                                                    </option>
+                                                @endif
+                                            @endforeach
                                         </select>
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputPassword1">Địa chỉ làm việc</label>
-                                        <input type="text" name="address" value="{{$job_detail->Dia_diem_lam_viec}}" class="form-control" id="exampleInputPassword1" placeholder="Địa chỉ">
+                                        <input type="text" name="address" value="{{ $job_detail->Dia_diem_lam_viec }}"
+                                            class="form-control" id="exampleInputPassword1" placeholder="Địa chỉ">
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputPassword1">Mức lương</label>
-                                        <input type="number" name="salary"  value="{{$job_detail->Muc_luong}}" class="form-control" id="exampleInputPassword1" placeholder="Lương">
+                                        <input type="number" name="salary" value="{{ $job_detail->Muc_luong }}"
+                                            class="form-control" id="exampleInputPassword1" placeholder="Lương">
                                     </div>
 
                                     <div class="form-group">
                                         <label for="exampleInputPassword1">Hạn ứng tuyển</label>
-                                        <input type="date" name="deadline"  value="{{$job_detail->Han_ung_tuyen}}" class="form-control" id="exampleInputPassword1">
+                                        <input type="date" name="deadline" value="{{ $job_detail->Han_ung_tuyen }}"
+                                            class="form-control" id="exampleInputPassword1">
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputPassword1">Yêu cầu</label>
-                                        <textarea id="summernote" name="res"  class="form-control">
-                                            <?php echo  $job_detail->Yeu_cau?>
-                                        </textarea>
+                                        <textarea id="summernote" name="res" class="form-control">
+                                                <?php echo $job_detail->Yeu_cau; ?>
+                                            </textarea>
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputPassword1">Mô tả công việc</label>
                                         <textarea id="summernote1" name="des" class="form-control">
-                                            <?php echo  $job_detail->Mo_ta_cong_viec?>
-                                        </textarea>
+                                                <?php echo $job_detail->Mo_ta_cong_viec; ?>
+                                            </textarea>
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputPassword1">Thông tin khác</label>
                                         <textarea id="summernote2" name="info" class="form-control">
-                                            <?php echo  $job_detail->Thong_tin_khac?>
-                                        </textarea>
+                                                <?php echo $job_detail->Thong_tin_khac; ?>
+                                            </textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Bài kiểm tra</label>
+                                        <div class="row">            
+                                            @foreach ($exam as $key => $exa)
+                                                <div class="col-md-6">
+                                                    @foreach ($info_exam as $$key=>$ie )   
+                                                    @if($exa->Ma_bai_kiem_tra == $ie->Ma_bai_kiem_tra)                                                     
+                                                        @if($ie->Trang_thai ==1  )
+                                                            <input class="form-check-input" name="exam[]" style="margin-left: 0" type="checkbox" checked
+                                                                value="{{ $exa->Ma_bai_kiem_tra }}">                                                            
+                                                            <label class="form-check-label"
+                                                                style=" margin-left: 1.25rem;">{{ $exa->Ten_bai_kiem_tra }}</label>
+                                                        @else
+                                                            <input class="form-check-input" name="exam[]" style="margin-left: 0" type="checkbox"
+                                                                value="{{ $exa->Ma_bai_kiem_tra }}">   
+                                                                
+                                                            <label class="form-check-label"
+                                                                style=" margin-left: 1.25rem;">{{ $exa->Ten_bai_kiem_tra }}</label>                                             
+                                                    @endif
+                                                    @endif
+                                              
+                                                    @endforeach
+                                                </div>
+                                            @endforeach
+                                        </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputPassword1">Tiêu đề SEO</label>
-                                        <input type="text" class="form-control" value="{{$job_detail->Tieu_de_SEO}}" name="tit_seo" id="exampleInputPassword1"
-                                            placeholder="Tiêu đề SEO">
+                                        <input type="text" class="form-control" value="{{ $job_detail->Tieu_de_SEO }}"
+                                            name="tit_seo" id="exampleInputPassword1" placeholder="Tiêu đề SEO">
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputPassword1">Mô tả SEO</label>
-                                        <input type="text" class="form-control" value="{{$job_detail->Mo_ta_SEO}}"  name="des_seo" id="exampleInputPassword1"
-                                            placeholder="Lương">
+                                        <input type="text" class="form-control" value="{{ $job_detail->Mo_ta_SEO }}"
+                                            name="des_seo" id="exampleInputPassword1" placeholder="Lương">
                                     </div>
 
                                     <div class="form-group">
@@ -182,11 +224,14 @@
 
                                         <div class="input-group">
                                             <div class="custom-file">
-                                                <input type="file" name="img_seo" class="custom-file-input" id="exampleInputFile">
-                                                <label class="custom-file-label" for="exampleInputFile">Chọn hình ảnh</label>
-                                            </div>                                           
+                                                <input type="file" name="img_seo" class="custom-file-input"
+                                                    id="exampleInputFile">
+                                                <label class="custom-file-label" for="exampleInputFile">Chọn hình
+                                                    ảnh</label>
+                                            </div>
                                         </div>
-                                        <img class="img" style="height: 100px; width: 200px" src="{{asset('public/upload/nhatuyendung/SEO/'.$job_detail->Hinh_anh_SEO )}}">
+                                        <img class="img" style="height: 100px; width: 200px"
+                                            src="{{ asset('public/upload/nhatuyendung/SEO/' . $job_detail->Hinh_anh_SEO) }}">
 
                                     </div>
                                     {{-- <div class="form-check">

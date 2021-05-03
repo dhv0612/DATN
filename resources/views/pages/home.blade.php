@@ -160,8 +160,8 @@
         <div class="container">
             <div class="aa-advance-search-area">
                 <div class="form">
-                    <form method="POST" action="{{URL::to('/jobs-list')}}">
-                      {{ csrf_field() }}
+                    <form method="get" action="{{URL::to('/jobs-list')}}">
+                      {{-- {{ csrf_field() }} --}}
                         <div class="aa-advance-search-top">
                             <div class="row">
                                 <div class="col-md-6">  

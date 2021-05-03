@@ -60,6 +60,15 @@
 
             </ul>
         </li>
+        <li class="nav-item ">
+            <a href="{{URL::to('/list-user-test')}}" class="nav-link">
+                <i class="nav-icon fas fa-user-friends"></i>
+                <p>
+                    Danh sách ứng viên
+                    {{-- <i class="fas fa-angle-left right"></i> --}}
+                </p>
+            </a>
+        </li>
         <li class="nav-item">
             <a href="{{URl::to('/logout-employer')}}" class="nav-link">
                 <i class="nav-icon fas fa-sign-out-alt"></i></i>
@@ -131,9 +140,8 @@
                                             </td>
                                             <td>{{$jl->Tieu_de_SEO}}</td>
                                             <td style="font-size: 20px">
-                                                <a href="{{URL::to('/view-user-job/'.$jl->Ma_bai_dang)}}">  <i class="fas fa-eye" style="color: Green; margin: 0 5px;"></i></a>|| 
-                                                <a href="{{URL::to('/edit-job/'.$jl->Ma_bai_dang)}}">  <i class="fas fa-edit" style="color: blue; margin: 0 5px;"></i></a>|| 
-                                                <a href="{{URL::to('/delete-job/'.$jl->Ma_bai_dang)}}" onclick="return confirm('Do you want delete ?')">  <i class="fas fa-trash-alt" style="color: red;margin: 0 5px;"></i></a>
+                                                <a href="{{URL::to('/user-apply-job/'.$jl->Ma_bai_dang)}}">  <i class="fas fa-eye" style="color: Green; margin: 0 5px;"></i></a>
+                                                <a href="{{URL::to('/edit-job/'.$jl->Ma_bai_dang)}}">  <i class="fas fa-edit" style="color: blue; margin: 0 5px;"></i></a>
                                             </td>
                                         </tr>
                                         @endforeach                                 

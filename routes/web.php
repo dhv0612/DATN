@@ -13,7 +13,6 @@ use App\Http\Controllers\EmployerController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 // Route::get('/', function () {
 //     return view('layout');
 // });
@@ -21,7 +20,7 @@ use App\Http\Controllers\EmployerController;
 Route::get('/',[HomeController::class, 'index']);
 Route::get('/login-user',[HomeController::class, 'login_user']);
 Route::get('/signup-user',[HomeController::class, 'signup_user']);
-Route::post('/jobs-list',[HomeController::class, 'jobs_list']);
+Route::get('/jobs-list',[HomeController::class, 'jobs_list']);
 Route::get('/jobs-details/{jobid}',[HomeController::class, 'job_detail']);
 
 //User
@@ -40,6 +39,9 @@ Route::get('/jobs-save',[UserController::class, 'jobs_save']);
 Route::post('/apply-job-filecv/{jobid}',[UserController::class, 'apply_job_filecv']);
 Route::get('/login-facebook',[UserController::class, 'login_facebook']);
 Route::get('/user/callback',[UserController::class, 'callback_facebook']);
+Route::get('/list-exam-user/{jobid}',[UserController::class, 'list_exam_user']);
+Route::get('/start-exam/{examid}',[UserController::class, 'start_exam']);
+
 
 //Employer
 Route::get('/employer',[EmployerController::class, 'employer']);
@@ -61,3 +63,12 @@ Route::post('/save-exam-employer',[EmployerController::class, 'save_exam_employe
 Route::get('/view-question-exam/{examid}',[EmployerController::class, 'view_question_exam']);
 Route::post('/import-question',[EmployerController::class, 'import_question']);
 Route::get('/delete-question/{questionid}',[EmployerController::class, 'delete_question']);
+Route::get('/forgot-password-employer',[EmployerController::class, 'forgot_password_employer']);
+Route::post('/recovery-password-employer',[EmployerController::class, 'recovery_password_employer']);
+Route::get('/forgot-password-employer',[EmployerController::class, 'forgot_password_employer']);
+Route::get('/update-pass-employer',[EmployerController::class, 'update_pass_employer']);
+Route::post('/reset-pass-employer',[EmployerController::class, 'reset_pass_employer']);
+Route::get('/user-apply-job/{jobid}',[EmployerController::class, 'user_apply_job']);
+Route::get('/cancle-user/{userid}',[EmployerController::class, 'cancle_user']);
+Route::get('/accept-user/{userid}',[EmployerController::class, 'accept_user']);
+Route::get('/list-user-test',[EmployerController::class, 'list_user_test']);

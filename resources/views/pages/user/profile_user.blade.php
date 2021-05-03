@@ -316,7 +316,7 @@
                                                                 <figure class="aa-blog-img">
                                                                     <div class="col-md-3 col-sm-3">
                                                                         <a href="#"><img src="img/blog-img-1.jpg"
-                                                                                alt="img"></a>
+                                                                            alt="img"></a>
 
                                                                     </div>
                                                                     <div class="col-md-9 col-sm-9">

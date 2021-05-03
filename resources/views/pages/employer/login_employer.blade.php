@@ -20,14 +20,23 @@
 </head>
 
 <body class="hold-transition login-page">
+    <?php
+    $message = Session::get('notification');
+        if ($message)   {
+            echo "<script> alert('$message') </script>";
+            Session::put('notification', null);
+        } 
+    ?>
     <div class="login-box">
         <!-- /.login-logo -->
         <div class="card card-outline card-primary">
+           
             <div class="card-header text-center">
                 <h1 class="h1"><b>Nhà tuyển dụng</b></h1>
             </div>
             <div class="card-body">
                 <form action="{{URL::to('/check-login-employer')}}" method="post">
+                    @csrf
                     <div class="input-group mb-3">
                         <input type="text" name="username" class="form-control" placeholder="Tài khoản">
                         <div class="input-group-append">
@@ -50,7 +59,7 @@
                         </div>
                         <div class="col-6">
 
-                            <a href="#" class="btn btn-primary btn-block btn-danger">Quên mật khẩu</a>
+                            <a href="{{URL::to('/forgot-password-employer')}}" class="btn btn-primary btn-block btn-danger">Quên mật khẩu</a>
                         </div>
                         <!-- /.col -->
                     </div>

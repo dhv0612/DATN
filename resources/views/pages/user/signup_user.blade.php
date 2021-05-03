@@ -77,7 +77,7 @@
                                 <div class="aa-single-field">
                                     <label for="password">Mật khẩu <span class="required">*</span></label>
                                     <input type="password" name="password" id="myInput">
-                                    <input type="checkbox" style="width: 6%;height: 20px;" onclick="myFunction()"><strong style="font-size: 20px">Show Password</strong>
+                                    <input type="checkbox" style="width: 6%;height: 20px;" onclick="myFunction()"><strong style="font-size: 20px">Hiển thị mật khẩu</strong>
                                 </div>
                                 
                                 {{-- <div class="aa-single-field">

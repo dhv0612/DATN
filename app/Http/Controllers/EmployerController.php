@@ -1,15 +1,18 @@
 <?php
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Str;
 use App\Imports\ExcelImports;
 use App\Models\Employer;
+use Carbon\Carbon;
 use App\Models\Jobs;
 use App\Models\Question;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Mail;
 
 // use App\Imports\e
 define( 'URL', 'https://dhv0612.com/DATN' );
@@ -69,22 +72,6 @@ class EmployerController extends Controller {
         return Redirect::to( 'employer' );
     }
 
-    public function delete_job( $jobid ) {
-        $this->Checklogin();
-        $employerid = Session::get( 'employerid' );
-        $employer = Employer::where( 'Ma_nha_tuyen_dung', $employerid )->first();
-        if ( isset( $employerid ) ) {
-            $bai_dang = Jobs::where( 'Ma_bai_dang', $jobid )->where( 'Ma_nha_tuyen_dung', $employerid )->first();
-            if ( isset( $bai_dang ) ) {
-                DB::table( 'bai_dang_tuyen_dung' )->where( 'Ma_bai_dang', $jobid )->delete();
-                return Redirect::to( 'list-job-employer' )->with( 'message', 'Xóa bài đăng thành công' );
-            }else {
-                return Redirect::to( '/dashboard-employer' )->with( 'employer', $employer );}
-        } else {
-            return Redirect::to( '/dashboard-employer' )            ->with( 'employer', $employer );
-        }
-    }
-
     public function edit_job( $jobid ) {
 
         $this->Checklogin();
@@ -94,11 +81,16 @@ class EmployerController extends Controller {
         $employerid =  Session::get( 'employerid' );
         $employer = Employer::where( 'Ma_nha_tuyen_dung', $employerid )->first();
         $job_detail = Jobs::where( 'Ma_bai_dang', $jobid )->where( 'Ma_nha_tuyen_dung', $employerid )->first();
+        $info_exam = DB::table('thong_tin_kiem_tra')->where('Ma_bai_dang', $jobid)->get();
+        $exam = DB::table('bai_kiem_tra')->where('Ma_nha_tuyen_dung', $employerid)->get();
+        // $info_exam = DB::table('thong_tin_kiem_tra')->where('')
         if ( $job_detail ) {
             return view ( 'pages.employer.edit_jobs_employer' )
             ->with( 'place', $place )
             ->with( 'branch', $branch )
             ->with( 'employer', $employer )
+            ->with('exam', $exam)
+            ->with('info_exam', $info_exam)
             ->with( 'job_detail', $job_detail );
         } else {
             return Redirect::to ( 'dashboard-employer' )->with( 'employer', $employer );
@@ -131,15 +123,27 @@ class EmployerController extends Controller {
             $get_image->move( 'public/upload/nhatuyendung/SEO', $new_image );
             $data['Hinh_anh_SEO'] = $new_image;
             DB::table( 'bai_dang_tuyen_dung' )->where( 'Ma_bai_dang', $jobid )->where( 'Ma_nha_tuyen_dung', $employerid )->update( $data );
-
-            return Redirect::to( 'list-job-employer' );
         } else {
-            DB::table( 'bai_dang_tuyen_dung' )->where( 'Ma_bai_dang', $jobid )->where( 'Ma_nha_tuyen_dung', $employerid )->update( $data );
-
-            return Redirect::to( 'list-job-employer' );
-
+            DB::table( 'bai_dang_tuyen_dung' )->where( 'Ma_bai_dang', $jobid )->where( 'Ma_nha_tuyen_dung', $employerid )->update( $data );    
         }
-
+        $exam_list = DB::table('bai_kiem_tra')->where('Ma_nha_tuyen_dung', $employerid)->get();
+        $exam = $request->exam;
+        foreach(  $exam_list  as $el){
+            $data_el = array();
+            $data_el['Trang_thai'] = 0;
+            DB::table('thong_tin_kiem_tra')->where('Ma_bai_dang', $jobid)
+            ->where('Ma_bai_kiem_tra',$el->Ma_bai_kiem_tra )
+            ->update($data_el);
+        }
+        foreach($exam  as  $ex){
+            $data_exam = array();
+            $data_exam['Trang_thai'] = 1;
+            DB::table('thong_tin_kiem_tra')
+            ->where('Ma_bai_dang', $jobid )
+            ->where('Ma_bai_kiem_tra', $ex)
+            ->update($data_exam);
+        }      
+        return Redirect::to( 'list-job-employer' );
     }
 
     public function add_job_employer() {
@@ -148,9 +152,11 @@ class EmployerController extends Controller {
         $branch = DB::table( 'nganh_nghe' )->get();
         $employerid =  Session::get( 'employerid' );
         $employer = Employer::where( 'Ma_nha_tuyen_dung', $employerid )->first();
+        $exam = DB::table('bai_kiem_tra')->where('Ma_nha_tuyen_dung', $employerid)->get();
         return view( 'pages.employer.add_list_jobs_employer' )
         ->with( 'place', $place )
         ->with( 'branch', $branch )
+        ->with('exam', $exam)
         ->with( 'employer', $employer );
     }
 
@@ -173,24 +179,34 @@ class EmployerController extends Controller {
         $data['Mo_ta_SEO'] = $request->des_seo;
         $get_image = $request->file( 'img_seo' );
         if ( $get_image ) {
-
             $date = date( 'dmYhis' );
             $get_name_image = $get_image->getClientOriginalName();
             $name_image = current( explode( '.', $get_name_image ) );
-
             $new_image = $date.'-'.$name_image.'.'.$get_image->getClientOriginalExtension();
             $get_image->move( 'public/upload/nhatuyendung/SEO', $new_image );
             $data['Hinh_anh_SEO'] = $new_image;
-            DB::table( 'bai_dang_tuyen_dung' )->where( 'Ma_nha_tuyen_dung', $employerid )->insert( $data );
-
-            return Redirect::to( 'list-job-employer' );
+            $jobid =Jobs::insertGetId( $data );            
         } else {
-            DB::table( 'bai_dang_tuyen_dung' )->where( 'Ma_nha_tuyen_dung', $employerid )->insert( $data );
-
-            return Redirect::to( 'list-job-employer' );
-
+            $jobid=Jobs::insertGetId( $data );
         }
-
+        $exam_list = DB::table('bai_kiem_tra')->where('Ma_nha_tuyen_dung', $employerid)->select('Ma_bai_kiem_tra')->get();
+        $exam = $request->exam;
+        foreach($exam_list as $el){
+            $data_el = array();
+            $data_el['Ma_bai_dang'] = $jobid;
+            $data_el['Ma_bai_kiem_tra'] = $el->Ma_bai_kiem_tra;
+            DB::table('thong_tin_kiem_tra')->insert($data_el);
+        }
+        foreach( $exam as  $ex){
+            // $examid =$exam_list[$i]->Ma_bai_kiem_tra;
+            $data_exam = array();
+            $data_exam['Ma_bai_dang'] = $jobid;
+            $data_exam['Ma_bai_kiem_tra'] = $ex;
+            $data_exam['Trang_thai'] = 1;
+            DB::table('thong_tin_kiem_tra')->where('Ma_bai_dang', $jobid)->where('Ma_bai_kiem_tra',$ex )->update($data_exam);
+        }
+        return Redirect::to( 'list-job-employer' );
+        // return response()->json($exam);
     }
 
     public function list_exam_employer() {
@@ -241,25 +257,6 @@ class EmployerController extends Controller {
         }
     }
 
-    public function delete_exam( $examid ) {
-        $this->Checklogin();
-        $employerid = Session::get( 'employerid' );
-        $employer = Employer::where( 'Ma_nha_tuyen_dung', $employerid )->first();
-        if ( isset( $employerid ) ) {
-            $exam_detail = DB::table( 'bai_kiem_tra' )->where( 'Ma_bai_kiem_tra', $examid )->where( 'Ma_nha_tuyen_dung', $employerid )->first();
-            if ( isset( $exam_detail ) ) {
-                DB::table( 'bai_kiem_tra' )->where( 'Ma_bai_kiem_tra', $examid )->delete();
-
-                return Redirect::to( 'list-exam-employer' )->with( 'message', 'Xóa bài kiểm tra thành công' );
-            }else{
-                return Redirect::to ( 'dashboard-employer' )
-                ->with( 'employer', $employer );
-            }
-        } else {
-            return Redirect::to ( 'dashboard-employer' )
-            ->with( 'employer', $employer );
-        }
-    }
 
     public function add_exam_employer() {
         $this->Checklogin();
@@ -270,7 +267,6 @@ class EmployerController extends Controller {
     }
 
     public function save_exam_employer( Request $request ) {
-
         $this->Checklogin();
         $employerid =  Session::get( 'employerid' );
         $employer = Employer::where( 'Ma_nha_tuyen_dung', $employerid )->first();
@@ -286,14 +282,30 @@ class EmployerController extends Controller {
         ->with( 'employer', $employer );
     }
 
-    public function view_question_exam( $examid ) {
+    public function view_question_exam( $examid ){
         $this->Checklogin();
         $employerid =  Session::get( 'employerid' );
         Session::put( 'examid', $examid );
         $employer = Employer::where( 'Ma_nha_tuyen_dung', $employerid )->first();
-        $exam = DB::table( 'bai_kiem_tra' )->where( 'Ma_bai_kiem_tra', $examid )->where( 'Ma_nha_tuyen_dung', $employerid )->first();
+        $exam = DB::table( 'bai_kiem_tra' )
+        ->where( 'Ma_bai_kiem_tra', $examid )
+        ->where( 'Ma_nha_tuyen_dung', 2 )
+        ->first();
         if ( $exam ) {
-            $question_list = DB::table( 'cau_hoi' )->where( 'Ma_bai_kiem_tra', $exam->Ma_bai_kiem_tra )->get();
+            $question_list = DB::table( 'cau_hoi' )
+            ->select (DB::raw('SUBSTR(Ten_cau_hoi, 1,20) as Ten_cau_hoi')
+            ,'Ma_bai_kiem_tra'
+            ,'Ma_cau_hoi'
+            , 'Lua_chon_a'
+            , 'Lua_chon_b'
+            , 'Lua_chon_c'
+            , 'Lua_chon_d'
+            , 'Dap_an')
+            ->where( 'Ma_bai_kiem_tra', $exam->Ma_bai_kiem_tra )
+            // ->toSql()
+            ->get()
+            ;
+            // return response()->json($question_list);
             return view( 'pages.employer.list_question_employer' )
             ->with( 'question_list', $question_list )
             ->with( 'employer', $employer );
@@ -304,30 +316,158 @@ class EmployerController extends Controller {
 
     }
 
-    public function import_question( Request $request ) {
+    public function import_question( Request $request ){
         $path = $request->file( 'file' )->getRealPath();
         Excel::import( new ExcelImports, $path );
         return back();
     }
 
-    public function delete_question( $questionid ) {
+    public function forgot_password_employer(){        
+        return view ( 'pages.employer.forgot_password_employer' );
+    }
+    public function recovery_password_employer(Request $request){
+        $data = $request->all();
+        $now = Carbon::now('Asia/Ho_Chi_Minh')->format('d-m-Y');
+        $title_mail = "Cấp lại mật khẩu".' '.$now;
+        $employer =Employer::where ('email', $data['email'])->first();
+        if (!isset($employer)){
+            Session::put('message',  'Email không tồn tại. Kiểm tra lại' );
+            return Redirect::to('/forgot-password-employer');
+        }else{
+            $token = Str::random();
+            $employerid = $employer->Ma_nha_tuyen_dung;
+            DB::table('nha_tuyen_dung')->where('Ma_nha_tuyen_dung', $employerid)->update(['token' => $token]);
+
+            $to_email = $data['email'];
+            $link_reset_pass =  url('/update-pass-employer?email='.$to_email.'&token='.$token);
+            $data = array("name"=>$title_mail, "body"=>$link_reset_pass, "email"=>$data['email']);
+            Mail::send('pages.send_mail', $data, function($message) use ($title_mail, $data){
+                $message->to($data['email'])->subject($title_mail);
+                $message->from($data['email'], $title_mail);
+            });
+            Session::put('message',  'Check mail to accept' );
+            return Redirect::to('/forgot-password-employer');
+        }
+    }
+
+    public function reset_pass_employer(Request $request){
+        $data = $request->all();
+        $new_token = Str::random();
+        $employer = Employer::where('Email', $data['email'])->where('token', $data['token'])->first();
+        if ($employer){
+            $employerid = $employer->Ma_nha_tuyen_dung;
+            $reset_pass = Employer::find($employerid);
+            $reset_pass->Mat_khau=md5($data['password']);
+            $reset_pass->token = $new_token;
+            $reset_pass->save();
+            Session::put('notification','Đổi mật khẩu thành công' );
+            return Redirect::to('/employer');
+        }else{
+            
+            return Redirect::to('/forgot-password-employer')->with('message', 'Đường đẫn đã hết hạn. Hãy thử lại');
+        }
+    }
+
+    public function update_pass_employer(Request $request){
+        return view ('pages.employer.update_pass_employer');
+    }
+    public function user_apply_job($jobid){
         $this->Checklogin();
         $employerid =  Session::get( 'employerid' );
+        Session::put( 'jobid' , $jobid);
         $employer = Employer::where( 'Ma_nha_tuyen_dung', $employerid )->first();
-        $question = DB::table('cau_hoi')->where( 'Ma_cau_hoi', $questionid )->first();
-        $exam = DB::table( 'bai_kiem_tra' )
-        ->where( 'Ma_nha_tuyen_dung', $employerid )
-        ->where( 'Ma_bai_kiem_tra', $question->Ma_bai_kiem_tra )
-        ->first();
-        if (isset($exam)) {
-            Question::where('Ma_cau_hoi', $questionid)->delete();
-            $question_list = DB::table( 'cau_hoi' )->where( 'Ma_bai_kiem_tra', $exam->Ma_bai_kiem_tra )->get();
-            return Redirect::to ( url()->previous())
-            ->with( 'question_list', $question_list )
+        $user = User::get();
+        $job_detail = DB::table('chi_tiet_ung_cu')->where('Ma_bai_dang', $jobid)->where('Trang_thai', 1)->get();
+        $title_job = Jobs::where('Ma_bai_dang',$jobid)->where('Ma_nha_tuyen_dung',$employerid )->first();
+        $education = DB::table('hoc_van')->get();
+        if ($title_job){
+            return view ('pages.employer.user_apply_job') 
+            ->with( 'employer', $employer )
+            ->with( 'user', $user )
+            ->with( 'job_detail', $job_detail )
+            ->with('education', $education)
+            ->with('title_job', $title_job)
+            ;
+        }else{
+            return Redirect::to ( 'dashboard-employer' )
+            ->with( 'employer', $employer );
+        }        
+    }
+    public function cancle_user($userid){
+        $this->Checklogin();
+        $employerid =  Session::get( 'employerid' );
+        $jobid =  Session::get( 'jobid' );
+        $employer = Employer::where( 'Ma_nha_tuyen_dung', $employerid )->first();
+        if ($employer){
+            DB::table('chi_tiet_ung_cu')
+            ->where('Ma_ung_vien', $userid)
+            ->where('Ma_bai_dang', $jobid)
+            ->update(['Kiem_tra'=> 0])
+            ;
+            return Redirect()->back()
             ->with( 'employer', $employer );
         }else{
             return Redirect::to ( 'dashboard-employer' )
             ->with( 'employer', $employer );
         }
     }
+    public function accept_user($userid){
+        $this->Checklogin();
+        $employerid =  Session::get( 'employerid' );
+        $jobid =  Session::get( 'jobid' );
+        $employer = Employer::where( 'Ma_nha_tuyen_dung', $employerid )->first();
+        if ($employer){
+            DB::table('chi_tiet_ung_cu')
+            ->where('Ma_ung_vien', $userid)
+            ->where('Ma_bai_dang', $jobid)
+            ->update(['Kiem_tra'=> 1])
+            ;
+            return Redirect()->back()
+            ->with( 'employer', $employer );
+        }else{
+            return Redirect::to ( 'dashboard-employer' )
+            ->with( 'employer', $employer );
+        }
+    }
+    public function list_user_test(){
+        $this->Checklogin();
+        $employerid =  Session::get( 'employerid' );
+        $employer = Employer::where( 'Ma_nha_tuyen_dung', $employerid )->first();
+        // $user = User::all();
+        // $job = Jobs::where('Ma_nha_tuyen_dung', $employerid)->get();
+        // $exam = DB::table('bai_kiem_tra')->where('Ma_nha_tuyen_dung', $employerid)->get();
+        // $info_exam = DB::table('thong_tin_kiem_tra')->where('Trang_thai', 1)->get();   
+        // $exam_detail = DB::table('chi_tiet_kiem_tra')->get();
+
+        $list_user = DB::table('ung_cu_vien')
+        ->join('chi_tiet_kiem_tra', 'ung_cu_vien.Ma_ung_vien', '=', 'chi_tiet_kiem_tra.Ma_ung_vien' )
+        ->join('bai_kiem_tra', 'chi_tiet_kiem_tra.Ma_bai_kiem_tra', '=','bai_kiem_tra.Ma_bai_kiem_tra')
+        ->join('thong_tin_kiem_tra', 'thong_tin_kiem_tra.Ma_bai_kiem_tra', '=', 'bai_kiem_tra.Ma_bai_kiem_tra')
+        ->join('bai_dang_tuyen_dung', 'thong_tin_kiem_tra.Ma_bai_dang', '=','bai_dang_tuyen_dung.Ma_bai_dang')
+        ->select('ung_cu_vien.Ten_ung_vien',
+                'bai_dang_tuyen_dung.Tieu_de', 
+                'bai_kiem_tra.Ten_bai_kiem_tra',
+                'chi_tiet_kiem_tra.So_diem',
+                'chi_tiet_kiem_tra.Ngay_lam_bai',
+                'bai_kiem_tra.Diem_toi_thieu',
+                'chi_tiet_kiem_tra.So_diem'
+                )
+        ->where('chi_tiet_kiem_tra.Trang_thai', 1)
+        ->where ('thong_tin_kiem_tra.Trang_thai', 1)
+        ->where('bai_dang_tuyen_dung.Ma_nha_tuyen_dung', $employerid)
+        ->groupBy( 'ung_cu_vien.Ten_ung_vien','bai_dang_tuyen_dung.Tieu_de', 
+        'bai_kiem_tra.Ten_bai_kiem_tra',
+        'chi_tiet_kiem_tra.So_diem',
+        'chi_tiet_kiem_tra.Ngay_lam_bai',
+        'bai_kiem_tra.Diem_toi_thieu',
+        'chi_tiet_kiem_tra.So_diem')
+        ->get()
+        ;
+        return view ('pages.employer.list_user_test')
+        ->with( 'list_user', $list_user ) 
+        ->with( 'employer', $employer );
+        ;
+        // return response()->json($list_user);
+    }
+  
 }

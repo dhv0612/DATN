@@ -24,7 +24,6 @@
     <!-- Theme color -->
     <link id="switcher" href="{{ asset('public/frontend/HomeProperty/css/theme-color/default-theme.css') }}"
         rel="stylesheet">
-
     <!-- Main style sheet -->
     <link href="{{ asset('public/frontend/HomeProperty/css/style.css') }}" rel="stylesheet">
     <!-- Google Font -->

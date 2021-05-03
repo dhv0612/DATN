@@ -234,8 +234,8 @@
                         <!-- Start Single properties sidebar -->
                         <div class="aa-properties-single-sidebar">
                             <h3>Thông tin tìm kiếm</h3>
-                            <form method="POST" action="{{URL::to('/jobs-list')}}">
-                                {{ csrf_field() }}
+                            <form method="get" action="{{URL::to('/jobs-list')}}">
+                           
                                 <div class="aa-single-advance-search">
                                     <input type="text" name="title" placeholder="Nhập vào công việc bạn muốn tìm">
                                 </div>

@@ -14,8 +14,10 @@ use App\Models\Social;
 use Laravel\Socialite\Facades\Socialite;
 session_start();
 
-define("URL", "https://dhv0612.com/DATN");
+define( 'URL', 'https://dhv0612.com/DATN' );
+
 class UserController extends Controller {
+    
     public function check_login_user( Request $request ) {
         $data = array();
         $data['username'] = $request->username;
@@ -177,7 +179,11 @@ class UserController extends Controller {
         $userid = Session::get( 'userid' );
         if ( $userid ) {
             // $user = User::where( 'Ma_ung_vien', $userid )->first();
-            $jobs_detail = DB::table( 'chi_tiet_ung_cu' )->where( 'Ma_ung_vien', $userid )->where( 'Trang_thai', 1 )->get();
+            $jobs_detail = DB::table( 'chi_tiet_ung_cu' )
+            ->where( 'Ma_ung_vien', $userid )
+            ->where( 'Trang_thai', 1 )
+            ->orderByDesc( 'Ma_bai_dang' )
+            ->get();
             $jobs = Jobs::all();
             $employer = Employer::all();
             return view ( 'pages.user.jobs_candidates' )
@@ -228,7 +234,7 @@ class UserController extends Controller {
         $data ['Ma_bai_dang'] = $jobid;
         $data['Trang_thai'] = 1;
         $get_file = $request->file( 'file_cv' );
-        $check_apply = DB::table('chi_tiet_ung_cu')->where('Ma_ung_vien',$userid)->where('Ma_bai_dang', $jobid)->first();
+        $check_apply = DB::table( 'chi_tiet_ung_cu' )->where( 'Ma_ung_vien', $userid )->where( 'Ma_bai_dang', $jobid )->first();
         if ( $get_file ) {
             date_default_timezone_set( 'Asia/Ho_Chi_Minh' );
             $date = date( 'd-m-Y--h-i-s' );
@@ -237,66 +243,136 @@ class UserController extends Controller {
             $new_file = $date.'-'.$name_file.'.'.$get_file->getClientOriginalExtension();
             $get_file->move( 'public/upload/ung_vien/filecv', $new_file );
             $data['File_CV'] = $new_file;
-            
-            if ($check_apply){
-                DB::table( 'chi_tiet_ung_cu' )->where( 'Ma_ung_vien', $userid )->where('Ma_bai_dang', $jobid)->update( $data );
-            }else{
-                DB::table('chi_tiet_ung_cu')->insert($data);
+
+            if ( $check_apply ) {
+                DB::table( 'chi_tiet_ung_cu' )->where( 'Ma_ung_vien', $userid )->where( 'Ma_bai_dang', $jobid )->update( $data );
+            } else {
+                DB::table( 'chi_tiet_ung_cu' )->insert( $data );
             }
             session( ['link' => url()->previous()] );
             return redirect( session( 'link' ) );
-        }else{
-            if ($check_apply){
-                DB::table( 'chi_tiet_ung_cu' )->where( 'Ma_ung_vien', $userid )->where('Ma_bai_dang', $jobid)->update( $data );
-            }else{
-                DB::table('chi_tiet_ung_cu')->insert($data);
+        } else {
+            if ( $check_apply ) {
+                DB::table( 'chi_tiet_ung_cu' )->where( 'Ma_ung_vien', $userid )->where( 'Ma_bai_dang', $jobid )->update( $data );
+            } else {
+                DB::table( 'chi_tiet_ung_cu' )->insert( $data );
             }
             session( ['link' => url()->previous()] );
             return redirect( session( 'link' ) );
         }
     }
 
-    public function login_facebook(){
-        return Socialite::driver('facebook')->redirect();
+    public function login_facebook() {
+        return Socialite::driver( 'facebook' )->redirect();
     }
-    
-    public function callback_facebook(){
-        $provider = Socialite::driver('facebook')->user();
-        $account = Social::where('Mang_xa_hoi','facebook')->where('Ma_ung_vien_mxh',$provider->getId())->first();
-        if($account){
-            $account_name = User::where('Ma_ung_vien',$account->Ma_ung_vien)->first();
+
+    public function callback_facebook() {
+        $provider = Socialite::driver( 'facebook' )->user();
+        $account = Social::where( 'Mang_xa_hoi', 'facebook' )->where( 'Ma_ung_vien_mxh', $provider->getId() )->first();
+        if ( $account ) {
+            $account_name = User::where( 'Ma_ung_vien', $account->Ma_ung_vien )->first();
             Session::put( 'userid', $account_name->Ma_ung_vien );
             Session::put( 'name', $account_name->Ten_ung_vien );
             Session::put( 'phone', $account_name->So_dien_thoai );
             Session::put( 'email_user', $account_name->Email );
             Session::put( 'filecv', $account_name->File_CV );
-            return redirect('/');
-        }else{
-            $new_user = new Social([
+            return redirect( '/' );
+        } else {
+            $new_user = new Social( [
                 'Ma_ung_vien_mxh' => $provider->getId(),
                 'Mang_xa_hoi' => 'Facebook'
-            ]);
-            $orang = User::where('Email',$provider->getEmail())->first();
-            if(!$orang){
-                $orang = User::create([
+            ] );
+            $orang = User::where( 'Email', $provider->getEmail() )->first();
+            if ( !$orang ) {
+                $orang = User::create( [
                     'Ten_ung_vien' => $provider->getName(),
                     'Email' => $provider->getEmail(),
                     'Tai_khoan'=>'',
                     'Mat_khau' => '',
                     'So_dien_thoai' => '',
                     'Trang_thai'=>0
-                ]);
+                ] );
             }
-            $new_user->login()->associate($orang);
+            $new_user->login()->associate( $orang );
             $new_user->save();
-            $account_name = User::where('Ma_ung_vien',$orang->Ma_ung_vien)->first();
+            $account_name = User::where( 'Ma_ung_vien', $orang->Ma_ung_vien )->first();
             Session::put( 'userid', $account_name->Ma_ung_vien );
             Session::put( 'name', $account_name->Ten_ung_vien );
             Session::put( 'phone', $account_name->So_dien_thoai );
             Session::put( 'email_user', $account_name->Email );
             Session::put( 'filecv', $account_name->File_CV );
-            return redirect('/');
-        } 
+            return redirect( '/' );
+        }
+
     }
 
+    public function list_exam_user( $jobid ) {
+        $userid = Session::get( 'userid' );
+        // $userid = 1;
+        $check_user = DB::table( 'chi_tiet_ung_cu' )
+        ->where( 'Ma_ung_vien', $userid )
+        ->where( 'Ma_bai_dang', $jobid )
+        ->first();
+        if ( isset( $check_user ) && $check_user->Kiem_tra == 1 ) {
+
+            $job = Jobs::find( $jobid );
+            $exam_detail = DB::table( 'chi_tiet_kiem_tra' )->where( 'Ma_ung_vien', $userid )->get();
+            $info_exam = DB::table( 'thong_tin_kiem_tra' )->where( 'Ma_bai_dang', $jobid )->get();
+            if ( count( $exam_detail ) < count( $info_exam ) ) {
+                $data = array();
+                $data['Ma_ung_vien'] = $userid;
+                foreach ( $info_exam as $ie ) {
+                    $data['Ma_bai_kiem_tra'] = $ie->Ma_bai_kiem_tra;
+                    DB::table( 'chi_tiet_kiem_tra' )->insert( $data );
+                }
+            }
+            $exam_list = DB::table( 'bai_kiem_tra' )
+            ->join( 'thong_tin_kiem_tra', 'thong_tin_kiem_tra.Ma_bai_kiem_tra', '=', 'bai_kiem_tra.Ma_bai_kiem_tra' )
+            ->where( 'thong_tin_kiem_tra.Ma_bai_dang', $jobid )
+            ->where( 'thong_tin_kiem_tra.Trang_thai', 1 )
+            ->where( 'bai_kiem_tra.Ma_nha_tuyen_dung', $job->Ma_nha_tuyen_dung )
+            ->select( 'bai_kiem_tra.Ma_bai_kiem_tra'
+            , 'bai_kiem_tra.Ten_bai_kiem_tra'
+            , 'bai_kiem_tra.Thoi_gian_lam'
+            , 'bai_kiem_tra.So_cau' )
+            ->groupBy( 'bai_kiem_tra.Ma_bai_kiem_tra'
+            , 'bai_kiem_tra.ten_bai_kiem_tra'
+            , 'bai_kiem_tra.Thoi_gian_lam'
+            , 'bai_kiem_tra.So_cau' )
+            ->get();
+            return view( 'pages.user.list_exam_user' )
+            ->with( 'exam_list', $exam_list )
+            ->with( 'exam_detail', $exam_detail )
+            ;
+        } else {
+            return Redirect::to( '/' );
+        }
+        // return response()->json( $exam_list );
+    }
+
+    public function start_exam( $examid ) {
+        $userid = Session::get( 'userid' );
+        $exam_detail = DB::table('chi_tiet_kiem_tra')->where('Ma_ung_vien', $userid)->where('Ma_bai_kiem_tra', $examid)->first();
+        if($exam_detail->Trang_thai ==0){
+            date_default_timezone_set( 'Asia/Ho_Chi_Minh' );
+            $today = date('Y-m-d');
+            $data= array();
+            $data['Ngay_lam_bai'] = $today;
+            // $data['Trang_thai'] =1;
+            DB::table('chi_tiet_kiem_tra')->where('Ma_ung_vien', $userid)->where('Ma_bai_kiem_tra', $examid)->update( $data);
+            $exam = DB::table('bai_kiem_tra')->where('Ma_bai_kiem_tra', $examid)->first();
+            $question_list = DB::table('cau_hoi')
+            ->where('Ma_bai_kiem_tra', $examid)
+            ->select('Ma_cau_hoi', 'Ten_cau_hoi', 'Lua_chon_a', 'Lua_chon_b', 'Lua_chon_c', 'Lua_chon_d')
+            ->inRandomOrder()
+            ->limit($exam->So_cau)
+            ->get();
+            return view ('pages.user.start_exam')
+            ->with('question_list', $question_list)
+            ->with('exam', $exam)
+            ;
+        } else {
+            return Redirect::to( '/' );
+        }
+    }
 }

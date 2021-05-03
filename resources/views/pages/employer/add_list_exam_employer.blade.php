@@ -61,6 +61,16 @@
             </ul>
         </li>
         <li class="nav-item">
+            <a href="{{URL::to('/list-user-test')}}" class="nav-link">
+                <i class="nav-icon fas fa-user-friends"></i>
+                <p>
+                    Danh sách ứng viên
+                    {{-- <i class="fas fa-angle-left right"></i> --}}
+                </p>
+            </a>
+
+        </li>
+        <li class="nav-item">
             <a href="{{URl::to('/logout-employer')}}" class="nav-link">
                 <i class="nav-icon fas fa-sign-out-alt"></i></i>
                 <p>
