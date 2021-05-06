@@ -89,7 +89,7 @@
             </div>
             <!-- /.card-header -->
             <div class="card-body">
-                <form action="{{URL::to('/')}}" method="post">
+                <form action="{{URL::to('/send-exam/'.$exam->Ma_bai_kiem_tra)}}" method="post">
                     @csrf
                     <div class="row">
                         <?php $i =0;?>
@@ -99,21 +99,22 @@
                             <label>Câu <?php $i++; echo $i;?> {{$ql->Ten_cau_hoi}}</label>
                             <div class="form-group">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="{{$ql->Ma_cau_hoi}}" value="A">
+                                    <input class="form-check-input" type="radio" name="answer{{$ql->Ma_cau_hoi}}" value="A">
                                     <label class="form-check-label">{{$ql->Lua_chon_a}}</label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="{{$ql->Ma_cau_hoi}}" value="B">
+                                    <input class="form-check-input" type="radio" name="answer{{$ql->Ma_cau_hoi}}" value="B">
                                     <label class="form-check-label">{{$ql->Lua_chon_b}}</label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="{{$ql->Ma_cau_hoi}}" value="C">
+                                    <input class="form-check-input" type="radio" name="answer{{$ql->Ma_cau_hoi}}" value="C">
                                     <label class="form-check-label">{{$ql->Lua_chon_c}}</label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="{{$ql->Ma_cau_hoi}}" value="D">
+                                    <input class="form-check-input" type="radio" name="answer{{$ql->Ma_cau_hoi}}" value="D">
                                     <label class="form-check-label">{{$ql->Lua_chon_d}}</label>
-                                </div>                                
+                                </div>     
+                                <input type="text" name="{{$ql->Ma_cau_hoi}}" value="{{$ql->Ma_cau_hoi}}">                  
                             </div>
                         </div>
                         @endforeach

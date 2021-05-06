@@ -433,11 +433,11 @@ class EmployerController extends Controller {
         $this->Checklogin();
         $employerid =  Session::get( 'employerid' );
         $employer = Employer::where( 'Ma_nha_tuyen_dung', $employerid )->first();
-        // $user = User::all();
-        // $job = Jobs::where('Ma_nha_tuyen_dung', $employerid)->get();
-        // $exam = DB::table('bai_kiem_tra')->where('Ma_nha_tuyen_dung', $employerid)->get();
-        // $info_exam = DB::table('thong_tin_kiem_tra')->where('Trang_thai', 1)->get();   
-        // $exam_detail = DB::table('chi_tiet_kiem_tra')->get();
+        $user = User::all();
+        $job = Jobs::where('Ma_nha_tuyen_dung', $employerid)->get();
+        $exam = DB::table('bai_kiem_tra')->where('Ma_nha_tuyen_dung', $employerid)->get();
+        $info_exam = DB::table('thong_tin_kiem_tra')->where('Trang_thai', 1)->get();   
+        $exam_detail = DB::table('chi_tiet_kiem_tra')->get();
 
         $list_user = DB::table('ung_cu_vien')
         ->join('chi_tiet_kiem_tra', 'ung_cu_vien.Ma_ung_vien', '=', 'chi_tiet_kiem_tra.Ma_ung_vien' )
@@ -462,6 +462,7 @@ class EmployerController extends Controller {
         'bai_kiem_tra.Diem_toi_thieu',
         'chi_tiet_kiem_tra.So_diem')
         ->get()
+        // ->tosql()
         ;
         return view ('pages.employer.list_user_test')
         ->with( 'list_user', $list_user ) 
@@ -469,5 +470,7 @@ class EmployerController extends Controller {
         ;
         // return response()->json($list_user);
     }
+
+
   
 }

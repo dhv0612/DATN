@@ -41,6 +41,7 @@ Route::get('/login-facebook',[UserController::class, 'login_facebook']);
 Route::get('/user/callback',[UserController::class, 'callback_facebook']);
 Route::get('/list-exam-user/{jobid}',[UserController::class, 'list_exam_user']);
 Route::get('/start-exam/{examid}',[UserController::class, 'start_exam']);
+Route::post('/send-exam/{examid}',[UserController::class, 'send_exam']);
 
 
 //Employer

@@ -17,7 +17,7 @@ session_start();
 define( 'URL', 'https://dhv0612.com/DATN' );
 
 class UserController extends Controller {
-    
+
     public function check_login_user( Request $request ) {
         $data = array();
         $data['username'] = $request->username;
@@ -352,27 +352,54 @@ class UserController extends Controller {
 
     public function start_exam( $examid ) {
         $userid = Session::get( 'userid' );
-        $exam_detail = DB::table('chi_tiet_kiem_tra')->where('Ma_ung_vien', $userid)->where('Ma_bai_kiem_tra', $examid)->first();
-        if($exam_detail->Trang_thai ==0){
+        $exam_detail = DB::table( 'chi_tiet_kiem_tra' )->where( 'Ma_ung_vien', $userid )->where( 'Ma_bai_kiem_tra', $examid )->first();
+        if ( $exam_detail->Trang_thai == 0 ) {
             date_default_timezone_set( 'Asia/Ho_Chi_Minh' );
-            $today = date('Y-m-d');
-            $data= array();
+            $today = date( 'Y-m-d' );
+            $data = array();
             $data['Ngay_lam_bai'] = $today;
-            // $data['Trang_thai'] =1;
-            DB::table('chi_tiet_kiem_tra')->where('Ma_ung_vien', $userid)->where('Ma_bai_kiem_tra', $examid)->update( $data);
-            $exam = DB::table('bai_kiem_tra')->where('Ma_bai_kiem_tra', $examid)->first();
-            $question_list = DB::table('cau_hoi')
-            ->where('Ma_bai_kiem_tra', $examid)
-            ->select('Ma_cau_hoi', 'Ten_cau_hoi', 'Lua_chon_a', 'Lua_chon_b', 'Lua_chon_c', 'Lua_chon_d')
+            // $data['Trang_thai'] = 1;
+            DB::table( 'chi_tiet_kiem_tra' )->where( 'Ma_ung_vien', $userid )->where( 'Ma_bai_kiem_tra', $examid )->update( $data );
+            $exam = DB::table( 'bai_kiem_tra' )->where( 'Ma_bai_kiem_tra', $examid )->first();
+            $question_list = DB::table( 'cau_hoi' )
+            ->where( 'Ma_bai_kiem_tra', $examid )
+            ->select( 'Ma_cau_hoi', 'Ten_cau_hoi', 'Lua_chon_a', 'Lua_chon_b', 'Lua_chon_c', 'Lua_chon_d' )
             ->inRandomOrder()
-            ->limit($exam->So_cau)
+            // ->limit( $exam->So_cau )
+            ->limit( 5 )
             ->get();
-            return view ('pages.user.start_exam')
-            ->with('question_list', $question_list)
-            ->with('exam', $exam)
+            return view ( 'pages.user.start_exam' )
+            ->with( 'question_list', $question_list )
+            ->with( 'exam', $exam )
             ;
         } else {
             return Redirect::to( '/' );
         }
     }
+
+    // public function send_exam( $examid, Request $request ) {
+    //     $userid = Session::get( 'userid' );
+    //     $data = $request->all();
+    //     $question_list = DB::table( 'cau_hoi' )->where( 'Ma_bai_kiem_tra', $examid )->get();
+            // foreach ( $question_list as $ql ) {
+            //     foreach ( $data as $dt ) {
+            //     $a =$ql->Ma_cau_hoi;
+            //     if ( isset($dt->$a)  ) {
+            //         $info = array();
+            //         $info['Ma_cau_hoi'] = $ql->Ma_cau_hoi;
+            //         $info['Ma_ung_vien'] = $userid;
+                    // $info['Cau_tra_loi'] = $dt['answer'.$ql->Ma_cau_hoi];
+                    // DB::table( 'chi_tiet_tra_loi' )->insert( $info );
+                    // echo $a;
+        //         }
+        //     }         
+        // }
+        // return Redirect::to( '/' );
+        // foreach($data as $dt){
+        //     $a = 1;
+        //     echo $a;
+        // }
+        // return response()->json( $data[]);
+    // }
+    
 }
