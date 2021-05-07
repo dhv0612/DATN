@@ -59,12 +59,14 @@ class HomeController extends Controller
             $salary_to = $data['salary_to'] * 1000000;
 
             $employer = Employer::all();
-           
+
             $job_list = Jobs::where('Tieu_de','like','%'.$title.'%')
                             ->where('Ma_nganh_nghe',$data['branch'])     
                             ->where('Ma_dia_diem',$data['place'])                     
                             ->whereBetween('Muc_luong', [(int)$salary_from, (int)$salary_to])
-                            ->get();
+                            // ->paginate(3)
+                            ->get()
+                            ;
 
                             // return response()->json($job_list);
                             // return response()->json($data);

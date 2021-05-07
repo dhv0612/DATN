@@ -470,4 +470,13 @@ class EmployerController extends Controller {
         ;
         // return response()->json($list_user);
     }
+    public function change_place_employer()
+    {
+        $this->Checklogin();
+        $employerid =  Session::get( 'employerid' );
+        $employer = Employer::where( 'Ma_nha_tuyen_dung', $employerid )->first();
+        return view ('pages.employer.edit_place_employer')
+        ->with( 'employer', $employer );
+        ;
+    }
 }

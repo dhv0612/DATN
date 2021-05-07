@@ -3,19 +3,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\EmployerController;
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-// Route::get('/', function () {
-//     return view('layout');
-// });
+
 //Home
 Route::get('/',[HomeController::class, 'index']);
 Route::get('/login-user',[HomeController::class, 'login_user']);
@@ -73,3 +61,4 @@ Route::get('/user-apply-job/{jobid}',[EmployerController::class, 'user_apply_job
 Route::get('/cancle-user/{userid}',[EmployerController::class, 'cancle_user']);
 Route::get('/accept-user/{userid}',[EmployerController::class, 'accept_user']);
 Route::get('/list-user-test',[EmployerController::class, 'list_user_test']);
+Route::get('/change-place-employer',[EmployerController::class, 'change_place_employer']);

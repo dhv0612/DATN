@@ -48,7 +48,20 @@
     <link rel="stylesheet" href="{{ asset('public/frontend/Pageadmin/plugins/codemirror/theme/monokai.css') }}">
     <!-- SimpleMDE -->
     <link rel="stylesheet" href="{{ asset('public/frontend/Pageadmin/plugins/simplemde/simplemde.min.css') }}">
+<style>
+    #map {
+  height: 100%;
+  width: auto;
+}
 
+/* Optional: Makes the sample page fill the window. */
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+</style>
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -301,7 +314,6 @@
     <script src="{{ asset('public/frontend/Pageadmin/plugins/datatables-buttons/js/buttons.html5.min.js') }}"></script>
     <script src="{{ asset('public/frontend/Pageadmin/plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
     <script src="{{ asset('public/frontend/Pageadmin/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
-
 <script>
     $(function () {
       $("#example1").DataTable({
@@ -348,8 +360,18 @@
         });
     })
 
-</script>
 
+
+
+
+
+
+
+</script>
+<script
+src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA66KwUrjxcFG5u0exynlJ45CrbrNe3hEc&callback=initMap&libraries=&v=weekly"
+async
+></script>
 </body>
 
 </html>

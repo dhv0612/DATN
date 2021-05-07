@@ -148,7 +148,7 @@
                                                                     <?php  
                                                                     $date_format_deadline = date("d-m-Y", strtotime($jl->Han_ung_tuyen));?>
                                                                     <p>
-                                                                        Hạn nộp hồ sơ: <strong>{{$date_format_deadline}}</strong>
+                                                                        shopacc: <strong>{{$date_format_deadline}}</strong>
                                                                     </p>
                                                                 @endif
                                                             @endforeach</p>
@@ -168,42 +168,12 @@
                                                     </div>
                                                 </article>
                                             </li>
-
                                         @endif
                                     @endforeach
-
                                 @endforeach
-                                {{-- <li>
-                                    <article class="aa-properties-item">
-                                        <a class="aa-properties-item-img" href="#">
-                                            <img alt="img" src="{{ 'public/frontend/HomeProperty/img/item/1.jpg' }}">
-                                        </a>
-                                        <div class="aa-tag sold-out">
-                                            Sold Out
-                                        </div>
-                                        <div class="aa-properties-item-content">
-                                            <div class="aa-properties-info">
-                                                <span>5 Rooms</span>
-                                                <span>2 Beds</span>
-                                                <span>3 Baths</span>
-                                                <span>1100 SQ FT</span>
-                                            </div>
-                                            <div class="aa-properties-about">
-                                                <h3><a href="#">Appartment Title</a></h3>
-                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Enim molestiae
-                                                    vero ducimus quibusdam odit vitae.</p>
-                                            </div>
-                                            <div class="aa-properties-detial">
-                                                <span class="aa-price">
-                                                    $35000
-                                                </span>
-                                                <a class="aa-secondary-btn" href="#">View Details</a>
-                                            </div>
-                                        </div>
-                                    </article>
-                                </li> --}}
                             </ul>
                         </div>
+              
                         <!-- Start properties content bottom -->
                         <div class="aa-properties-content-bottom">
                             <nav>
@@ -213,9 +183,9 @@
                                             <span aria-hidden="true">&laquo;</span>
                                         </a>
                                     </li>
-                                    <li><a href="#">1</a></li>
+                                    <li  class="active" ><a href="#">1</a></li>
                                     <li><a href="#">2</a></li>
-                                    <li class="active"><a href="#">3</a></li>
+                                    <li ><a href="#">3</a></li>
                                     <li><a href="#">4</a></li>
                                     <li><a href="#">5</a></li>
                                     <li>
@@ -223,6 +193,7 @@
                                             <span aria-hidden="true">&raquo;</span>
                                         </a>
                                     </li>
+                                    {{-- {{$jobs_list->.links()}} --}}
                                 </ul>
                             </nav>
                         </div>
@@ -247,10 +218,8 @@
                                                 <?php echo $bra->Ten_nganh_nghe; ?>
                                             </option>
                                         @endforeach
-
                                     </select>
                                 </div>
-
                                 <div class="aa-single-advance-search">
                                     <select id="" name="place">
                                         @foreach ($place as $key => $pla)

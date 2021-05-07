@@ -70,6 +70,14 @@
             </a>
 
         </li>
+        <li class="nav-item ">
+            <a href="{{ URL::to('/change-place-employer') }}" class="nav-link">
+                <i class="nav-icon fas fa-map-marker-alt"></i>
+                <p>
+                    Thay đổi vị trí
+                </p>
+            </a>
+        </li>
         <li class="nav-item">
             <a href="{{URl::to('/logout-employer')}}" class="nav-link">
                 <i class="nav-icon fas fa-sign-out-alt"></i></i>
