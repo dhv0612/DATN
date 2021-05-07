@@ -470,7 +470,4 @@ class EmployerController extends Controller {
         ;
         // return response()->json($list_user);
     }
-
-
-  
 }

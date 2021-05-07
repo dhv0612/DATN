@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use App\Models\Employer;
 use App\Models\Jobs;
 use Illuminate\Http\Request;
@@ -12,17 +10,14 @@ use Illuminate\Support\Facades\Redirect;
 use App\Rules\Captcha;
 use App\Models\Social;
 use Laravel\Socialite\Facades\Socialite;
+use SebastianBergmann\Environment\Console;
 session_start();
-
 define( 'URL', 'https://dhv0612.com/DATN' );
-
 class UserController extends Controller {
-
     public function check_login_user( Request $request ) {
         $data = array();
         $data['username'] = $request->username;
         $data['password'] = md5( $request->password );
-
         $check_user = User::where( 'Tai_khoan', $data['username'] )->where( 'Mat_khau', $data['password'] )->first();
         if ( $check_user ) {
             Session::put( 'userid', $check_user->Ma_ung_vien );
@@ -303,7 +298,6 @@ class UserController extends Controller {
             Session::put( 'filecv', $account_name->File_CV );
             return redirect( '/' );
         }
-
     }
 
     public function list_exam_user( $jobid ) {
@@ -358,15 +352,15 @@ class UserController extends Controller {
             $today = date( 'Y-m-d' );
             $data = array();
             $data['Ngay_lam_bai'] = $today;
-            // $data['Trang_thai'] = 1;
+            $data['Trang_thai'] = 1;
             DB::table( 'chi_tiet_kiem_tra' )->where( 'Ma_ung_vien', $userid )->where( 'Ma_bai_kiem_tra', $examid )->update( $data );
             $exam = DB::table( 'bai_kiem_tra' )->where( 'Ma_bai_kiem_tra', $examid )->first();
             $question_list = DB::table( 'cau_hoi' )
             ->where( 'Ma_bai_kiem_tra', $examid )
             ->select( 'Ma_cau_hoi', 'Ten_cau_hoi', 'Lua_chon_a', 'Lua_chon_b', 'Lua_chon_c', 'Lua_chon_d' )
             ->inRandomOrder()
-            // ->limit( $exam->So_cau )
-            ->limit( 5 )
+            ->limit( $exam->So_cau )
+            // ->limit( 5 )
             ->get();
             return view ( 'pages.user.start_exam' )
             ->with( 'question_list', $question_list )
@@ -377,29 +371,39 @@ class UserController extends Controller {
         }
     }
 
-    // public function send_exam( $examid, Request $request ) {
-    //     $userid = Session::get( 'userid' );
-    //     $data = $request->all();
-    //     $question_list = DB::table( 'cau_hoi' )->where( 'Ma_bai_kiem_tra', $examid )->get();
-            // foreach ( $question_list as $ql ) {
-            //     foreach ( $data as $dt ) {
-            //     $a =$ql->Ma_cau_hoi;
-            //     if ( isset($dt->$a)  ) {
-            //         $info = array();
-            //         $info['Ma_cau_hoi'] = $ql->Ma_cau_hoi;
-            //         $info['Ma_ung_vien'] = $userid;
-                    // $info['Cau_tra_loi'] = $dt['answer'.$ql->Ma_cau_hoi];
-                    // DB::table( 'chi_tiet_tra_loi' )->insert( $info );
-                    // echo $a;
-        //         }
-        //     }         
-        // }
-        // return Redirect::to( '/' );
-        // foreach($data as $dt){
-        //     $a = 1;
-        //     echo $a;
-        // }
-        // return response()->json( $data[]);
-    // }
-    
+    public function send_exam( $examid, Request $request ) {
+        $userid = Session::get( 'userid' );
+        $data = $request->all();
+        // $name_list = array_keys( $data );
+
+        $question_list = DB::table( 'cau_hoi' )->where( 'Ma_bai_kiem_tra', $examid )->get();
+        $socaudung = 0;
+        foreach ( $question_list as  $ql ) {
+            foreach ( $data as $key=>$dt ) {
+                if ( $ql->Ma_cau_hoi == $key && $key != '_token' ) {
+                    $info = array();
+                    $info['Ma_cau_hoi'] = $ql->Ma_cau_hoi;
+                    $info['Ma_ung_vien'] = $userid;
+                    $info['Cau_tra_loi'] = $dt; 
+                    DB::table( 'chi_tiet_tra_loi' )->insert( $info );        
+                    if( $info['Cau_tra_loi'] == $ql->Dap_an){
+                        $socaudung++;
+                    }
+                }
+            }
+        }
+        $exam = DB::table('bai_kiem_tra')->where('Ma_bai_kiem_tra', $examid)->first();
+        $ctkt = array();
+        $ctkt['So_diem'] = $socaudung * 10 / $exam->So_cau;
+        DB::table('chi_tiet_kiem_tra')->where('Ma_bai_kiem_tra', $examid)->where('Ma_ung_vien', $userid)->update($ctkt);
+
+        return Redirect::to( '/' );
+        //     foreach ( $data as $dt ) {
+        //         $a = 1;
+        //         echo $a;
+        //     }
+        // return response()->json( $data );
+
+    }
+
 }
