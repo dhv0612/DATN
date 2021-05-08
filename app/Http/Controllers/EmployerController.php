@@ -25,7 +25,6 @@ class EmployerController extends Controller {
         } else {
             return Redirect::to( 'employer' )->send();
         }
-
     }
 
     public function employer() {
@@ -41,19 +40,21 @@ class EmployerController extends Controller {
             Session::put( 'employerid', $check_employer->Ma_nha_tuyen_dung );
             Session::put( 'employername', $check_employer->Ten_cong_ty );
             return Redirect::to( '/dashboard-employer' );
-
         } else {
             Session::put( 'notification', 'Tài khoản hoặc mât khẩu không chính xác. Thử lại' );
             return Redirect::to( 'employer' );
         }
-
     }
 
     public function dashboard_employer() {
         $this->Checklogin();
         $employerid =  Session::get( 'employerid' );
         $employer = Employer::where( 'Ma_nha_tuyen_dung', $employerid )->first();
-        return view ( 'pages.employer.home_employer' )->with( 'employer', $employer );
+        $job = Jobs::where('Ma_nha_tuyen_dung', $employerid)->count();
+        // $user_apply = DB::table('chi_tiet_ung_cu')->
+        return view ( 'pages.employer.home_employer' )
+        ->with( 'employer', $employer );
+        // return response()->json($job);
     }
 
     public function list_job_employer() {
@@ -478,5 +479,21 @@ class EmployerController extends Controller {
         return view ('pages.employer.edit_place_employer')
         ->with( 'employer', $employer );
         ;
+    }
+    public function update_place_employer(Request $request)
+    {
+        $this->Checklogin();
+        $employerid =  Session::get( 'employerid' );
+        $employer = Employer::where( 'Ma_nha_tuyen_dung', $employerid )->first();
+        $data = array();
+        $data['Kinh_do']= $request->kinhdo;
+        $data['Vi_do']= $request->vido;
+        if ($data['Kinh_do'] == null || $data['Vi_do'] == null){
+            return Redirect::to('/dashboard-employer')->with( 'employer', $employer );
+        }else{
+            DB::table('nha_tuyen_dung')->where ('Ma_nha_tuyen_dung', $employerid)->update($data);
+            return Redirect::to('/dashboard-employer')->with( 'employer', $employer );
+            
+        }  
     }
 }

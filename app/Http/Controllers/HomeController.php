@@ -26,9 +26,6 @@ class HomeController extends Controller
         if(url()->previous() != URL."/login-user" && url()->previous() != URL."/signup-user" ){
             session(['link' => url()->previous()]);  
         }
-        else if ($url == null){
-            session(['link', ""]); 
-        }
         else{
              session(['link', $url]); 
         }
