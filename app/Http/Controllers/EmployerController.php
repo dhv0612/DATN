@@ -496,4 +496,82 @@ class EmployerController extends Controller {
             
         }  
     }
+    public function extend_time_employer()
+    {
+        $this->Checklogin();
+        $employerid =  Session::get( 'employerid' );
+        $employer = Employer::where( 'Ma_nha_tuyen_dung', $employerid )->first();
+        $sevice = DB::table('thoi_han_dang_bai')->get();
+        return view ('pages.employer.extend_time_employer')
+        ->with('employer', $employer)
+        ->with('sevice', $sevice)
+        ;
+    }
+    public function pay_service(Request $request)
+    {
+        $this->Checklogin();
+        $employerid =  Session::get( 'employerid' );
+        $employer = Employer::where( 'Ma_nha_tuyen_dung', $employerid )->first();
+        $data = array();
+        $data['Ma_thoi_han'] = $request->Thoihan;
+        $data['Ma_nha_tuyen_dung'] = $employerid;
+        date_default_timezone_set('Asia/Ho_Chi_Minh');
+        $today = date('Y-m-d');
+        $data['Ngay_thanh_toan'] =$today;
+        $idpay = DB::table('thong_tin_thanh_toan')->insertGetId($data);
+        $info_pay = DB::table('thong_tin_thanh_toan')
+        ->join('nha_tuyen_dung', 'thong_tin_thanh_toan.Ma_nha_tuyen_dung', '=','nha_tuyen_dung.Ma_nha_tuyen_dung')
+        ->join('thoi_han_dang_bai', 'thong_tin_thanh_toan.Ma_thoi_han','=', 'thoi_han_dang_bai.Ma_thoi_han')
+        ->select('nha_tuyen_dung.Ten_cong_ty',
+        'nha_tuyen_dung.Han_dang_bai',
+        'thoi_han_dang_bai.Ma_thoi_han',
+        'thoi_han_dang_bai.Thoi_han',
+        'thoi_han_dang_bai.So_tien',
+        'thong_tin_thanh_toan.Ngay_thanh_toan',
+        'thong_tin_thanh_toan.Ma_thanh_toan'
+        )
+        ->where('thong_tin_thanh_toan.Ma_thanh_toan', $idpay)
+        ->first()
+        ;
+        return view ('pages.employer.pay_service_employer')
+        ->with('employer', $employer)
+        ->with('info_pay', $info_pay)
+        ;
+    }
+    public function history_payment_employer()
+    {
+        $this->Checklogin();
+        $employerid =  Session::get( 'employerid' );
+        $employer = Employer::where( 'Ma_nha_tuyen_dung', $employerid )->first();
+        $list_history= DB::table('thong_tin_thanh_toan')
+        ->join('nha_tuyen_dung','thong_tin_thanh_toan.Ma_nha_tuyen_dung', '=', 'nha_tuyen_dung.Ma_nha_tuyen_dung')
+        ->join('thoi_han_dang_bai', 'thong_tin_thanh_toan.Ma_thoi_han', '=','thoi_han_dang_bai.Ma_thoi_han')
+        ->select('thoi_han_dang_bai.Thoi_han', 
+        'thong_tin_thanh_toan.Ngay_thanh_toan', 
+        'thong_tin_thanh_toan.Han_dang_bai')
+        ->get();
+        return view ('pages.employer.history_payment_employer')
+        ->with('employer', $employer)
+        ->with('list_history', $list_history)
+        ;
+    }
+    public function pay_sucessfully()
+    {
+        $this->Checklogin();
+        $employerid =  Session::get( 'employerid' );
+        $employer = Employer::where( 'Ma_nha_tuyen_dung', $employerid )->first();
+        $idpay = Session::get('idpay');
+        $lasttime = Session::get('lasttime');
+        $lasttime =date ( 'Y-m-j' , $lasttime );
+        $data_tt = array();
+        $data_tt['trang_thai'] = 1;
+        $data_tt['Han_dang_bai'] = $lasttime;
+        $data_ep = array();
+        $data_ep['Han_dang_bai'] = $lasttime;
+        DB::table('thong_tin_thanh_toan')->where('Ma_thanh_toan', $idpay)->update($data_tt);
+        DB::table('nha_tuyen_dung')->where('Ma_nha_tuyen_dung', $employerid)->update($data_ep);
+        return Redirect::to('/history-payment-employer')
+        ->with('employer', $employer)
+        ;
+    }
 }

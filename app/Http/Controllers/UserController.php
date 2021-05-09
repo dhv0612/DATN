@@ -352,7 +352,7 @@ class UserController extends Controller {
             $today = date( 'Y-m-d' );
             $data = array();
             $data['Ngay_lam_bai'] = $today;
-            // $data['Trang_thai'] = 1;
+            $data['Trang_thai'] = 1;
             DB::table( 'chi_tiet_kiem_tra' )->where( 'Ma_ung_vien', $userid )->where( 'Ma_bai_kiem_tra', $examid )->update( $data );
             $exam = DB::table( 'bai_kiem_tra' )->where( 'Ma_bai_kiem_tra', $examid )->first();
             $question_list = DB::table( 'cau_hoi' )

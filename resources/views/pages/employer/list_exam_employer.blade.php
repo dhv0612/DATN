@@ -59,6 +59,31 @@
 
             </ul>
         </li>
+        <li class="nav-item">
+            <a href="#" class="nav-link">
+                <i class="nav-icon far fa-credit-card"></i>
+                <p>
+                    Dịch vụ
+                    <i class="fas fa-angle-left right"></i>
+                </p>
+            </a>
+            <ul class="nav nav-treeview">
+                <li class="nav-item">
+                    <a href="{{URL::to('/history-payment-employer')}}" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Lịch sử thanh toán</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{URL::to('/extend-time-employer')}}" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Gia hạn thời gian</p>
+                    </a>
+                </li>
+
+            </ul>
+        </li>
+
         <li class="nav-item ">
             <a href="{{URL::to('/list-user-test')}}" class="nav-link">
                 <i class="nav-icon fas fa-user-friends"></i>
