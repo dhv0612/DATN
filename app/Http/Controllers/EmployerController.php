@@ -190,6 +190,7 @@ class EmployerController extends Controller {
         } else {
             $jobid=Jobs::insertGetId( $data );
         }
+
         $exam_list = DB::table('bai_kiem_tra')->where('Ma_nha_tuyen_dung', $employerid)->select('Ma_bai_kiem_tra')->get();
         $exam = $request->exam;
         foreach($exam_list as $el){
@@ -198,14 +199,17 @@ class EmployerController extends Controller {
             $data_el['Ma_bai_kiem_tra'] = $el->Ma_bai_kiem_tra;
             DB::table('thong_tin_kiem_tra')->insert($data_el);
         }
-        foreach( $exam as  $ex){
-            // $examid =$exam_list[$i]->Ma_bai_kiem_tra;
-            $data_exam = array();
-            $data_exam['Ma_bai_dang'] = $jobid;
-            $data_exam['Ma_bai_kiem_tra'] = $ex;
-            $data_exam['Trang_thai'] = 1;
-            DB::table('thong_tin_kiem_tra')->where('Ma_bai_dang', $jobid)->where('Ma_bai_kiem_tra',$ex )->update($data_exam);
+        if (isset($exam)){
+            foreach( $exam as  $ex){
+                // $examid =$exam_list[$i]->Ma_bai_kiem_tra;
+                $data_exam = array();
+                $data_exam['Ma_bai_dang'] = $jobid;
+                $data_exam['Ma_bai_kiem_tra'] = $ex;
+                $data_exam['Trang_thai'] = 1;
+                DB::table('thong_tin_kiem_tra')->where('Ma_bai_dang', $jobid)->where('Ma_bai_kiem_tra',$ex )->update($data_exam);
+            }
         }
+     
         return Redirect::to( 'list-job-employer' );
         // return response()->json($exam);
     }
@@ -434,12 +438,11 @@ class EmployerController extends Controller {
         $this->Checklogin();
         $employerid =  Session::get( 'employerid' );
         $employer = Employer::where( 'Ma_nha_tuyen_dung', $employerid )->first();
-        $user = User::all();
-        $job = Jobs::where('Ma_nha_tuyen_dung', $employerid)->get();
-        $exam = DB::table('bai_kiem_tra')->where('Ma_nha_tuyen_dung', $employerid)->get();
-        $info_exam = DB::table('thong_tin_kiem_tra')->where('Trang_thai', 1)->get();   
-        $exam_detail = DB::table('chi_tiet_kiem_tra')->get();
-
+        // $user = User::all();
+        // $job = Jobs::where('Ma_nha_tuyen_dung', $employerid)->get();
+        // $exam = DB::table('bai_kiem_tra')->where('Ma_nha_tuyen_dung', $employerid)->get();
+        // $info_exam = DB::table('thong_tin_kiem_tra')->where('Trang_thai', 1)->get();   
+        // $exam_detail = DB::table('chi_tiet_kiem_tra')->get();
         $list_user = DB::table('ung_cu_vien')
         ->join('chi_tiet_kiem_tra', 'ung_cu_vien.Ma_ung_vien', '=', 'chi_tiet_kiem_tra.Ma_ung_vien' )
         ->join('bai_kiem_tra', 'chi_tiet_kiem_tra.Ma_bai_kiem_tra', '=','bai_kiem_tra.Ma_bai_kiem_tra')

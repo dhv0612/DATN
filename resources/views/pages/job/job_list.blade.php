@@ -148,7 +148,7 @@
                                                                     <?php  
                                                                     $date_format_deadline = date("d-m-Y", strtotime($jl->Han_ung_tuyen));?>
                                                                     <p>
-                                                                        shopacc: <strong>{{$date_format_deadline}}</strong>
+                                                                        Hạn ứng tuyển: <strong>{{$date_format_deadline}}</strong>
                                                                     </p>
                                                                 @endif
                                                             @endforeach</p>
