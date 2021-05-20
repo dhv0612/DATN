@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use App\Models\Jobs;
 use App\Models\Question;
 use App\Models\User;
+use Illuminate\Contracts\Queue\Job;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -298,8 +299,10 @@ class EmployerController extends Controller {
         ->first();
         if ( $exam ) {
             $question_list = DB::table( 'cau_hoi' )
-            ->select (DB::raw('SUBSTR(Ten_cau_hoi, 1,20) as Ten_cau_hoi')
-            ,'Ma_bai_kiem_tra'
+            ->select (
+            // DB::raw('SUBSTR(Ten_cau_hoi, 1,30) as Ten_cau_hoi')
+            'Ma_bai_kiem_tra'
+            , 'Ten_cau_hoi'
             ,'Ma_cau_hoi'
             , 'Lua_chon_a'
             , 'Lua_chon_b'
@@ -310,6 +313,7 @@ class EmployerController extends Controller {
             // ->toSql()
             ->get()
             ;
+
             // return response()->json($question_list);
             return view( 'pages.employer.list_question_employer' )
             ->with( 'question_list', $question_list )
@@ -576,5 +580,46 @@ class EmployerController extends Controller {
         return Redirect::to('/history-payment-employer')
         ->with('employer', $employer)
         ;
+    }
+    public function edit_question($questionid)
+    {
+        $this->Checklogin();
+        $employerid =  Session::get( 'employerid' );
+        $employer = Employer::find($employerid);
+        $question = Question::find($questionid);
+        $exam = DB::table('bai_kiem_tra')->where('Ma_bai_kiem_tra', $question->Ma_bai_kiem_tra)->first();
+        if (isset($question) && isset($exam)){
+            $job = Jobs::find($exam->Ma_nha_tuyen_dung);
+            if ($employerid == $job->Ma_nha_tuyen_dung){
+                session(['link' => url()->previous()]);  
+                return view ('pages.employer.edit_question_employer') 
+                ->with('question', $question)
+                ->with('employer', $employer);
+    
+            }else{
+                return Redirect::to('/dashboard-employer');
+            }
+        }else{
+            return Redirect::to('/dashboard-employer');
+        }
+    }
+    public function update_question_employer($questionid, Request $request)
+    {
+        $this->Checklogin();
+        $employerid =  Session::get( 'employerid' );
+        $employer = Employer::find($employerid);
+  
+        $data = array();
+       
+        $data['Ten_cau_hoi'] =  $request->Ten_cau_hoi;
+        $data['Lua_chon_a'] =$request->Lua_chon_a;
+        $data['Lua_chon_b'] =$request->Lua_chon_b;
+        $data['Lua_chon_c'] =$request->Lua_chon_c;
+        $data['Lua_chon_d'] =$request->Lua_chon_d;
+        $data['Dap_an'] =$request->Dap_an;
+        Question::find($questionid)->update($data);
+        // return Redirect::to('/dashboard-employer');
+    //    return $data;
+        return Redirect::to( session( 'link' ) );
     }
 }

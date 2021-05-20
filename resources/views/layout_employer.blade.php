@@ -315,6 +315,8 @@ body {
     <script src="{{ asset('public/frontend/Pageadmin/plugins/datatables-buttons/js/buttons.html5.min.js') }}"></script>
     <script src="{{ asset('public/frontend/Pageadmin/plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
     <script src="{{ asset('public/frontend/Pageadmin/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
+
+    <script src="{{ asset('public/frontend/Pageadmin/plugins/bs-custom-file-input/bs-custom-file-input.min.js') }}"></script>
 <script>
     $(function () {
       $("#example1").DataTable({
@@ -354,6 +356,33 @@ body {
     $(function() {
         // Summernote
         $('#summernote2').summernote()
+        // CodeMirror
+        CodeMirror.fromTextArea(document.getElementById("codeMirrorDemo"), {
+            mode: "htmlmixed",
+            theme: "monokai"
+        });
+    })
+    $(function() {
+        // Summernote
+        $('#summernote3').summernote()
+        // CodeMirror
+        CodeMirror.fromTextArea(document.getElementById("codeMirrorDemo"), {
+            mode: "htmlmixed",
+            theme: "monokai"
+        });
+    })
+    $(function() {
+        // Summernote
+        $('#summernote4').summernote()
+        // CodeMirror
+        CodeMirror.fromTextArea(document.getElementById("codeMirrorDemo"), {
+            mode: "htmlmixed",
+            theme: "monokai"
+        });
+    })
+    $(function() {
+        // Summernote
+        $('#summernote5').summernote()
         // CodeMirror
         CodeMirror.fromTextArea(document.getElementById("codeMirrorDemo"), {
             mode: "htmlmixed",

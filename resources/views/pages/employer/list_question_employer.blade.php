@@ -173,11 +173,11 @@
                                                     echo $i;
                                                     $i = $i + 1;
                                                     ?></td>
-                                                <td>{{ $ql->Ten_cau_hoi }} .....</td>
-                                                <td>{{ $ql->Lua_chon_a }}</td>
-                                                <td>{{ $ql->Lua_chon_b }}</td>
-                                                <td>{{ $ql->Lua_chon_c }}</td>
-                                                <td>{{ $ql->Lua_chon_d }}</td>
+                                                <td><?php echo $ql->Ten_cau_hoi?></td>
+                                                <td><?php echo $ql->Lua_chon_a?></td>
+                                                <td><?php echo $ql->Lua_chon_b?></td>
+                                                <td><?php echo $ql->Lua_chon_c?></td>
+                                                <td><?php echo $ql->Lua_chon_d?></td>
                                                 <td>{{ $ql->Dap_an }}</td>
                                                 <td style="font-size: 20px">
                                                     <a href="{{ URL::to('/edit-question/' . $ql->Ma_cau_hoi) }}"> <i
