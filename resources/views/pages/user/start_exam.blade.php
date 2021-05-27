@@ -96,23 +96,23 @@
                         @foreach ($question_list as $key =>$ql )
                         <div class="col-sm-6">
                             <!-- radio -->                            
-                            <label>Câu <?php $i++; echo $i;?> {{$ql->Ten_cau_hoi}}</label>
+                            <label>Câu <?php $i++; echo $i;?> <?php echo $ql->Ten_cau_hoi;?></label>
                             <div class="form-group">
                                 <div class="form-check">
                                     <input class="form-check-input" type="radio" name="{{$ql->Ma_cau_hoi}}" value="A">
-                                    <label class="form-check-label">{{$ql->Lua_chon_a}}</label>
+                                    <label class="form-check-label"> <?php echo $ql->Lua_chon_a?></label>
                                 </div>
                                 <div class="form-check">
                                     <input class="form-check-input" type="radio" name="{{$ql->Ma_cau_hoi}}" value="B">
-                                    <label class="form-check-label">{{$ql->Lua_chon_b}}</label>
+                                    <label class="form-check-label"> <?php echo $ql->Lua_chon_b?></label>
                                 </div>
                                 <div class="form-check">
                                     <input class="form-check-input" type="radio" name="{{$ql->Ma_cau_hoi}}" value="C">
-                                    <label class="form-check-label">{{$ql->Lua_chon_c}}</label>
+                                    <label class="form-check-label"> <?php echo $ql->Lua_chon_c?></label>
                                 </div>
                                 <div class="form-check">
                                     <input class="form-check-input" type="radio" name="{{$ql->Ma_cau_hoi}}" value="D">
-                                    <label class="form-check-label">{{$ql->Lua_chon_d}}</label>
+                                    <label class="form-check-label"> <?php echo $ql->Lua_chon_d?></label>
                                 </div>     
                                 {{-- <input type="text" name="{{$ql->Ma_cau_hoi}}" value="{{$ql->Ma_cau_hoi}}">                   --}}
                             </div>

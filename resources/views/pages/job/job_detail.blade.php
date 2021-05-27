@@ -29,16 +29,16 @@
                     <ul id="top-menu" class="nav navbar-nav navbar-right aa-main-nav">
                         <li><a href="{{ URL::TO('/') }}">TRANG CHỦ</a></li>
                         <!-- <li class="dropdown active">
-                      <a class="dropdown-toggle" data-toggle="dropdown" href="properties.html">PROPERTIES <span class="caret"></span></a>
-                      <ul class="dropdown-menu" role="menu">                
-                        <li><a href="properties.html">PROPERTIES</a></li>
-                        <li><a href="properties-detail.html">PROPERTIES DETAIL</a></li>                                            
-                      </ul>
-                    </li> -->
+                          <a class="dropdown-toggle" data-toggle="dropdown" href="properties.html">PROPERTIES <span class="caret"></span></a>
+                          <ul class="dropdown-menu" role="menu">                
+                            <li><a href="properties.html">PROPERTIES</a></li>
+                            <li><a href="properties-detail.html">PROPERTIES DETAIL</a></li>                                            
+                          </ul>
+                        </li> -->
                         <li class="active"><a href="#">VIỆC LÀM</a></li>
                         <li><a href="gallery.html">THÔNG TIN VỀ UTC2</a></li>
 
-                        <li><a href="{{URL::TO('/employer')}}">NHÀ TUYỂN DỤNG</a></li>
+                        <li><a href="{{ URL::TO('/employer') }}">NHÀ TUYỂN DỤNG</a></li>
 
                 </div>
                 <!--/.nav-collapse -->
@@ -82,14 +82,14 @@
                     <div class="aa-properties-content">
                         <!-- Start properties content body -->
                         <div class="aa-properties-details">
-                           
+
                             <div class="aa-properties-info">
                                 <div class="col-md-4" style="padding: 0">
                                     <img src="{{ URL::to('public/upload/nhatuyendung/' . $employer->Hinh_anh) }}"
                                         style="width: 100%" alt="img">
                                 </div>
                                 <div class="col-md-8" style="padding: 0">
-                                    <h2>{{ $job_detail->Tieu_de }}</h2>                                    
+                                    <h2>{{ $job_detail->Tieu_de }}</h2>
                                     <?php $format_number = number_format($job_detail->Muc_luong); ?>
                                     <h3>Mức lương : <strong>{{ $format_number }} VNĐ</strong> </h3>
                                     <h4 style="font-size: 18px">Địa điểm làm việc:
@@ -98,7 +98,7 @@
                                     <a href="{{ $employer->Trang_web }}" style="color: blue;font-size: 18px;"
                                         target="_blank">Trang web công ty</a>
                                 </div>
-                              
+
                             </div>
                             <h2>Yêu cầu</h2>
                             <?php echo $job_detail->Yeu_cau; ?>
@@ -122,9 +122,12 @@
                                 </ul>
                             </div>
 
+
                         </div>
+                        <button type="button" class="btn btn-primary" data-toggle="modal"
+                            data-target=".bd-example-modal-lg">Chọn phương tiện di chuyển</button>
                         <div id="map" style=" height: 600px; 
-                        width: 100%;"></div>
+                            width: 100%;"></div>
 
                     </div>
                 </div>
@@ -149,7 +152,7 @@
                             <div class="aa-single-advance-search">
                                 <p class="navbar-brand aa-logo">Ngành nghề:</p> <span class="navbar-brand aa-logo"
                                     style="float: right; font-weight: bold;">{{ $branch->Ten_nganh_nghe }}</span>
-                            </div>             
+                            </div>
                             <div class="aa-single-advance-search">
                                 <?php
                                 date_default_timezone_set('Asia/Ho_Chi_Minh');
@@ -221,6 +224,7 @@
                                 </div>
                             </div>
                             <div class="media">
+
                                 <div class="media-left">
                                     <a href="#">
                                         <img class="media-object" src="img/item/1.jpg" alt="img">
@@ -234,11 +238,12 @@
                             </div>
                         </div>
                     </aside>
+
                 </div>
             </div>
         </div>
     </section>
-   
+
     <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -247,10 +252,11 @@
                     <strong class="" id="" style="font-size: 20px">Thông tin cá nhân</strong>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
-                    </button>                
+                    </button>
                 </div>
-                <form action="{{ URL::to('/apply-job-filecv/'. $job_detail->Ma_bai_dang) }}" method="post" enctype="multipart/form-data">
-                {{ csrf_field() }}
+                <form action="{{ URL::to('/apply-job-filecv/' . $job_detail->Ma_bai_dang) }}" method="post"
+                    enctype="multipart/form-data">
+                    {{ csrf_field() }}
                     <div class="modal-body">
                         <strong style="font-size: 20px">Họ và tên</strong>
                         <p><?php echo Session::get('name'); ?> </p>
@@ -273,31 +279,165 @@
                         <input type="submit" value="Ứng tuyển" style="width: 16%; font-size: 14px;" class="btn btn-primary">
                     </div>
                 </form>
+
             </div>
         </div>
     </div>
+
+    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div id="floating-panel">
+                    <h2 style="margin: 22px 0;">Chọn phương tiện di chuyển: </h2>
+                    <select id="mode" style="font-size: 25px; height: 50px;">
+                        <option disabled selected>Chọn phương tiện</option>
+                        <option value="DRIVING" style="font-size: 25px">Ô tô </option>
+                        <option value="WALKING">Mô tô</option>
+                        <option value="BICYCLING">Xe đạp</option>
+                        <option value="TRANSIT">Xe khách</option>
+                    </select>
+                </div>
+                <div class="modal-footer" style="border: none">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Xác nhận</button>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    </div>
+
     <script>
-        let map;
+        // let map;
+        // function initMap() {
+        //     // The location of Uluru
+        //     const uluru = {
+        //         lat: {{ $employer->Kinh_do }},
+        //         lng: {{ $employer->Vi_do }}
+        //     };
+        //     // The map, centered at Uluru
+        //     const map = new google.maps.Map(document.getElementById("map"), {
+        //         zoom: 18,
+        //         center: uluru,
+        //     });
+        //     // The marker, positioned at Uluru
+        //     const marker = new google.maps.Marker({
+        //         position: uluru,
+        //         map: map,
+        //     });
+        // }
+
+        //let map, infoWindow;
+        var kinhdo;
+        var vido;
+
         function initMap() {
-            // The location of Uluru
-            const uluru = {
-                lat: {{ $employer->Kinh_do }},
-                lng: {{ $employer->Vi_do }}
-            };
-            // The map, centered at Uluru
+            const directionsRenderer = new google.maps.DirectionsRenderer();
+            const directionsService = new google.maps.DirectionsService();
             const map = new google.maps.Map(document.getElementById("map"), {
-                zoom: 18,
-                center: uluru,
+                zoom: 15,
             });
-            // The marker, positioned at Uluru
-            const marker = new google.maps.Marker({
-                position: uluru,
-                map: map,
+            directionsRenderer.setMap(map);
+            calculateAndDisplayRoute(directionsService, directionsRenderer);
+            document.getElementById("mode").addEventListener("change", () => {
+                calculateAndDisplayRoute(directionsService, directionsRenderer);
             });
+            var infoWindow = new google.maps.InfoWindow();
+            // current location
+            var locate;
+            var icon_marker = {
+                url: "{{ asset('public/upload/1280x720.png') }}",
+                scaledSize: new google.maps.Size(30, 40),
+                origin: new google.maps.Point(0, 0),
+                anchor: new google.maps.Point(0, 0)
+            };
+            map.controls[google.maps.ControlPosition.TOP_CENTER].push(locate);
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        const pos = {
+                            lat: {{ $employer->Kinh_do }},
+                            lng: {{ $employer->Vi_do }},
+                        };
+                        kinhdo = position.coords.latitude;
+                        vido = position.coords.longitude;
+                        infoWindow.setPosition(pos);
+                        map.setCenter(pos);
+                        var marker = new google.maps.Marker({
+                            map: map,
+                            position: pos,
+                            // icon: icon_marker,
+                        });
+                        // marker.addListener('click', function() {
+                        //     infoWindow.setContent("lat and lng : " + pos.lat + "------" + pos.lng);
+                        //     infoWindow.open(map, marker);
+                        // });
+                        document.getElementById('lat_user').value = pos.lat;
+                        document.getElementById('lng_user').value = pos.lng;
+                        map.setCenter(pos);
+                    },
+                    () => {
+                        handleLocationError(true, infoWindow, map.getCenter());
+                    }
+                );
+            } else {
+                handleLocationError(false, infoWindow, map.getCenter());
+            }
+            // //   });
+            // }
+
+            // function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+            //   infoWindow.setPosition(pos);
+            //   infoWindow.setContent(
+            //     browserHasGeolocation
+            //       ? "Error: The Geolocation service failed."
+            //       : "Error: Your browser doesn't support geolocation."
+            //   );
+            //   infoWindow.open(map);
+
+        }
+
+        function calculateAndDisplayRoute(directionsService, directionsRenderer) {
+            const selectedMode = document.getElementById("mode").value;
+            directionsService.route({
+                    // lat: {{ $employer->Kinh_do }},
+                    //         lng: {{ $employer->Vi_do }}
+                    destination: {
+                        lat: {{ $employer->Kinh_do }},
+                        lng: {{ $employer->Vi_do }}
+                    },
+                    origin: {
+                        lat: kinhdo,
+                        lng: vido
+                    },
+
+
+                    // Note that Javascript allows us to access the constant
+                    // using square brackets and a string value as its
+                    // "property."
+                    travelMode: google.maps.TravelMode[selectedMode],
+                },
+                (response, status) => {
+                    if (status == "OK") {
+                        directionsRenderer.setDirections(response);
+                        var leg = response.routes[0].legs[0];
+                        var marker_star = new google.maps.Marker({
+
+                        })
+                        makeMarker(leg.start_location, icons.start, "title");
+                        makeMarker(leg.end_location, icons.end, 'title');
+                    } else {
+                        window.alert("Đoạn đường không hỗ trợ với phương tiện này");
+                    }
+                }
+            );
         }
 
     </script>
     <script
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA66KwUrjxcFG5u0exynlJ45CrbrNe3hEc&callback=initMap&libraries=&v=weekly"
-    async></script>
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCJqpC7oo-YYJJ1pRVZJgf84qExlHZCWSc&callback=initMap&libraries=&v=weekly"
+        async></script>
 @endsection

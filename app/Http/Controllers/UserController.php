@@ -360,7 +360,6 @@ class UserController extends Controller {
             ->select( 'Ma_cau_hoi', 'Ten_cau_hoi', 'Lua_chon_a', 'Lua_chon_b', 'Lua_chon_c', 'Lua_chon_d' )
             ->inRandomOrder()
             ->limit( $exam->So_cau )
-            // ->limit( 5 )
             ->get();
             return view ( 'pages.user.start_exam' )
             ->with( 'question_list', $question_list )

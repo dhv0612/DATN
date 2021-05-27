@@ -603,14 +603,11 @@ class EmployerController extends Controller {
             return Redirect::to('/dashboard-employer');
         }
     }
-    public function update_question_employer($questionid, Request $request)
-    {
+    public function update_question_employer($questionid, Request $request){
         $this->Checklogin();
         $employerid =  Session::get( 'employerid' );
         $employer = Employer::find($employerid);
-  
         $data = array();
-       
         $data['Ten_cau_hoi'] =  $request->Ten_cau_hoi;
         $data['Lua_chon_a'] =$request->Lua_chon_a;
         $data['Lua_chon_b'] =$request->Lua_chon_b;
