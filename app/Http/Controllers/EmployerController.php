@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Mail;
+use PHPMailer\PHPMailer\PHPMailer;
+require 'vendor/autoload.php';
 
 // use App\Imports\e
 define( 'URL', 'https://dhv0612.com/DATN' );
@@ -618,5 +620,27 @@ class EmployerController extends Controller {
         // return Redirect::to('/dashboard-employer');
     //    return $data;
         return Redirect::to( session( 'link' ) );
+    }
+    public function sendmailer()
+    {
+        $mail = new PHPMailer;
+        $mail->isSMTP();
+        $mail->SMTPDebug = 2;
+        $mail->Host = 'smtp.gmail.com';
+        $mail->Port = 587;
+        $mail->SMTPAuth = true;
+        $mail->Username = 'dhvsport00@gmail.com';
+        $mail->Password = 'DHVSport450LeVanViet';
+        $mail->setFrom('test@hostinger-tutorials.com', 'Your Name');
+        $mail->addReplyTo('test@hostinger-tutorials.com', 'Your Name');
+        $mail->addAddress('dhv0612@gmail.com', 'Receiver Name');
+        $mail->Subject = 'Testing PHPMailer';
+        $mail->Body = 'This is a plain text message body';
+        //$mail->addAttachment('test.txt');
+        if (!$mail->send()) {
+            return ('a');
+        } else {
+            return ('b');
+        }
     }
 }

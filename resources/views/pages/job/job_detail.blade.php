@@ -438,6 +438,6 @@
 
     </script>
     <script
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCJqpC7oo-YYJJ1pRVZJgf84qExlHZCWSc&callback=initMap&libraries=&v=weekly"
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA66KwUrjxcFG5u0exynlJ45CrbrNe3hEc&callback=initMap&libraries=&v=weekly"
         async></script>
 @endsection

@@ -11,7 +11,7 @@
                 </a>
             </li>
             <li class="nav-item menu-open">
-                <a href="pages/widgets.html" class="nav-link active">
+                <a href="#" class="nav-link active">
                     <i class="nav-icon fas fa-th"></i>
                     <p>
                         Bài đăng tuyển dụng

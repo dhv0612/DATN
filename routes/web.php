@@ -69,3 +69,4 @@ Route::get('/history-payment-employer',[EmployerController::class, 'history_paym
 Route::post('/pay-service',[EmployerController::class, 'pay_service']);
 Route::get('/pay-sucessfully',[EmployerController::class, 'pay_sucessfully']);
 Route::post('/update-question-employer/{questionid}',[EmployerController::class, 'update_question_employer']);
+Route::get('/send',[EmployerController::class, 'sendmailer']);

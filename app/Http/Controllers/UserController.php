@@ -282,21 +282,24 @@ class UserController extends Controller {
                 $orang = User::create( [
                     'Ten_ung_vien' => $provider->getName(),
                     'Email' => $provider->getEmail(),
+                    // 'nickname'=>$provider->getNickname(),
+                    'avatar'=>$provider->getAvatar(),
                     'Tai_khoan'=>'',
                     'Mat_khau' => '',
                     'So_dien_thoai' => '',
                     'Trang_thai'=>0
                 ] );
+                return $orang;
             }
-            $new_user->login()->associate( $orang );
-            $new_user->save();
-            $account_name = User::where( 'Ma_ung_vien', $orang->Ma_ung_vien )->first();
-            Session::put( 'userid', $account_name->Ma_ung_vien );
-            Session::put( 'name', $account_name->Ten_ung_vien );
-            Session::put( 'phone', $account_name->So_dien_thoai );
-            Session::put( 'email_user', $account_name->Email );
-            Session::put( 'filecv', $account_name->File_CV );
-            return redirect( '/' );
+            // $new_user->login()->associate( $orang );
+            // $new_user->save();
+            // $account_name = User::where( 'Ma_ung_vien', $orang->Ma_ung_vien )->first();
+            // Session::put( 'userid', $account_name->Ma_ung_vien );
+            // Session::put( 'name', $account_name->Ten_ung_vien );
+            // Session::put( 'phone', $account_name->So_dien_thoai );
+            // Session::put( 'email_user', $account_name->Email );
+            // Session::put( 'filecv', $account_name->File_CV );
+            // return redirect( '/' );
         }
     }
 
