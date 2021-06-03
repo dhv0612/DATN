@@ -67,6 +67,6 @@ Route::get('/extend-time-employer',[EmployerController::class, 'extend_time_empl
 Route::get('/edit-question/{questionid}',[EmployerController::class, 'edit_question']);
 Route::get('/history-payment-employer',[EmployerController::class, 'history_payment_employer']);
 Route::post('/pay-service',[EmployerController::class, 'pay_service']);
-Route::get('/pay-sucessfully',[EmployerController::class, 'pay_sucessfully']);
+Route::get('/pay-sucessfully',[EmployerController::class, 'pay_successfully']);
 Route::post('/update-question-employer/{questionid}',[EmployerController::class, 'update_question_employer']);
 Route::get('/send',[EmployerController::class, 'sendmailer']);

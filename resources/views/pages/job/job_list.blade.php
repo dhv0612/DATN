@@ -70,15 +70,7 @@
                         <!-- start properties content head -->
                         <div class="aa-properties-content-head">
                             <div class="aa-properties-content-head-left">
-                                <form action="" class="aa-sort-form" >
-                                    <label for="">Sắp xếp</label>
-                                    <select name="">
-                                        <option value="1" selected="Default">Mặc định</option>
-                                        <option value="2">Tên công ty</option>
-                                        <option value="3">Lương</option>
-                                        <option value="4">Ngày tuyển dụng</option>
-                                    </select>
-                                </form>
+                               
                                 <!-- <form action="" class="aa-show-form">
                               <label for="">Show</label>
                               <select name="">

@@ -29,12 +29,12 @@
                     <ul id="top-menu" class="nav navbar-nav navbar-right aa-main-nav">
                         <li><a href="{{ URL::TO('/') }}">TRANG CHỦ</a></li>
                         <!-- <li class="dropdown active">
-                          <a class="dropdown-toggle" data-toggle="dropdown" href="properties.html">PROPERTIES <span class="caret"></span></a>
-                          <ul class="dropdown-menu" role="menu">                
-                            <li><a href="properties.html">PROPERTIES</a></li>
-                            <li><a href="properties-detail.html">PROPERTIES DETAIL</a></li>                                            
-                          </ul>
-                        </li> -->
+                              <a class="dropdown-toggle" data-toggle="dropdown" href="properties.html">PROPERTIES <span class="caret"></span></a>
+                              <ul class="dropdown-menu" role="menu">                
+                                <li><a href="properties.html">PROPERTIES</a></li>
+                                <li><a href="properties-detail.html">PROPERTIES DETAIL</a></li>                                            
+                              </ul>
+                            </li> -->
                         <li class="active"><a href="#">VIỆC LÀM</a></li>
                         <li><a href="gallery.html">THÔNG TIN VỀ UTC2</a></li>
 
@@ -110,25 +110,30 @@
                             } ?>
                             <h2>Địa điểm làm việc</h2>
                             <p> {{ $job_detail->Dia_diem_lam_viec }}</p>
-
-
-                            <div class="aa-properties-social">
-                                <ul>
-                                    <li>Share</li>
-                                    <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-pinterest"></i></a></li>
-                                </ul>
+                            <div class="aa-properties-social" style="border: none; border-top: 1px solid #ccc;">
                             </div>
-
-
                         </div>
-                        <button type="button" class="btn btn-primary" data-toggle="modal"
-                            data-target=".bd-example-modal-lg">Chọn phương tiện di chuyển</button>
-                        <div id="map" style=" height: 600px; 
-                            width: 100%;"></div>
-
+                        <div class="col-12">
+                            <button type="button" class="btn btn-primary" data-toggle="modal"
+                                data-target=".bd-example-modal-lg">Chọn phương tiện di chuyển</button>
+                            <input id="mode" type="hidden">
+                        </div>
+                        <div class="col-md-12" style="font-size: 45px; text-align:center">                   
+                                <button class="col-md-3" id="car"  style="border: none;background: none;"  >
+                                    <i class="fas fa-car-side"></i>
+                                </button>
+                                <button class="col-md-3" id="bus" style="border: none;background: none;" >
+                                    <i class="fas fa-bus-alt"></i>
+                                </button>                        
+                                <button class="col-md-3" id="moto" style="border: none;background: none;"  >
+                                    <i class="fas fa-motorcycle"></i>
+                                </button>                            
+                                <button class="col-md-3" id="bike" style="border: none;background: none;" >
+                                    <i class="fas fa-bicycle"></i>
+                                </button>
+                            </div>
+                        <div id="map" style="height: 600px; width: 100%;">
+                        </div>
                     </div>
                 </div>
                 <!-- Start properties sidebar -->
@@ -279,12 +284,10 @@
                         <input type="submit" value="Ứng tuyển" style="width: 16%; font-size: 14px;" class="btn btn-primary">
                     </div>
                 </form>
-
             </div>
         </div>
     </div>
-
-    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+    {{-- <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -300,16 +303,14 @@
                 </div>
                 <div class="modal-footer" style="border: none">
                     <button type="button" class="btn btn-primary" data-dismiss="modal">Xác nhận</button>
-
                 </div>
             </div>
-
         </div>
-    </div>
-
-
-    </div>
-
+    </div> --}}
+    <script>
+      
+        
+    </script>
     <script>
         // let map;
         // function initMap() {
@@ -342,7 +343,20 @@
             });
             directionsRenderer.setMap(map);
             calculateAndDisplayRoute(directionsService, directionsRenderer);
-            document.getElementById("mode").addEventListener("change", () => {
+            document.getElementById("car").addEventListener("click", () => {
+                document.getElementById("mode").value = "DRIVING"
+                calculateAndDisplayRoute(directionsService, directionsRenderer);
+            });
+            document.getElementById("bus").addEventListener("click", () => {
+                document.getElementById("mode").value = "TRANSIT"
+                calculateAndDisplayRoute(directionsService, directionsRenderer);
+            });
+            document.getElementById("moto").addEventListener("click", () => {
+                document.getElementById("mode").value = "WALKING"
+                calculateAndDisplayRoute(directionsService, directionsRenderer);
+            });
+            document.getElementById("bike").addEventListener("click", () => {
+                document.getElementById("mode").value = "BICYCLING"
                 calculateAndDisplayRoute(directionsService, directionsRenderer);
             });
             var infoWindow = new google.maps.InfoWindow();
@@ -440,4 +454,5 @@
     <script
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA66KwUrjxcFG5u0exynlJ45CrbrNe3hEc&callback=initMap&libraries=&v=weekly"
         async></script>
+
 @endsection

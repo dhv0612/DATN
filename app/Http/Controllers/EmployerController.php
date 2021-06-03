@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Str;
 use App\Imports\ExcelImports;
 use App\Models\Employer;
+
 use Carbon\Carbon;
 use App\Models\Jobs;
 use App\Models\Question;
@@ -564,7 +565,7 @@ class EmployerController extends Controller {
         ->with('list_history', $list_history)
         ;
     }
-    public function pay_sucessfully()
+    public function pay_successfully()
     {
         $this->Checklogin();
         $employerid =  Session::get( 'employerid' );
@@ -636,11 +637,12 @@ class EmployerController extends Controller {
         $mail->addAddress('dhv0612@gmail.com', 'Receiver Name');
         $mail->Subject = 'Testing PHPMailer';
         $mail->Body = 'This is a plain text message body';
+		
         //$mail->addAttachment('test.txt');
         if (!$mail->send()) {
-            return ('a');
+            echo 'Mailer Error: ' . $mail->ErrorInfo;
         } else {
-            return ('b');
+            echo 'The email message was sent.';
         }
     }
 }

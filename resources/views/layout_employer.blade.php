@@ -38,11 +38,7 @@
         href="{{ asset('public/frontend/Pageadmin/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
     <link rel="stylesheet"
         href="{{ asset('public/frontend/Pageadmin/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
-
-
     <link rel="shortcut icon" href="{{ asset('public/upload/logo.png') }}" type="image/x-icon">
-
-  
     <!-- CodeMirror -->
     <link rel="stylesheet" href="{{ asset('public/frontend/Pageadmin/plugins/codemirror/codemirror.css') }}">
     <link rel="stylesheet" href="{{ asset('public/frontend/Pageadmin/plugins/codemirror/theme/monokai.css') }}">
