@@ -61,6 +61,9 @@ class HomeController extends Controller
                             ->where('Ma_nganh_nghe',$data['branch'])     
                             ->where('Ma_dia_diem',$data['place'])                     
                             ->whereBetween('Muc_luong', [(int)$salary_from, (int)$salary_to])
+                            ->join('nha_tuyen_dung', 'nha_tuyen_dung.Ma_nha_tuyen_dung', '=', 'bai_dang_tuyen_dung.Ma_nha_tuyen_dung' )
+                            ->where('bai_dang_tuyen_dung.Ngay_dang', '>=', 'nha_tuyen_dung.Han_dang_bai')
+                            
                             // ->paginate(3)
                             ->get()
                             ;
