@@ -21,9 +21,10 @@
 <body class="hold-transition login-page">
     <?php
     $message = Session::get('message');
+
         if ($message)   {
             echo "<script> alert('$message') </script>";
-            Session::put('notification', null);
+            Session::put('message', null);
         } 
     ?>
     <div class="login-box">

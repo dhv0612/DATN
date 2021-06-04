@@ -12,6 +12,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <!-- Font awesome -->
     <link href="{{ asset('public/frontend/HomeProperty/css/font-awesome.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('public/frontend/Pageadmin/plugins/fontawesome-free/css/all.min.css') }}">
     <!-- Bootstrap -->
     <link href="{{ asset('public/frontend/HomeProperty/css/bootstrap.css') }}" rel="stylesheet">
     <!-- slick slider -->

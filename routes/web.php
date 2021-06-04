@@ -64,7 +64,9 @@ Route::get('/list-user-test',[EmployerController::class, 'list_user_test']);
 Route::get('/change-place-employer',[EmployerController::class, 'change_place_employer']);
 Route::post('/update-place-employer',[EmployerController::class, 'update_place_employer']);
 Route::get('/extend-time-employer',[EmployerController::class, 'extend_time_employer']);
+Route::get('/edit-question/{questionid}',[EmployerController::class, 'edit_question']);
 Route::get('/history-payment-employer',[EmployerController::class, 'history_payment_employer']);
 Route::post('/pay-service',[EmployerController::class, 'pay_service']);
-Route::get('/pay-sucessfully',[EmployerController::class, 'pay_sucessfully']);
-
+Route::get('/pay-sucessfully',[EmployerController::class, 'pay_successfully']);
+Route::post('/update-question-employer/{questionid}',[EmployerController::class, 'update_question_employer']);
+Route::get('/send',[EmployerController::class, 'sendmailer']);

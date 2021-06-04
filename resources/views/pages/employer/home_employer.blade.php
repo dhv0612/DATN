@@ -240,7 +240,7 @@
     </script>
 
     <script
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDtSvDoJ02Ig-m-Q_l5Na0T4yifdBNs8q4&callback=initMap&libraries=&v=weekly"
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCE61DppH-vILR7wAG3BVnnucS6pVLEx9w&callback=initMap&libraries=&v=weekly"
         async></script>
 
 @endsection

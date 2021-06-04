@@ -3,16 +3,20 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Str;
 use App\Imports\ExcelImports;
 use App\Models\Employer;
+
 use Carbon\Carbon;
 use App\Models\Jobs;
 use App\Models\Question;
 use App\Models\User;
+use Illuminate\Contracts\Queue\Job;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Mail;
+use PHPMailer\PHPMailer\PHPMailer;
+require 'vendor/autoload.php';
 
 // use App\Imports\e
 define( 'URL', 'https://dhv0612.com/DATN' );
@@ -190,6 +194,7 @@ class EmployerController extends Controller {
         } else {
             $jobid=Jobs::insertGetId( $data );
         }
+
         $exam_list = DB::table('bai_kiem_tra')->where('Ma_nha_tuyen_dung', $employerid)->select('Ma_bai_kiem_tra')->get();
         $exam = $request->exam;
         foreach($exam_list as $el){
@@ -198,14 +203,17 @@ class EmployerController extends Controller {
             $data_el['Ma_bai_kiem_tra'] = $el->Ma_bai_kiem_tra;
             DB::table('thong_tin_kiem_tra')->insert($data_el);
         }
-        foreach( $exam as  $ex){
-            // $examid =$exam_list[$i]->Ma_bai_kiem_tra;
-            $data_exam = array();
-            $data_exam['Ma_bai_dang'] = $jobid;
-            $data_exam['Ma_bai_kiem_tra'] = $ex;
-            $data_exam['Trang_thai'] = 1;
-            DB::table('thong_tin_kiem_tra')->where('Ma_bai_dang', $jobid)->where('Ma_bai_kiem_tra',$ex )->update($data_exam);
+        if (isset($exam)){
+            foreach( $exam as  $ex){
+                // $examid =$exam_list[$i]->Ma_bai_kiem_tra;
+                $data_exam = array();
+                $data_exam['Ma_bai_dang'] = $jobid;
+                $data_exam['Ma_bai_kiem_tra'] = $ex;
+                $data_exam['Trang_thai'] = 1;
+                DB::table('thong_tin_kiem_tra')->where('Ma_bai_dang', $jobid)->where('Ma_bai_kiem_tra',$ex )->update($data_exam);
+            }
         }
+     
         return Redirect::to( 'list-job-employer' );
         // return response()->json($exam);
     }
@@ -294,8 +302,10 @@ class EmployerController extends Controller {
         ->first();
         if ( $exam ) {
             $question_list = DB::table( 'cau_hoi' )
-            ->select (DB::raw('SUBSTR(Ten_cau_hoi, 1,20) as Ten_cau_hoi')
-            ,'Ma_bai_kiem_tra'
+            ->select (
+            // DB::raw('SUBSTR(Ten_cau_hoi, 1,30) as Ten_cau_hoi')
+            'Ma_bai_kiem_tra'
+            , 'Ten_cau_hoi'
             ,'Ma_cau_hoi'
             , 'Lua_chon_a'
             , 'Lua_chon_b'
@@ -306,6 +316,7 @@ class EmployerController extends Controller {
             // ->toSql()
             ->get()
             ;
+
             // return response()->json($question_list);
             return view( 'pages.employer.list_question_employer' )
             ->with( 'question_list', $question_list )
@@ -434,12 +445,11 @@ class EmployerController extends Controller {
         $this->Checklogin();
         $employerid =  Session::get( 'employerid' );
         $employer = Employer::where( 'Ma_nha_tuyen_dung', $employerid )->first();
-        $user = User::all();
-        $job = Jobs::where('Ma_nha_tuyen_dung', $employerid)->get();
-        $exam = DB::table('bai_kiem_tra')->where('Ma_nha_tuyen_dung', $employerid)->get();
-        $info_exam = DB::table('thong_tin_kiem_tra')->where('Trang_thai', 1)->get();   
-        $exam_detail = DB::table('chi_tiet_kiem_tra')->get();
-
+        // $user = User::all();
+        // $job = Jobs::where('Ma_nha_tuyen_dung', $employerid)->get();
+        // $exam = DB::table('bai_kiem_tra')->where('Ma_nha_tuyen_dung', $employerid)->get();
+        // $info_exam = DB::table('thong_tin_kiem_tra')->where('Trang_thai', 1)->get();   
+        // $exam_detail = DB::table('chi_tiet_kiem_tra')->get();
         $list_user = DB::table('ung_cu_vien')
         ->join('chi_tiet_kiem_tra', 'ung_cu_vien.Ma_ung_vien', '=', 'chi_tiet_kiem_tra.Ma_ung_vien' )
         ->join('bai_kiem_tra', 'chi_tiet_kiem_tra.Ma_bai_kiem_tra', '=','bai_kiem_tra.Ma_bai_kiem_tra')
@@ -555,7 +565,7 @@ class EmployerController extends Controller {
         ->with('list_history', $list_history)
         ;
     }
-    public function pay_sucessfully()
+    public function pay_successfully()
     {
         $this->Checklogin();
         $employerid =  Session::get( 'employerid' );
@@ -573,5 +583,66 @@ class EmployerController extends Controller {
         return Redirect::to('/history-payment-employer')
         ->with('employer', $employer)
         ;
+    }
+    public function edit_question($questionid)
+    {
+        $this->Checklogin();
+        $employerid =  Session::get( 'employerid' );
+        $employer = Employer::find($employerid);
+        $question = Question::find($questionid);
+        $exam = DB::table('bai_kiem_tra')->where('Ma_bai_kiem_tra', $question->Ma_bai_kiem_tra)->first();
+        if (isset($question) && isset($exam)){
+            $job = Jobs::find($exam->Ma_nha_tuyen_dung);
+            if ($employerid == $job->Ma_nha_tuyen_dung){
+                session(['link' => url()->previous()]);  
+                return view ('pages.employer.edit_question_employer') 
+                ->with('question', $question)
+                ->with('employer', $employer);
+    
+            }else{
+                return Redirect::to('/dashboard-employer');
+            }
+        }else{
+            return Redirect::to('/dashboard-employer');
+        }
+    }
+    public function update_question_employer($questionid, Request $request){
+        $this->Checklogin();
+        $employerid =  Session::get( 'employerid' );
+        $employer = Employer::find($employerid);
+        $data = array();
+        $data['Ten_cau_hoi'] =  $request->Ten_cau_hoi;
+        $data['Lua_chon_a'] =$request->Lua_chon_a;
+        $data['Lua_chon_b'] =$request->Lua_chon_b;
+        $data['Lua_chon_c'] =$request->Lua_chon_c;
+        $data['Lua_chon_d'] =$request->Lua_chon_d;
+        $data['Dap_an'] =$request->Dap_an;
+        Question::find($questionid)->update($data);
+        // return Redirect::to('/dashboard-employer');
+    //    return $data;
+        return Redirect::to( session( 'link' ) );
+    }
+    public function sendmailer()
+    {
+        $mail = new PHPMailer;
+        $mail->isSMTP();
+        $mail->SMTPDebug = 2;
+        $mail->Host = 'smtp.gmail.com';
+        $mail->Port = 587;
+        $mail->SMTPAuth = true;
+        $mail->Username = 'dhvsport00@gmail.com';
+        $mail->Password = 'DHVSport450LeVanViet';
+        $mail->setFrom('test@hostinger-tutorials.com', 'Your Name');
+        $mail->addReplyTo('test@hostinger-tutorials.com', 'Your Name');
+        $mail->addAddress('dhv0612@gmail.com', 'Receiver Name');
+        $mail->Subject = 'Testing PHPMailer';
+        $mail->Body = 'This is a plain text message body';
+		
+        //$mail->addAttachment('test.txt');
+        if (!$mail->send()) {
+            echo 'Mailer Error: ' . $mail->ErrorInfo;
+        } else {
+            echo 'The email message was sent.';
+        }
     }
 }

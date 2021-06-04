@@ -38,11 +38,7 @@
         href="{{ asset('public/frontend/Pageadmin/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
     <link rel="stylesheet"
         href="{{ asset('public/frontend/Pageadmin/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
-
-
     <link rel="shortcut icon" href="{{ asset('public/upload/logo.png') }}" type="image/x-icon">
-
-  
     <!-- CodeMirror -->
     <link rel="stylesheet" href="{{ asset('public/frontend/Pageadmin/plugins/codemirror/codemirror.css') }}">
     <link rel="stylesheet" href="{{ asset('public/frontend/Pageadmin/plugins/codemirror/theme/monokai.css') }}">
@@ -315,6 +311,8 @@ body {
     <script src="{{ asset('public/frontend/Pageadmin/plugins/datatables-buttons/js/buttons.html5.min.js') }}"></script>
     <script src="{{ asset('public/frontend/Pageadmin/plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
     <script src="{{ asset('public/frontend/Pageadmin/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
+
+    <script src="{{ asset('public/frontend/Pageadmin/plugins/bs-custom-file-input/bs-custom-file-input.min.js') }}"></script>
 <script>
     $(function () {
       $("#example1").DataTable({
@@ -354,6 +352,33 @@ body {
     $(function() {
         // Summernote
         $('#summernote2').summernote()
+        // CodeMirror
+        CodeMirror.fromTextArea(document.getElementById("codeMirrorDemo"), {
+            mode: "htmlmixed",
+            theme: "monokai"
+        });
+    })
+    $(function() {
+        // Summernote
+        $('#summernote3').summernote()
+        // CodeMirror
+        CodeMirror.fromTextArea(document.getElementById("codeMirrorDemo"), {
+            mode: "htmlmixed",
+            theme: "monokai"
+        });
+    })
+    $(function() {
+        // Summernote
+        $('#summernote4').summernote()
+        // CodeMirror
+        CodeMirror.fromTextArea(document.getElementById("codeMirrorDemo"), {
+            mode: "htmlmixed",
+            theme: "monokai"
+        });
+    })
+    $(function() {
+        // Summernote
+        $('#summernote5').summernote()
         // CodeMirror
         CodeMirror.fromTextArea(document.getElementById("codeMirrorDemo"), {
             mode: "htmlmixed",
