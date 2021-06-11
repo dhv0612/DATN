@@ -11,7 +11,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="pages/widgets.html" class="nav-link">
+                <a href="#" class="nav-link">
                     <i class="nav-icon fas fa-th"></i>
                     <p>
                         Bài đăng tuyển dụng
@@ -223,6 +223,7 @@
                 lat: {{ $employer->Kinh_do }},
                 lng: {{ $employer->Vi_do }}
             };
+
             // The map, centered at Uluru
             const map = new google.maps.Map(document.getElementById("map"), {
                 zoom: 18,
