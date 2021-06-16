@@ -62,9 +62,16 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="aa-blog-area">
-                        <p style=" font-size: 40px;
-                        text-align: center;
-                        font-weight: bold;">Hãy chắc chắn rằng kết nối mạng của bạn không có vấn đề và thời gian để làm bài sẽ không bị ảnh hưởng<br>Khi bắt đầu làm bài bạn sẽ không thể làm lại</p>
+                        <p style=" font-size: 20px;
+                       
+                        font-weight: bold;">Hãy chắc chắn rằng kết nối mạng của bạn không có vấn đề và thời gian để làm bài sẽ không bị ảnh hưởng
+                        <br>Khi bắt đầu làm bài bạn sẽ không thể làm lại
+                        <br>Trong khi làm bài bạn không được chụp màn hình hoặc sửa mã nguồn 
+                    </p>
+                    <p style=" font-size: 40px;
+                    color: red;
+                    text-align: center;
+                    font-weight: bold;">Nếu không bài kiểm tra sẽ bị hủy</p>
                         <div class="row">
                             @foreach ($exam_list as $key=>$el )
                             <div class="col-md-4">

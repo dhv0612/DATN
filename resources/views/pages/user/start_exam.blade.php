@@ -51,7 +51,8 @@
 
 </head>
 
-<body>
+<body id="form" 
+onkeyup="isKeyPressed(event)">
 
 
 
@@ -170,6 +171,24 @@
         }
 
     </script>
+
+<script>
+    const URL= 'https://dhv0612.com/DATN';
+    const form = document.getElementById("form")
+    function isKeyPressed(event) {
+        console.log(`key: ${event.key} has been pressed down`);
+        if(event.key==='PrintScreen' ||event.key==='F12' ){
+            alert("Bạn đã vi phạm quy chế. Bài kiểm tra sẽ bị hủy")
+            window.location.href= URL+'/';
+        }
+       
+    }
+
+    // const form = document.getElementById("form")
+    // input.addEventListener('keydown', (event) => {
+    //     console.log(`key: ${event.key} has been pressed down`);
+    // });
+</script>
 </body>
 
 </html>

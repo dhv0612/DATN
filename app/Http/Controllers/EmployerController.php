@@ -298,7 +298,7 @@ class EmployerController extends Controller {
         $employer = Employer::where( 'Ma_nha_tuyen_dung', $employerid )->first();
         $exam = DB::table( 'bai_kiem_tra' )
         ->where( 'Ma_bai_kiem_tra', $examid )
-        ->where( 'Ma_nha_tuyen_dung', 2 )
+        ->where( 'Ma_nha_tuyen_dung', $employerid )
         ->first();
         if ( $exam ) {
             $question_list = DB::table( 'cau_hoi' )
@@ -434,6 +434,17 @@ class EmployerController extends Controller {
             ->where('Ma_bai_dang', $jobid)
             ->update(['Kiem_tra'=> 1])
             ;
+            $exam_list = DB::table('thong_tin_kiem_tra')->where('Ma_bai_dang', $jobid)->get();
+            foreach(  $exam_list  as $el){
+                $data_el = array();
+                $data_el['Trang_thai'] = 0;
+                $data_el['Ma_bai_kiem_tra'] = $el->Ma_bai_kiem_tra;
+                $data_el['Ma_ung_vien'] = $userid;
+                DB::table('chi_tiet_kiem_tra')->insert($data_el);
+                // DB::table('thong_tin_kiem_tra')->where('Ma_bai_dang', $jobid)
+                // ->where('Ma_bai_kiem_tra',$el->Ma_bai_kiem_tra )
+                // ->insert($data_el);
+            }
             return Redirect()->back()
             ->with( 'employer', $employer );
         }else{

@@ -185,8 +185,10 @@
                                                 <td>{{$lu->Ten_ung_vien}}</td>
                                                 <td>{{$lu->Tieu_de}}</td>
                                                 <td>{{$lu->Ten_bai_kiem_tra}}</td>
-                                          
-                                                <td>{{$lu->So_diem}}</td>
+                                                @if($lu->So_diem == null)
+                                                <td>Vi phạm quy chế</td>
+                                                @else <td>{{$lu->So_diem}}</td>
+                                                @endif                                               
                                                 <td>{{$lu->Ngay_lam_bai}}</td>
                                                 @if($lu->Diem_toi_thieu > $lu->So_diem)
                                                 <td>Trượt</td>
