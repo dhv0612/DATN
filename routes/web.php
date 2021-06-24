@@ -61,6 +61,7 @@ Route::get('/user-apply-job/{jobid}',[EmployerController::class, 'user_apply_job
 Route::get('/cancle-user/{userid}',[EmployerController::class, 'cancle_user']);
 Route::get('/accept-user/{userid}',[EmployerController::class, 'accept_user']);
 Route::get('/list-user-test',[EmployerController::class, 'list_user_test']);
+Route::get('/view-answer/{userid}/{examid}',[EmployerController::class, 'view_answer']);
 Route::get('/change-place-employer',[EmployerController::class, 'change_place_employer']);
 Route::post('/update-place-employer',[EmployerController::class, 'update_place_employer']);
 Route::get('/extend-time-employer',[EmployerController::class, 'extend_time_employer']);

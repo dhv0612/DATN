@@ -69,21 +69,21 @@
                 </a>
                 <ul class="nav nav-treeview">
                     <li class="nav-item">
-                        <a href="{{URL::to('/history-payment-employer')}}" class="nav-link">
+                        <a href="{{ URL::to('/history-payment-employer') }}" class="nav-link">
                             <i class="far fa-circle nav-icon"></i>
                             <p>Lịch sử thanh toán</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{URL::to('/extend-time-employer')}}" class="nav-link">
+                        <a href="{{ URL::to('/extend-time-employer') }}" class="nav-link">
                             <i class="far fa-circle nav-icon"></i>
                             <p>Gia hạn thời gian</p>
                         </a>
                     </li>
-    
+
                 </ul>
             </li>
-    
+
             <li class="nav-item ">
                 <a href="{{ URL::to('/list-user-test') }}" class="nav-link active">
                     <i class="nav-icon fas fa-user-friends"></i>
@@ -147,6 +147,7 @@
                                             <th>Số điểm</th>
                                             <th>Ngày làm bài</th>
                                             <th>Trạng thái</th>
+                                            <th>Xem</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -155,19 +156,14 @@
                                                 @foreach ($info_exam as $key => $ie)
                                                     @foreach ($exam as $key => $ex)
                                                         @foreach ($job as $key => $jb)
-                                                            @if (
-                                                            $ed->Ma_ung_vien == $us->Ma_ung_vien 
-                                                            && $ie->Ma_bai_kiem_tra == $ex->Ma_bai_kiem_tra 
-                                                            && $ed->Ma_bai_kiem_tra == $ex->Ma_bai_kiem_tra                                                      
-                                                            && $jb->Ma_bai_dang == $ie->Ma_bai_dang
-                                                            ) 
+                                                            @if ($ed->Ma_ung_vien == $us->Ma_ung_vien && $ie->Ma_bai_kiem_tra == $ex->Ma_bai_kiem_tra && $ed->Ma_bai_kiem_tra == $ex->Ma_bai_kiem_tra && $jb->Ma_bai_dang == $ie->Ma_bai_dang) 
                                                                 <tr>
                                                                     <td>{{ $us->Ten_ung_vien }}</td>
                                                                     <td>{{ $jb->Tieu_de }}</td>
                                                                     <td>{{ $ex->Ten_bai_kiem_tra }}</td>
                                                                     <td>{{ $ed->So_diem }}</td>
                                                                     <td>{{ $ed->Ngay_lam_bai }}</td>
-                                                                    @if($ex->Diem_toi_thieu > $ed->So_diem)
+                                                                    @if ($ex->Diem_toi_thieu > $ed->So_diem)
                                                                     <td>Trượt</td>
                                                                     @else
                                                                     <td>Đạt</td>
@@ -180,25 +176,26 @@
                                             @endforeach
                                         @endforeach --}}
 
-                                        @foreach ($list_user as $key =>$lu)
+                                        @foreach ($list_user as $key => $lu)
                                             <tr>
-                                                <td>{{$lu->Ten_ung_vien}}</td>
-                                                <td>{{$lu->Tieu_de}}</td>
-                                                <td>{{$lu->Ten_bai_kiem_tra}}</td>
-                                                @if($lu->So_diem == null)
-                                                <td>Vi phạm quy chế</td>
-                                                @else <td>{{$lu->So_diem}}</td>
-                                                @endif                                               
-                                                <td>{{$lu->Ngay_lam_bai}}</td>
-                                                @if($lu->Diem_toi_thieu > $lu->So_diem)
-                                                <td>Trượt</td>
+                                                <td>{{ $lu->Ten_ung_vien }}</td>
+                                                <td>{{ $lu->Tieu_de }}</td>
+                                                <td>{{ $lu->Ten_bai_kiem_tra }}</td>
+                                                <td>{{ $lu->So_diem }}</td>
+                                                <td>{{ $lu->Ngay_lam_bai }}</td>
+                                                @if ($lu->Diem_toi_thieu > $lu->So_diem)
+                                                    <td>Trượt</td>
                                                 @else
-                                                <td>Đạt</td>
+                                                    <td>Đạt</td>
                                                 @endif
+                                                <td style="font-size: 20px">
+                                                    <a
+                                                        href="{{ URL::to('view-answer/' . $lu->Ma_ung_vien . '/' . $lu->Ma_bai_kiem_tra) }}">
+                                                        <i class="fas fa-eye" style="color: Green; margin: 0 5px;"></i></a>
+                                                </td>
                                             </tr>
                                         @endforeach
                                     </tbody>
-
                                 </table>
                             </div>
                             <!-- /.card-body -->

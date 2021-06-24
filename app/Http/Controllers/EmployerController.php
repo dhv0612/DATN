@@ -435,6 +435,9 @@ class EmployerController extends Controller {
             ->update(['Kiem_tra'=> 1])
             ;
             $exam_list = DB::table('thong_tin_kiem_tra')->where('Ma_bai_dang', $jobid)->get();
+            if ($exam_list != null){
+
+           
             foreach(  $exam_list  as $el){
                 $data_el = array();
                 $data_el['Trang_thai'] = 0;
@@ -445,6 +448,7 @@ class EmployerController extends Controller {
                 // ->where('Ma_bai_kiem_tra',$el->Ma_bai_kiem_tra )
                 // ->insert($data_el);
             }
+        }
             return Redirect()->back()
             ->with( 'employer', $employer );
         }else{
@@ -466,8 +470,10 @@ class EmployerController extends Controller {
         ->join('bai_kiem_tra', 'chi_tiet_kiem_tra.Ma_bai_kiem_tra', '=','bai_kiem_tra.Ma_bai_kiem_tra')
         ->join('thong_tin_kiem_tra', 'thong_tin_kiem_tra.Ma_bai_kiem_tra', '=', 'bai_kiem_tra.Ma_bai_kiem_tra')
         ->join('bai_dang_tuyen_dung', 'thong_tin_kiem_tra.Ma_bai_dang', '=','bai_dang_tuyen_dung.Ma_bai_dang')
-        ->select('ung_cu_vien.Ten_ung_vien',
+        ->select('ung_cu_vien.Ma_ung_vien',
+                'ung_cu_vien.Ten_ung_vien',
                 'bai_dang_tuyen_dung.Tieu_de', 
+                'bai_kiem_tra.Ma_bai_kiem_tra',
                 'bai_kiem_tra.Ten_bai_kiem_tra',
                 'chi_tiet_kiem_tra.So_diem',
                 'chi_tiet_kiem_tra.Ngay_lam_bai',
@@ -477,7 +483,11 @@ class EmployerController extends Controller {
         ->where('chi_tiet_kiem_tra.Trang_thai', 1)
         ->where ('thong_tin_kiem_tra.Trang_thai', 1)
         ->where('bai_dang_tuyen_dung.Ma_nha_tuyen_dung', $employerid)
-        ->groupBy( 'ung_cu_vien.Ten_ung_vien','bai_dang_tuyen_dung.Tieu_de', 
+        ->groupBy( 'ung_cu_vien.Ma_ung_vien' ,
+        'ung_cu_vien.Ten_ung_vien',
+        'bai_kiem_tra.Ma_bai_kiem_tra',
+        'bai_kiem_tra.Ten_bai_kiem_tra',
+        'bai_dang_tuyen_dung.Tieu_de', 
         'bai_kiem_tra.Ten_bai_kiem_tra',
         'chi_tiet_kiem_tra.So_diem',
         'chi_tiet_kiem_tra.Ngay_lam_bai',
@@ -655,5 +665,37 @@ class EmployerController extends Controller {
         } else {
             echo 'The email message was sent.';
         }
+    }
+
+    public function view_answer($userid, $examid )
+    {
+        $this->Checklogin();
+        $employerid =  Session::get( 'employerid' );
+        $employer = Employer::find($employerid);
+        $answer_list = DB::table('chi_tiet_tra_loi')
+            ->join('cau_hoi', 'cau_hoi.Ma_cau_hoi', '=', 'chi_tiet_tra_loi.Ma_cau_hoi')
+            ->select('chi_tiet_tra_loi.Ma_ung_vien',
+            'chi_tiet_tra_loi.Ma_cau_hoi',
+            'chi_tiet_tra_loi.Cau_tra_loi',
+            'cau_hoi.Ten_cau_hoi',
+            'cau_hoi.Lua_chon_a',
+            'cau_hoi.Lua_chon_b',
+            'cau_hoi.Lua_chon_c',
+            'cau_hoi.Lua_chon_d',
+            'cau_hoi.Dap_an'
+            )
+            ->where('cau_hoi.Ma_bai_kiem_tra', $examid)
+            ->where('chi_tiet_tra_loi.Ma_ung_vien', $userid)
+            ->get();
+        $name_exam = DB::table('bai_kiem_tra')->where('Ma_bai_kiem_tra', $examid)->first();    
+        if($answer_list){
+            return view('pages.employer.view-answer_employer')
+            ->with('answer_list', $answer_list) 
+            ->with('name_exam', $name_exam) 
+            ->with('employer', $employer)
+            ;
+        }else{
+            return Redirect::to('/employer');
+        }        
     }
 }
