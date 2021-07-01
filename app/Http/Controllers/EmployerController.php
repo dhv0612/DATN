@@ -6,6 +6,7 @@ use App\Models\Employer;
 
 use Carbon\Carbon;
 use App\Models\Jobs;
+use App\Models\Exam;
 use App\Models\Question;
 use App\Models\User;
 use Illuminate\Contracts\Queue\Job;
@@ -55,7 +56,7 @@ class EmployerController extends Controller {
         $employerid =  Session::get( 'employerid' );
         $employer = Employer::where( 'Ma_nha_tuyen_dung', $employerid )->first();
         $job = Jobs::where('Ma_nha_tuyen_dung', $employerid)->count();
-        $exam = DB::table('Bai_kiem_tra')->where('Ma_nha_tuyen_dung', $employerid)->count();
+        $exam = Exam::where('Ma_nha_tuyen_dung', $employerid)->count();
         $list_job = Jobs::where('Ma_nha_tuyen_dung',$employerid)->get();
  
         $user_apply = DB::table('chi_tiet_ung_cu')
