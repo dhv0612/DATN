@@ -55,10 +55,25 @@ class EmployerController extends Controller {
         $employerid =  Session::get( 'employerid' );
         $employer = Employer::where( 'Ma_nha_tuyen_dung', $employerid )->first();
         $job = Jobs::where('Ma_nha_tuyen_dung', $employerid)->count();
-        // $user_apply = DB::table('chi_tiet_ung_cu')->
+        $exam = DB::table('Bai_kiem_tra')->where('Ma_nha_tuyen_dung', $employerid)->count();
+        $list_job = Jobs::where('Ma_nha_tuyen_dung',$employerid)->get();
+ 
+        $user_apply = DB::table('chi_tiet_ung_cu')
+        ->join('bai_dang_tuyen_dung', 'bai_dang_tuyen_dung.Ma_bai_dang', '=', 'chi_tiet_ung_cu.Ma_bai_dang')
+        ->join('nha_tuyen_dung', 'nha_tuyen_dung.Ma_nha_tuyen_dung', '=', 'bai_dang_tuyen_dung.Ma_nha_tuyen_dung')
+        ->select ('chi_tiet_ung_cu.Ma_ung_vien')
+        ->groupBy('chi_tiet_ung_cu.Ma_ung_vien')
+        ->count();
+
+        $pay = DB::table('thong_tin_thanh_toan')->where('Ma_nha_tuyen_dung', $employerid)->where('trang_thai', 1)->count();
         return view ( 'pages.employer.home_employer' )
-        ->with( 'employer', $employer );
-        // return response()->json($job);
+        ->with( 'employer', $employer )
+        ->with('job',$job)
+        ->with('exam',$exam)
+        ->with('pay',$pay)
+        ->with('user_apply',$user_apply)
+        ;
+        // return $user_apply;
     }
 
     public function list_job_employer() {
@@ -580,6 +595,7 @@ class EmployerController extends Controller {
         ->select('thoi_han_dang_bai.Thoi_han', 
         'thong_tin_thanh_toan.Ngay_thanh_toan', 
         'thong_tin_thanh_toan.Han_dang_bai')
+        ->where('trang_thai', 1)
         ->get();
         return view ('pages.employer.history_payment_employer')
         ->with('employer', $employer)

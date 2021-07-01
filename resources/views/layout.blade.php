@@ -2,6 +2,19 @@
 <html lang="en">
 
 <head>
+    @if (isset($SEO))
+    <?php
+    $Ma_bai_dang = $job_detail->Ma_bai_dang;
+    $Tieu_de = $job_detail->Tieu_de_SEO;
+    $Mo_ta_SEO = $job_detail->Mo_ta_SEO;
+    $Hinh_anh = $job_detail->Hinh_anh_SEO;
+    ?>
+        <meta property="og:url"                content="<?php echo URL;?>/jobs-details/<?php echo $Ma_bai_dang ?>"/>
+        <meta property="og:type"               content="article" />
+        <meta property="og:title"              content= "<?php echo $Tieu_de ?>" />
+        <meta property="og:description"        content="<?php echo $Mo_ta_SEO ?>" />
+        <meta property="og:image"              content="<?php echo URL?>/public/upload/nhatuyendung/SEO/<?php echo $Hinh_anh; ?>">
+    @endif
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -31,19 +44,7 @@
     <link href='https://fonts.googleapis.com/css?family=Vollkorn' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 
-    @if (isset($SEO))
-    <?php
-    $Ma_bai_dang = $job_detail->Ma_bai_dang;
-    $Tieu_de = $job_detail->Tieu_de_SEO;
-    $Mo_ta_SEO = $job_detail->Mo_ta_SEO;
-    $Hinh_anh = $job_detail->Hinh_anh_SEO;
-    ?>
-        <meta property="og:url"                content="<?php echo URL;?>/jobs-details/<?php echo $Ma_bai_dang ?>"/>
-        <meta property="og:type"               content="article" />
-        <meta property="og:title"              content= "<?php echo $Tieu_de ?>" />
-        <meta property="og:description"        content="<?php echo $Mo_ta_SEO ?>" />
-        <meta property="og:image"              content="<?php echo URL?>/public/upload/nhatuyendung/SEO/<?php echo $Hinh_anh; ?>">
-    @endif
+   
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
