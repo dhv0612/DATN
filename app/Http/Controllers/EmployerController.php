@@ -301,8 +301,15 @@ class EmployerController extends Controller {
         $data['So_cau'] = $request->number_ques;
         $data['Diem_toi_thieu'] = $request->mark;
         $data['Ma_nha_tuyen_dung'] = $employerid;
-        DB::table( 'bai_kiem_tra' )->where( 'Ma_nha_tuyen_dung', $employerid )->insert( $data );
-
+        $examid = DB::table( 'bai_kiem_tra' )->where( 'Ma_nha_tuyen_dung', $employerid )->insertGetId( $data );
+        $job_list = DB::table('bai_dang_tuyen_dung')->where('Ma_nha_tuyen_dung', $employerid)->get();
+        foreach ($job_list as $key => $jl){
+            $data_jl = array();
+            $data_jl['trang_thai'] = 0;
+            $data_jl['Ma_bai_kiem_tra'] = $examid;
+            $data_jl['Ma_bai_dang'] = $jl->Ma_bai_dang;
+            DB::table('thong_tin_kiem_tra')->insert($data_jl); 
+        }
         return Redirect::to( 'list-exam-employer' )
         ->with( 'employer', $employer );
     }

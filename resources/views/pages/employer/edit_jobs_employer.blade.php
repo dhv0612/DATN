@@ -94,13 +94,13 @@
                 </a>
             </li>
             <li class="nav-item ">
-              <a href="{{ URL::to('/change-place-employer') }}" class="nav-link">
-                <i class="nav-icon fas fa-map-marker-alt"></i>
-                  <p>
-                      Thay đổi vị trí
-                  </p>
-              </a>
-          </li>
+                <a href="{{ URL::to('/change-place-employer') }}" class="nav-link">
+                    <i class="nav-icon fas fa-map-marker-alt"></i>
+                    <p>
+                        Thay đổi vị trí
+                    </p>
+                </a>
+            </li>
             <li class="nav-item">
                 <a href="{{ URl::to('/logout-employer') }}" class="nav-link">
                     <i class="nav-icon fas fa-sign-out-alt"></i></i>
@@ -143,8 +143,8 @@
                             </div>
                             <!-- /.card-header -->
                             <!-- form start -->
-                            <form action="{{ URL::to('/update-job-employer/' . $job_detail->Ma_bai_dang) }}" method="post"
-                                enctype="multipart/form-data">
+                            <form action="{{ URL::to('/update-job-employer/' . $job_detail->Ma_bai_dang) }}"
+                                method="post" enctype="multipart/form-data">
                                 {{ csrf_field() }}
                                 <div class="card-body">
                                     <div class="form-group">
@@ -161,7 +161,8 @@
                                                     <option value="{{ $bra->Ma_nganh_nghe }}" selected>
                                                         {{ $bra->Ten_nganh_nghe }}</option>
                                                 @else
-                                                    <option value="{{ $bra->Ma_nganh_nghe }}">{{ $bra->Ten_nganh_nghe }}
+                                                    <option value="{{ $bra->Ma_nganh_nghe }}">
+                                                        {{ $bra->Ten_nganh_nghe }}
                                                     </option>
                                                 @endif
                                             @endforeach
@@ -200,43 +201,47 @@
                                     <div class="form-group">
                                         <label for="exampleInputPassword1">Yêu cầu</label>
                                         <textarea id="summernote" name="res" class="form-control">
-                                                <?php echo $job_detail->Yeu_cau; ?>
-                                            </textarea>
+                                                    <?php echo $job_detail->Yeu_cau; ?>
+                                                </textarea>
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputPassword1">Mô tả công việc</label>
                                         <textarea id="summernote1" name="des" class="form-control">
-                                                <?php echo $job_detail->Mo_ta_cong_viec; ?>
-                                            </textarea>
+                                                    <?php echo $job_detail->Mo_ta_cong_viec; ?>
+                                                </textarea>
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputPassword1">Thông tin khác</label>
                                         <textarea id="summernote2" name="info" class="form-control">
-                                                <?php echo $job_detail->Thong_tin_khac; ?>
-                                            </textarea>
+                                                    <?php echo $job_detail->Thong_tin_khac; ?>
+                                                </textarea>
                                     </div>
                                     <div class="form-group">
                                         <label>Bài kiểm tra</label>
-                                        <div class="row">            
+                                        <div class="row">
                                             @foreach ($exam as $key => $exa)
                                                 <div class="col-md-6">
-                                                    @foreach ($info_exam as $$key=>$ie )   
-                                                    @if($exa->Ma_bai_kiem_tra == $ie->Ma_bai_kiem_tra)                                                     
-                                                        @if($ie->Trang_thai ==1  )
-                                                            <input class="form-check-input" name="exam[]" style="margin-left: 0" type="checkbox" checked
-                                                                value="{{ $exa->Ma_bai_kiem_tra }}">                                                            
-                                                            <label class="form-check-label"
-                                                                style=" margin-left: 1.25rem;">{{ $exa->Ten_bai_kiem_tra }}</label>
-                                                        @else
-                                                            <input class="form-check-input" name="exam[]" style="margin-left: 0" type="checkbox"
-                                                                value="{{ $exa->Ma_bai_kiem_tra }}">   
-                                                                
-                                                            <label class="form-check-label"
-                                                                style=" margin-left: 1.25rem;">{{ $exa->Ten_bai_kiem_tra }}</label>                                             
-                                                    @endif
-                                                    @endif
-                                              
+                                                    @foreach ($info_exam as $$key => $ie)
+                                                        @if ($exa->Ma_bai_kiem_tra == $ie->Ma_bai_kiem_tra)
+                                                            @if ($ie->Trang_thai == 1)
+                                                                <input class="form-check-input" name="exam[]"
+                                                                    style="margin-left: 0" type="checkbox" checked
+                                                                    value="{{ $exa->Ma_bai_kiem_tra }}">
+                                                                <label class="form-check-label"
+                                                                    style=" margin-left: 1.25rem;">{{ $exa->Ten_bai_kiem_tra }}</label>
+                                                            @else
+                                                                <input class="form-check-input" name="exam[]"
+                                                                    style="margin-left: 0" type="checkbox"
+                                                                    value="{{ $exa->Ma_bai_kiem_tra }}">
+
+                                                                <label class="form-check-label"
+                                                                    style=" margin-left: 1.25rem;">{{ $exa->Ten_bai_kiem_tra }}</label>
+                                                            @endif
+                                                      
+                                                        @endif
+
                                                     @endforeach
+
                                                 </div>
                                             @endforeach
                                         </div>
