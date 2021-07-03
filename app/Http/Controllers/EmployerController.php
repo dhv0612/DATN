@@ -61,7 +61,7 @@ class EmployerController extends Controller {
         // $data = $request->all();
         $data = array();
         $data['Tai_khoan'] = $request->Tai_khoan;
-        $data['Mat_khau'] = $request->Mat_khau;
+        $data['Mat_khau'] =md5($request->Mat_khau);
         $data['Email'] = $request->Email;
         $data['Ten_cong_ty'] = $request->Ten_cong_ty;
         $data['Trang_web'] = $request->Trang_web;
@@ -73,7 +73,7 @@ class EmployerController extends Controller {
         $get_name_file = $get_file->getClientOriginalName();
         $name_file = current( explode( '.', $get_name_file ) );
         $new_file = $date.'-'.$name_file.'.'.$get_file->getClientOriginalExtension();
-        $get_file->move( 'public/upload/upload/nhatuyendung', $new_file );
+        $get_file->move( 'public/upload/nhatuyendung', $new_file );
         $data['Hinh_anh'] = $new_file;
         DB::table('nha_tuyen_dung')->insert($data);
         return Redirect::to( 'employer' );
@@ -632,6 +632,7 @@ class EmployerController extends Controller {
         'thong_tin_thanh_toan.Ngay_thanh_toan', 
         'thong_tin_thanh_toan.Han_dang_bai')
         ->where('trang_thai', 1)
+        ->where('nha_tuyen_dung.Ma_nha_tuyen_dung', $employerid)
         ->get();
         return view ('pages.employer.history_payment_employer')
         ->with('employer', $employer)
