@@ -34,6 +34,8 @@ Route::post('/send-exam/{examid}',[UserController::class, 'send_exam']);
 
 //Employer
 Route::get('/employer',[EmployerController::class, 'employer']);
+Route::get('/register-employer',[EmployerController::class, 'register_employer']);
+Route::post('/save-employer',[EmployerController::class, 'save_employer']);
 Route::post('/check-login-employer',[EmployerController::class, 'check_login_employer']);
 Route::get('/dashboard-employer',[EmployerController::class, 'dashboard_employer']);
 Route::get('/list-job-employer',[EmployerController::class, 'list_job_employer']);

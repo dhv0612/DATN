@@ -51,6 +51,34 @@ class EmployerController extends Controller {
         }
     }
 
+    public function register_employer()
+    {
+        return view ('pages.employer.register_employer');
+    }
+
+    public function save_employer(Request $request)
+    {
+        // $data = $request->all();
+        $data = array();
+        $data['Tai_khoan'] = $request->Tai_khoan;
+        $data['Mat_khau'] = $request->Mat_khau;
+        $data['Email'] = $request->Email;
+        $data['Ten_cong_ty'] = $request->Ten_cong_ty;
+        $data['Trang_web'] = $request->Trang_web;
+        $data['Dia_chi'] = $request->Dia_chi;
+        $data['So_dien_thoai'] = $request->So_dien_thoai;
+        $get_file = $request->Hinh_anh;
+        date_default_timezone_set( 'Asia/Ho_Chi_Minh' );
+        $date = date( 'd-m-Y--h-i-s' );
+        $get_name_file = $get_file->getClientOriginalName();
+        $name_file = current( explode( '.', $get_name_file ) );
+        $new_file = $date.'-'.$name_file.'.'.$get_file->getClientOriginalExtension();
+        $get_file->move( 'public/upload/upload/nhatuyendung', $new_file );
+        $data['Hinh_anh'] = $new_file;
+        DB::table('nha_tuyen_dung')->insert($data);
+        return Redirect::to( 'employer' );
+    }
+
     public function dashboard_employer() {
         $this->Checklogin();
         $employerid =  Session::get( 'employerid' );

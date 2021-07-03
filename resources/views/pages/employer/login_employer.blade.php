@@ -66,7 +66,7 @@
                 </form>
 
                 <div class="input-group mb-3" style="margin: 10px 0px">
-                    <a href="#" class="btn btn-block btn-primary form-control">
+                    <a href="{{URL::to('/register-employer')}}" class="btn btn-block btn-primary form-control">
                         Đăng ký tài khoản
                     </a>
                     <div class="input-group-append">
