@@ -142,13 +142,11 @@
                         <div class="small-box bg-info">
                             <div class="inner">
                                 <h3>{{$job}}</h3>
-
                                 <p>Bài đăng tuyển dụng</p>
                             </div>
                             <div class="icon">
-                                <i class="ion ion-bag"></i>
+                                <i class="fas fa-newspaper"></i>
                             </div>
-                          
                         </div>
                     </div>
                     <!-- ./col -->
@@ -157,13 +155,11 @@
                         <div class="small-box bg-success">
                             <div class="inner">
                                 <h3>{{$exam}}</h3>
-
                                 <p>Bài kiểm tra</p>
                             </div>
                             <div class="icon">
                                 <i class="fas fa-file-alt"></i>
-                            </div>
-     
+                            </div>     
                         </div>
                     </div>
                     <!-- ./col -->
@@ -172,13 +168,11 @@
                         <div class="small-box bg-warning">
                             <div class="inner">
                                 <h3>{{$pay}}</h3>
-
                                 <p>Giao dịch thanh toán</p>
                             </div>
                             <div class="icon">
                                 <i class="fas fa-money-bill-wave"></i>
-                            </div>
-                      
+                            </div>                      
                         </div>
                     </div>
                     <!-- ./col -->
@@ -191,8 +185,7 @@
                             </div>
                             <div class="icon">
                                 <i class="fas fa-user-plus"></i>
-                            </div>
-                           
+                            </div>                           
                         </div>
                     </div>
                     <!-- ./col -->
