@@ -527,11 +527,9 @@ class EmployerController extends Controller {
         ->join('chi_tiet_kiem_tra', 'ung_cu_vien.Ma_ung_vien', '=', 'chi_tiet_kiem_tra.Ma_ung_vien' )
         ->join('bai_kiem_tra', 'chi_tiet_kiem_tra.Ma_bai_kiem_tra', '=','bai_kiem_tra.Ma_bai_kiem_tra')
         ->join('thong_tin_kiem_tra', 'thong_tin_kiem_tra.Ma_bai_kiem_tra', '=', 'bai_kiem_tra.Ma_bai_kiem_tra')
-        ->join('bai_dang_tuyen_dung', 'thong_tin_kiem_tra.Ma_bai_dang', '=','bai_dang_tuyen_dung.Ma_bai_dang')
         ->join('chi_tiet_ung_cu', 'chi_tiet_ung_cu.Ma_ung_vien', '=', 'ung_cu_vien.Ma_ung_vien')
         ->select('ung_cu_vien.Ma_ung_vien',
                 'ung_cu_vien.Ten_ung_vien',
-                'bai_dang_tuyen_dung.Tieu_de', 
                 'bai_kiem_tra.Ma_bai_kiem_tra',
                 'bai_kiem_tra.Ten_bai_kiem_tra',
                 'chi_tiet_kiem_tra.So_diem',
@@ -541,14 +539,13 @@ class EmployerController extends Controller {
                 )
         ->where('chi_tiet_kiem_tra.Trang_thai', 1)
         ->where('thong_tin_kiem_tra.Trang_thai', 1)
-        ->where('bai_dang_tuyen_dung.Ma_nha_tuyen_dung', $employerid)
+        ->where('bai_kiem_tra.Ma_nha_tuyen_dung', $employerid)
         ->where('chi_tiet_ung_cu.Trang_thai', 1)
         ->where('chi_tiet_ung_cu.Kiem_tra', 1)
         ->groupBy( 'ung_cu_vien.Ma_ung_vien' ,
         'ung_cu_vien.Ten_ung_vien',
         'bai_kiem_tra.Ma_bai_kiem_tra',
         'bai_kiem_tra.Ten_bai_kiem_tra',
-        'bai_dang_tuyen_dung.Tieu_de', 
         'bai_kiem_tra.Ten_bai_kiem_tra',
         'chi_tiet_kiem_tra.So_diem',
         'chi_tiet_kiem_tra.Ngay_lam_bai',

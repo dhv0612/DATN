@@ -142,7 +142,7 @@
                                     <thead>
                                         <tr>
                                             <th>Họ và tên ứng viên</th>
-                                            <th>Bài tuyển dụng</th>
+                                       
                                             <th>Bài kiểm tra</th>
                                             <th>Số điểm</th>
                                             <th>Ngày làm bài</th>
@@ -179,7 +179,7 @@
                                         @foreach ($list_user as $key => $lu)
                                             <tr>
                                                 <td>{{ $lu->Ten_ung_vien }}</td>
-                                                <td>{{ $lu->Tieu_de }}</td>
+                                            
                                                 <td>{{ $lu->Ten_bai_kiem_tra }}</td>
                                                 <td>{{ $lu->So_diem }}</td>
                                                 <td>{{ $lu->Ngay_lam_bai }}</td>
