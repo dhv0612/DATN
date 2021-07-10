@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Redirect;
 use App\Rules\Captcha;
 use App\Models\Social;
 use Laravel\Socialite\Facades\Socialite;
-use SebastianBergmann\Environment\Console;
+
 session_start();
 define( 'URL', 'https://dhv0612.com/DATN' );
 class UserController extends Controller {
@@ -317,10 +317,14 @@ class UserController extends Controller {
             $info_exam = DB::table( 'thong_tin_kiem_tra' )->where( 'Ma_bai_dang', $jobid )->get();
             if ( count( $exam_detail ) < count( $info_exam ) ) {
                 $data = array();
-                $data['Ma_ung_vien'] = $userid;
+                $data['Ma_bai_kiem_tra'] = $userid;
                 foreach ( $info_exam as $ie ) {
                     $data['Ma_bai_kiem_tra'] = $ie->Ma_bai_kiem_tra;
-                    DB::table( 'chi_tiet_kiem_tra' )->insert( $data );
+                    $check_isset = DB::table('chi_tiet_kiem_tra')->where('Ma_bai_kiem_tra',$data['Ma_bai_kiem_tra'])->where('Ma_ung_vien', $data['Ma_bai_kiem_tra'])->get();
+                    if( !isset($check_isset) ){
+                        DB::table( 'chi_tiet_kiem_tra' )->insert( $data );
+                    }
+                    
                 }
             }
             $exam_list = DB::table( 'bai_kiem_tra' )
@@ -350,7 +354,7 @@ class UserController extends Controller {
     public function start_exam( $examid ) {
         $userid = Session::get( 'userid' );
         $exam_detail = DB::table( 'chi_tiet_kiem_tra' )->where( 'Ma_ung_vien', $userid )->where( 'Ma_bai_kiem_tra', $examid )->first();
-        if ( $exam_detail->Trang_thai == 0 ) {
+        if ( isset( $exam_detail) && $exam_detail->Trang_thai == 0 ) {
             date_default_timezone_set( 'Asia/Ho_Chi_Minh' );
             $today = date( 'Y-m-d' );
             $data = array();
@@ -377,7 +381,6 @@ class UserController extends Controller {
         $userid = Session::get( 'userid' );
         $data = $request->all();
         // $name_list = array_keys( $data );
-
         $question_list = DB::table( 'cau_hoi' )->where( 'Ma_bai_kiem_tra', $examid )->get();
         $socaudung = 0;
         foreach ( $question_list as  $ql ) {

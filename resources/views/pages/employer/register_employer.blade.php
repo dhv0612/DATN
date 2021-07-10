@@ -20,6 +20,12 @@
 </head>
 
 <body class="hold-transition register-page">
+    <?php
+        $message = Session::get('message');
+        if (isset($message))    {
+            echo "<script>alert ('$message')</script>";
+        }
+    ?>
     <div class="register-box">
         <div class="card card-outline card-primary">
             <div class="card-header text-center">

@@ -61,22 +61,28 @@ class EmployerController extends Controller {
         // $data = $request->all();
         $data = array();
         $data['Tai_khoan'] = $request->Tai_khoan;
-        $data['Mat_khau'] =md5($request->Mat_khau);
-        $data['Email'] = $request->Email;
-        $data['Ten_cong_ty'] = $request->Ten_cong_ty;
-        $data['Trang_web'] = $request->Trang_web;
-        $data['Dia_chi'] = $request->Dia_chi;
-        $data['So_dien_thoai'] = $request->So_dien_thoai;
-        $get_file = $request->Hinh_anh;
-        date_default_timezone_set( 'Asia/Ho_Chi_Minh' );
-        $date = date( 'd-m-Y--h-i-s' );
-        $get_name_file = $get_file->getClientOriginalName();
-        $name_file = current( explode( '.', $get_name_file ) );
-        $new_file = $date.'-'.$name_file.'.'.$get_file->getClientOriginalExtension();
-        $get_file->move( 'public/upload/nhatuyendung', $new_file );
-        $data['Hinh_anh'] = $new_file;
-        DB::table('nha_tuyen_dung')->insert($data);
-        return Redirect::to( 'employer' );
+        $check_tk = DB::table('nha_tuyen_dung')->where('Tai_khoan', $data['Tai_khoan'])->first();
+        if (isset($check_tk)){
+            return redirect()->back()->with('message', 'Tài khoản đã tồn tại. Hãy thử lại');
+        }else{
+            $data['Mat_khau'] =md5($request->Mat_khau);
+            $data['Email'] = $request->Email;
+            $data['Ten_cong_ty'] = $request->Ten_cong_ty;
+            $data['Trang_web'] = $request->Trang_web;
+            $data['Dia_chi'] = $request->Dia_chi;
+            $data['So_dien_thoai'] = $request->So_dien_thoai;
+            $get_file = $request->Hinh_anh;
+            date_default_timezone_set( 'Asia/Ho_Chi_Minh' );
+            $date = date( 'd-m-Y--h-i-s' );
+            $get_name_file = $get_file->getClientOriginalName();
+            $name_file = current( explode( '.', $get_name_file ) );
+            $new_file = $date.'-'.$name_file.'.'.$get_file->getClientOriginalExtension();
+            $get_file->move( 'public/upload/nhatuyendung', $new_file );
+            $data['Hinh_anh'] = $new_file;
+            DB::table('nha_tuyen_dung')->insert($data);
+            return Redirect::to( 'employer' )->with('notification', 'Đăng ký thành công');
+        }
+        
     }
 
     public function dashboard_employer() {
@@ -494,6 +500,7 @@ class EmployerController extends Controller {
                 $data_el['Trang_thai'] = 0;
                 $data_el['Ma_bai_kiem_tra'] = $el->Ma_bai_kiem_tra;
                 $data_el['Ma_ung_vien'] = $userid;
+                // $check_isset_user_exam = DB::table('chi_tiet_kiem_tra')->where ('')
                 DB::table('chi_tiet_kiem_tra')->insert($data_el);
                 // DB::table('thong_tin_kiem_tra')->where('Ma_bai_dang', $jobid)
                 // ->where('Ma_bai_kiem_tra',$el->Ma_bai_kiem_tra )
@@ -521,6 +528,7 @@ class EmployerController extends Controller {
         ->join('bai_kiem_tra', 'chi_tiet_kiem_tra.Ma_bai_kiem_tra', '=','bai_kiem_tra.Ma_bai_kiem_tra')
         ->join('thong_tin_kiem_tra', 'thong_tin_kiem_tra.Ma_bai_kiem_tra', '=', 'bai_kiem_tra.Ma_bai_kiem_tra')
         ->join('bai_dang_tuyen_dung', 'thong_tin_kiem_tra.Ma_bai_dang', '=','bai_dang_tuyen_dung.Ma_bai_dang')
+        ->join('chi_tiet_ung_cu', 'chi_tiet_ung_cu.Ma_ung_vien', '=', 'ung_cu_vien.Ma_ung_vien')
         ->select('ung_cu_vien.Ma_ung_vien',
                 'ung_cu_vien.Ten_ung_vien',
                 'bai_dang_tuyen_dung.Tieu_de', 
@@ -532,8 +540,10 @@ class EmployerController extends Controller {
                 'chi_tiet_kiem_tra.So_diem'
                 )
         ->where('chi_tiet_kiem_tra.Trang_thai', 1)
-        ->where ('thong_tin_kiem_tra.Trang_thai', 1)
+        ->where('thong_tin_kiem_tra.Trang_thai', 1)
         ->where('bai_dang_tuyen_dung.Ma_nha_tuyen_dung', $employerid)
+        ->where('chi_tiet_ung_cu.Trang_thai', 1)
+        ->where('chi_tiet_ung_cu.Kiem_tra', 1)
         ->groupBy( 'ung_cu_vien.Ma_ung_vien' ,
         'ung_cu_vien.Ten_ung_vien',
         'bai_kiem_tra.Ma_bai_kiem_tra',
@@ -742,7 +752,7 @@ class EmployerController extends Controller {
             ->get();
         $name_exam = DB::table('bai_kiem_tra')->where('Ma_bai_kiem_tra', $examid)->first();    
         if($answer_list){
-            return view('pages.employer.view-answer_employer')
+            return view('pages.employer.view_answer_employer')
             ->with('answer_list', $answer_list) 
             ->with('name_exam', $name_exam) 
             ->with('employer', $employer)
