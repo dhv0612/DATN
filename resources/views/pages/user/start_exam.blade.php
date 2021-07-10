@@ -184,6 +184,11 @@ onkeyup="isKeyPressed(event)">
        
     }
 
+    if (window.performance && window.performance.navigation.type === window.performance.navigation.TYPE_BACK_FORWARD) {
+            alert('Bạn không thể quay lại trang này');
+            window.location.href= URL+'/';
+        }
+
     // const form = document.getElementById("form")
     // input.addEventListener('keydown', (event) => {
     //     console.log(`key: ${event.key} has been pressed down`);
