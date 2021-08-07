@@ -169,17 +169,8 @@
             }
 
         }
-
     </style>
-
-
 </head>
-
-
-
-
-
-
 <body class="clean-body hold-transition login-page"
     style="margin: 0;padding: 0;-webkit-text-size-adjust: 100%;background-color: #eeeeee;color: #000000">
     <!--[if IE]><div class="ie-container"><![endif]-->
