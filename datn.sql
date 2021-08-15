@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th8 07, 2021 lúc 09:15 AM
+-- Thời gian đã tạo: Th8 11, 2021 lúc 03:38 PM
 -- Phiên bản máy phục vụ: 10.4.19-MariaDB
 -- Phiên bản PHP: 7.4.19
 
@@ -53,12 +53,12 @@ INSERT INTO `bai_dang_tuyen_dung` (`Ma_bai_dang`, `Tieu_de`, `Yeu_cau`, `Ma_dia_
 (1, 'PHP - Developer', '<p>- Tốt nghiệp đại hoc</p>', 1, '<p>Cần có Nhân viên bảo trì  để hoạt động trong <u>môi trường bán lẻ</u> sang trọng <br> Tìm kiếm những cá nhân năng động, những người luôn <b>mong muố</b>n đạt được những <b>tiêu chuẩn cao nhất</b>.</p>', '12000000', '68 Nguyễn Huệ, Bến Nghé, Quận 1, Thành phố Hồ Chí Minh', '2021-04-09', '2025-10-30', NULL, 1, 1, 'MeU-Solution tuyển Developer', 'Môi trường năng động, hòa nhập với người mới', ''),
 (2, 'PHP - Senior', '<p>- Tốt nghiệp đại hoc</p><p><b>- Hòa đồng</b></p><p><br></p>', 1, '<p>Cần có Nhân viên bảo trì  để hoạt động trong môi trường bán lẻ sang trọng <br> Tìm kiếm những cá nhân năng động, những người luôn mong muốn đạt được những tiêu chuẩn cao nhất.</p>', '15000000', '117-119 Đường Lý Chính Thắng Quận 3 TP.HCM', '2021-04-11', '2025-11-16', NULL, 2, 1, 'Lampart tuyển dụng Senior', 'Môi trường năng động, hòa nhập với người mới', '19042021100013-1920 x 1080.png'),
 (9, 'Python', '<p><b>Học giỏi</b></p><p><u>Biết điều</u></p>', 1, '<span style=\"font-family: Impact;\">Làm bài tập về nhà</span><br><span style=\"font-family: &quot;Segoe UI Symbol&quot;;\">Không đánh nhau</span>', '21000000', '450 Lê Văn Việt Quận 9', '2021-04-19', '2025-09-29', NULL, 2, 1, NULL, NULL, '19042021105913-vegito.png'),
-(84, 'huhu', '1', 1, '1', '123', '450 Lê Văn Việt Quận 9', '2021-05-01', '2025-10-27', '1', 2, 1, NULL, NULL, NULL),
+(84, 'Python - Dev', '1', 1, '1', '21000000', '450 Lê Văn Việt Quận 9', '2021-05-01', '2025-10-27', '1', 2, 1, NULL, NULL, NULL),
 (85, 'PHP tester', 'A', 1, 'B', '15000000', '450 Lê Văn Việt Quận 9', '2021-05-01', '2025-09-09', 'C', 2, 1, NULL, NULL, '01052021032613-1920 x 1080.png'),
-(86, 'hihi', '<p><img src=\"https://helpx.adobe.com/content/dam/help/en/photoshop/using/convert-color-image-black-white/jcr_content/main-pars/before_and_after/image-before/Landscape-Color.jpg\" style=\"width: 1080px;\">\r\n                                                        </p>', 1, '<b>dsf</b>', '12345', '450 Lê Văn Việt Quận 9', '2021-05-15', '2021-10-27', '<u>dsda</u>', 2, 1, '123', '123', NULL),
-(87, 'hihi', '<p><img src=\"https://helpx.adobe.com/content/dam/help/en/photoshop/using/convert-color-image-black-white/jcr_content/main-pars/before_and_after/image-before/Landscape-Color.jpg\" style=\"width: 1080px;\">\r\n                                                        </p>', 1, '<b>dsf</b>', '12345', '450 Lê Văn Việt Quận 9', '2021-05-15', '2021-12-27', '<u>dsda</u>', 2, 1, '123', '123', NULL),
+(86, 'PHP Test', '<p><img src=\"https://helpx.adobe.com/content/dam/help/en/photoshop/using/convert-color-image-black-white/jcr_content/main-pars/before_and_after/image-before/Landscape-Color.jpg\" style=\"width: 1080px;\">\r\n                                                        </p>', 1, '<b>dsf</b>', '13000000', '450 Lê Văn Việt Quận 9', '2021-05-15', '2021-10-27', '<u>dsda</u>', 2, 1, '123', '123', NULL),
+(87, 'Java - Develop', '<p><img src=\"https://helpx.adobe.com/content/dam/help/en/photoshop/using/convert-color-image-black-white/jcr_content/main-pars/before_and_after/image-before/Landscape-Color.jpg\" style=\"width: 1080px;\">\r\n                                                        </p>', 1, '<b>dsf</b>', '10000000', '450 Lê Văn Việt Quận 9', '2021-05-15', '2021-12-27', '<u>dsda</u>', 2, 1, '123', '123', NULL),
 (88, 'python tester', '<font color=\"#000000\" style=\"background-color: rgb(255, 255, 0);\">a</font>', 1, '<b>v</b>', '10000000', 'd', '2021-06-15', '2021-09-29', '<u>d</u>', 3, 1, '123', '123', NULL),
-(89, 'a', '1', 1, '1', '123', 'a', '2021-07-02', '2021-08-27', '1', 2, 1, '123', '123', NULL);
+(89, 'PHP tester', '1', 1, '1', '11000000', 'a', '2021-07-02', '2021-08-27', '1', 2, 1, '123', '123', NULL);
 
 -- --------------------------------------------------------
 
@@ -349,7 +349,8 @@ INSERT INTO `mang_xa_hoi` (`Nguoi_dung`, `Ma_ung_vien_mxh`, `Mang_xa_hoi`, `Ma_u
 (3, '1648728335319672', 'Facebook', 4),
 (5, '915078145973090', 'Facebook', 5),
 (9, '214154420513242', 'Facebook', 8),
-(10, '1192898141181054', 'Facebook', 9);
+(10, '1192898141181054', 'Facebook', 9),
+(11, '1582445275281312', 'Facebook', 4);
 
 -- --------------------------------------------------------
 
@@ -556,7 +557,7 @@ CREATE TABLE `ung_cu_vien` (
 INSERT INTO `ung_cu_vien` (`Ma_ung_vien`, `Ten_ung_vien`, `Email`, `So_dien_thoai`, `Dia_chi`, `Hinh_anh`, `Ngay_sinh`, `Gioi_tinh`, `Tai_khoan`, `Mat_khau`, `File_CV`, `Ma_hoc_van`, `Trang_thai`) VALUES
 (1, 'Đinh Hoàng ', 'dhv061@gmail.com', '0974963361', '450 Lê Văn Việt Quận 9 TPHCM', '1920 x 1080.png', '1999-12-06', 1, 'dhv0612', 'e10adc3949ba59abbe56e057f20f883e', '17-04-2021--12-00-44-DinhHoangVu - Intern.pdf', 2, 1),
 (2, 'Đinh Hoàng Vũ', '', NULL, NULL, NULL, NULL, NULL, '1', 'c4ca4238a0b923820dcc509a6f75849b', NULL, NULL, NULL),
-(4, 'Hoàng Vũ', 'dhv0612@gmail.com', '', NULL, NULL, NULL, NULL, '', '', '16-04-2021--01-47-52-DinhHoangVu - Intern.pdf', NULL, 0),
+(4, 'Hoàng Vũ', 'dhv0612@gmail.com', '', NULL, '1920 x 1080.png', NULL, NULL, '', '', '16-04-2021--01-47-52-DinhHoangVu - Intern.pdf', NULL, 0),
 (5, 'Đinh Hoàng Vũ', 'dhvv0612@gmail.com', NULL, NULL, NULL, NULL, NULL, 'hehe', '202cb962ac59075b964b07152d234b70', NULL, NULL, NULL),
 (8, 'hehe', 'hihi@gmail.com', '', NULL, NULL, NULL, NULL, '', '', NULL, NULL, 0),
 (9, 'Nghĩa Lê', NULL, '', NULL, NULL, NULL, NULL, '', '', NULL, NULL, 0),
@@ -713,7 +714,7 @@ ALTER TABLE `hoc_van`
 -- AUTO_INCREMENT cho bảng `mang_xa_hoi`
 --
 ALTER TABLE `mang_xa_hoi`
-  MODIFY `Nguoi_dung` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `Nguoi_dung` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT cho bảng `nganh_nghe`

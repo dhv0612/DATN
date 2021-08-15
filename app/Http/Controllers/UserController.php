@@ -408,7 +408,29 @@ class UserController extends Controller {
         //         echo $a;
         //     }
         // return response()->json( $data );
+    }
+    
+    public function start_exam_sample (){
+        $check = DB::table('bai_kiem_tra')->where('Ma_bai_kiem_tra', 1)->first();
+        if ($check  != null){
+            $question_list = DB::table( 'cau_hoi' )
+            ->where( 'Ma_bai_kiem_tra', 1 )
+            ->select( 'Ma_cau_hoi', 'Ten_cau_hoi', 'Lua_chon_a', 'Lua_chon_b', 'Lua_chon_c', 'Lua_chon_d' )
+            ->inRandomOrder()
+            ->limit( $check->So_cau )
+            ->get();
+            return view ( 'pages.user.start_exam_sample' )
+            ->with( 'question_list', $question_list )
+            ->with( 'exam', $check )
+            ;
+        } else {
+            return Redirect::to( '/' );
+        }
+       
+    }
 
+    public function send_exam_sample(){
+        return Redirect::to( '/' );
     }
 
 }

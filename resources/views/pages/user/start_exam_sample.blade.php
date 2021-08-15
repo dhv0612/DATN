@@ -74,9 +74,6 @@ onkeyup="isKeyPressed(event)"
 oncontextmenu="return false;"
 >
 
-
-
-
     <div class="container" style="margin-top:100px ">
 
         {{-- <div class="col-md-12">
@@ -110,7 +107,7 @@ oncontextmenu="return false;"
             </div>
             <!-- /.card-header -->
             <div id="a" class="card-body">
-                <form action="{{URL::to('/send-exam/'.$exam->Ma_bai_kiem_tra)}}" method="post">
+                <form action="{{URL::to('/send-exam-sample')}}" method="post">
                     @csrf
                     <div class="row">
                         <?php $i =0;?>
@@ -209,10 +206,10 @@ oncontextmenu="return false;"
        
     }
 
-    if (window.performance && window.performance.navigation.type === window.performance.navigation.TYPE_BACK_FORWARD) {
-            alert('Bạn không thể quay lại trang này');
-            window.location.href= URL+'/';
-        }
+    // if (window.performance && window.performance.navigation.type === window.performance.navigation.TYPE_BACK_FORWARD) {
+    //         alert('Bạn không thể quay lại trang này');
+    //         window.location.href= URL+'/';
+    //     }
 
     // const form = document.getElementById("form")
     // input.addEventListener('keydown', (event) => {

@@ -73,3 +73,7 @@ Route::post('/pay-service',[EmployerController::class, 'pay_service']);
 Route::get('/pay-sucessfully',[EmployerController::class, 'pay_successfully']);
 Route::post('/update-question-employer/{questionid}',[EmployerController::class, 'update_question_employer']);
 Route::get('/send',[EmployerController::class, 'sendmailer']);
+
+//Sample
+Route::get('/start-exam-sample',[UserController::class, 'start_exam_sample']);
+Route::post('/send-exam-sample',[UserController::class, 'send_exam_sample']);
