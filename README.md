@@ -12,16 +12,16 @@
 Các chức năng đã hoàn thành bao gồm: 
 - Quản lý tài khoản: Cấp lại mật khẩu qua gmail, đổi mật khẩu, thay đổi thông tin.
 - Chức năng của ứng cử viên:
-    + Quản lý thông tin cá nhân
-	+ Tìm kiếm công việc
-	+ Ứng tuyển vào công việc
-	+ Làm bài kiểm tra đánh giá năng lực
+    + Quản lý thông tin cá nhân.
+	+ Tìm kiếm công việc.
+	+ Ứng tuyển vào công việc.
+	+ Làm bài kiểm tra đánh giá năng lực.
 - Chức năng của nhà tuyển dụng:
-	+ Đăng bài tuyển dụng
-	+ Cung cấp bài kiểm tra đánh giá năng lực
-	+ Xác nhận / hủy quyền làm bài đánh giá năng lực của ứng viên
-	+ Kiểm tra kết quả bài kiểm tra của ứng viên
-	+ Gia hạn thời gian đăng bài tìm kiếm ứng viên qua PayPal
+	+ Đăng bài tuyển dụng.
+	+ Cung cấp bài kiểm tra đánh giá năng lực.
+	+ Xác nhận / hủy quyền làm bài đánh giá năng lực của ứng viên.
+	+ Kiểm tra kết quả bài kiểm tra của ứng viên.
+	+ Gia hạn thời gian đăng bài tìm kiếm ứng viên qua PayPal.
 - Các API hỗ trợ
 	+ API hỗ trợ đăng nhập: Facebook.
 	+ API hỗ trợ thanh toán: PayPal.
