@@ -23,6 +23,7 @@ Các chức năng đã hoàn thành bao gồm:
 	+ Kiểm tra kết quả bài kiểm tra của ứng viên
 	+ Gia hạn thời gian đăng bài tìm kiếm ứng viên qua PayPal
 - Các API hỗ trợ
-	+ API hỗ trợ đăng nhập: Google, Facebook.
-	+ API hỗ trợ thanh toán: PayPal
+	+ API hỗ trợ đăng nhập: Facebook.
+	+ API hỗ trợ thanh toán: PayPal.
+	+ API hỗ trợ chỉ đường: Google map.
 ## Xin cám ơn!
