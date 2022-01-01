@@ -20,7 +20,7 @@ Các chức năng đã hoàn thành bao gồm:
 	+ Đăng bài tuyển dụng.
 	+ Cung cấp bài kiểm tra đánh giá năng lực.
 	+ Xác nhận / hủy quyền làm bài đánh giá năng lực của ứng viên.
-	+ Kiểm tra kết quả bài kiểm tra của ứng viên.
+	+ Kiểm tra kết quả bài làm của ứng viên.
 	+ Gia hạn thời gian đăng bài tìm kiếm ứng viên qua PayPal.
 - Các API hỗ trợ
 	+ API hỗ trợ đăng nhập: Facebook.
