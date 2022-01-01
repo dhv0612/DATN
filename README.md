@@ -1,4 +1,3 @@
-# DATN
 # ĐỒ ÁN TỐT NGHIỆP NĂM HỌC 2020-2021
 + Họ tên: Đinh Hoàng Vũ
 + Mã sinh viên: 5851071091
