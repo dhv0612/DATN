@@ -6,7 +6,7 @@
 ## Phần 1: Công nghệ sử dụng
 - Sử dụng ngôn ngữ PHP (Laravel) phía backend.
 - Sử dụng html, css, bootstrap, javascript phía frontend.
-- Thiết kế cơ sở dữ liệu: MySQL.
+- Cơ sở dữ liệu: MySQL.
 ## Phần 2: Các chức năng đã hoàn thành
 Các chức năng đã hoàn thành bao gồm: 
 - Quản lý tài khoản: Cấp lại mật khẩu qua gmail, đổi mật khẩu, thay đổi thông tin.
