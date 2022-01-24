@@ -8,7 +8,6 @@
 - Sử dụng html, css, bootstrap, javascript phía frontend.
 - Cơ sở dữ liệu: MySQL.
 ## Phần 2: Các chức năng đã hoàn thành
-Các chức năng đã hoàn thành bao gồm: 
 - Quản lý tài khoản: Cấp lại mật khẩu qua gmail, đổi mật khẩu, thay đổi thông tin.
 - Chức năng của ứng cử viên:
     + Quản lý thông tin cá nhân.
@@ -26,3 +25,31 @@ Các chức năng đã hoàn thành bao gồm:
 	+ API hỗ trợ thanh toán: PayPal.
 	+ API hỗ trợ chỉ đường: Google map.
 ## Xin cám ơn!
+
+# GRADUATION PROJECT SCHOOL YEAR 2020-2021
++ Full name: Dinh Hoang Vu
++ Student code: 5851071091
++ Class: Infomation Technology K58
+## Topic: PHP TECHNOLOGY APPLICATIONS SOLVES JOB PROBLEMS FOR UTC2 STUDENTS 
+## Part 1: Language used
+- Use language PHP (Laravel) for backend.
+- Use html, css, bootstrap, javascript for frontend.
+- Database: MySQL.
+## Part 2: Function complete
+- Account management: Reset password via gmail, change password and infomation.
+- Function of candidates:
+    + Personal information management.
+	+ Find jobs.
+	+ Apply for the job.
+	+ Take the ability test.
+- Function of employer:
+	+ Publish recruitment.
+	+ Provide competency assessment test.
+	+ Accept / cancle the candidate's right to take the test.
+	+ Check the candidate's test results.
+	+ Extension of time to post candidate search via PayPal.
+- API support
+	+ API support login: Facebook.
+	+ API support payment: PayPal.
+	+ API support guide: Google map.
+## Thank you very much!
