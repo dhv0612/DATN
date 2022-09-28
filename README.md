@@ -14,6 +14,9 @@
 	+ Find jobs.
 	+ Apply for the job.
 	+ Take the ability test.
+	    + Make certain that the candidate will not be allowed to continue working after the test time has expired.
+	    + The exam will be canceled if the member cheats by altering the source code or capturing screenshots.
+	    + When the candidate reloads the page, he is unable to complete the test.   
 - Feature of employer:
 	+ Publish recruitment.
 	+ Provide competency assessment test.
